@@ -87,3 +87,12 @@ margin-right: 0 !important;
     justify-items: center;
     align-items: flex-end;
 }
+
+.boldCss {
+        font-weight: bold !important;
+    }
+
+.sapUiSizeCompact .sapUiTableCell .sapMLabel, .sapUiSizeCondensed .sapUiTableCell .sapMLabel {
+        font-weight: bold !important;
+        font-size: 0.875rem;
+}

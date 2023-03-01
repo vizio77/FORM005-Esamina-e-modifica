@@ -18,6 +18,22 @@
 					<fb:FilterBar id="filterBarPF" showClearOnFB="true" clear="onClear" reset="onReset" search="onSearch" showGoOnFB="true"
 						showFilterConfiguration="true" useToolbar="false">
 						<fb:filterGroupItems>
+							<!-- <fb:FilterGroupItem visibleInFilterBar="true" enabled="false" groupName="G1"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="CodiceAmmin"
+								label="{i18n>Amministrazione}" labelTooltip="">
+								<fb:control>
+									<Input width="80%" id="AmmFA" maxSuggestionWidth="60%"
+										placeholder="Inserisci amministrazione"
+										value="A020"
+										editable="false"
+										showSuggestion="true" showValueHelp="true"
+										change=".onChange($event, 'AmmFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'AmmFA')"
+										suggest=".onSuggest($event, 'AmmFA')"
+										suggestionItemSelected=".onSuggestionItemSelectedAmmin" />
+								</fb:control>
+							</fb:FilterGroupItem> -->
 							<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1" groupTitle="{i18n>Filtri} {i18n>Base}" name="Fipex" label="{i18n>PosFin}"
 								labelTooltip="">
 								<fb:control>
@@ -458,7 +474,7 @@
 					</OverflowToolbar>
 				</t:extension>
 				<t:columns>
-					<t:Column label="{i18n>Seleziona}" width="5rem">
+					<t:Column class="boldCss" label="{i18n>Seleziona}" width="5rem">
 						<t:template>
 							<CheckBox visible="{= ${modelTreeTable>HierarchyLevel} === '0' ? true : false}" select="onSelectCheckBox" selected="{modelTreeTable>SELECTED}"></CheckBox>
 						</t:template>
