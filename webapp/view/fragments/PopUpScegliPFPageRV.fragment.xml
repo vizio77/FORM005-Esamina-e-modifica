@@ -1,0 +1,45 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	<Dialog id="idPopupScegliPF" title="{i18n>ScegliPosFin}">
+		<VBox>
+			<l:VerticalLayout width="25em" class="sapUiSmallMargin">
+		<Label text="{i18n>CedenteRicevente}:" labelFor="GroupA"/>
+		<!--<RadioButtonGroup id="GroupA" width="100%" >-->
+			<RadioButton groupName="GroupA" id="idCedente" text="{i18n>Cedente}" selected="true"/>
+			<RadioButton groupName="GroupA" id="idRicevente" text="{i18n>Ricevente}" selected="false"/>
+		<!--</RadioButtonGroup>-->
+	</l:VerticalLayout>
+			<l:VerticalLayout width="25em" class="sapUiSmallMargin">
+				<Label text="{i18n>PosFin}:" labelFor="idInputPF"/>
+				<!--<Input id="idInputPFRV" editable="true" required="true" showSuggestion="true" showValueHelp="true" change="onChange($event, 'idInputPFRV')"
+					valueHelpRequest=".onValueHelpRequest($event, 'idInputPFRV')" suggest=".onSuggest($event, 'idInputPFRV')"
+					suggestionItemSelected=".onSuggestionItemSelected($event, 'idInputPFRV')" />-->
+					
+					<Input id="idInputPFRV" editable="true" required="true" showSuggestion="true" showValueHelp="true" change="onChange($event, 'idInputPFRV')"
+					valueHelpRequest="onPressChoosePosFin" suggest=".onSuggest($event, 'idInputPFRV')"
+					suggestionItemSelected=".onSuggestionItemSelected($event, 'idInputPFRV')" />
+				<!--<suggestionItems>
+					<core:ListItem key="{Idposfin}" text="{Posfins4}" />
+				</suggestionItems>
+			</Input>-->
+		</l:VerticalLayout>
+		<l:VerticalLayout width="25em" class="sapUiSmallMargin">
+			<Label text="{i18n>Autorizzazione}:" labelFor="idInputAut"/>
+			<Input id="idInputAutRV" enabled="false" editable="true" showSuggestion="true" showValueHelp="true" required="true" change="onChange($event, 'idInputAutRV')"
+				valueHelpRequest="onValueHelpRequest($event, 'idInputAutRV')" suggest="onSuggest($event, 'idInputAutRV')"
+				suggestionItemSelected="onSuggestionItemSelected($event, 'idInputAutRV')" />
+			<!--<suggestionItems>
+				<core:ListItem key="{modelPreAutRV>Autorizzazione}" text="{modelPreAutRV>Descautorizz}"/>
+			</suggestionItems>
+		</Input>-->
+	</l:VerticalLayout>
+	
+</VBox>
+<OverflowToolbar>
+	<ToolbarSpacer/>
+	<!--<Button id="idSalvaBtn" type="Emphasized" text="{i18n>Salva}" press="onPressSalva"/>-->
+	<!--<Button type="Emphasized" text="{i18n>Indietro}" press="onPressIndietro"/>-->
+	<Button type="Emphasized" text="{i18n>Ok}" press="onPressOkPopupScegliPF"/>
+	<Button type="Emphasized" text="{i18n>Chiudi}" press="onPressChiudiPopupScegliPF"/>
+</OverflowToolbar>
+</Dialog>
+</core:FragmentDefinition>

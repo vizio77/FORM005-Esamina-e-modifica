@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core">
+	<Dialog id="NPF_dialogScegliPG" title="Scegli PG" icon="" showHeader="true">
+		<content>
+			<!--	<Label class="sapUiTinyMarginTop sapUiTinyMarginBeginEnd"  id="IdPropostaLabel" text="Id proposta" labelFor="IdProposta" design="Bold"/>
+		-->
+			<HBox justifyContent="Center">
+				<Input class="sapUiSmallMargin" type="Number" maxLength="2" width="auto" id="idPGNPFPoP" maxSuggestionWidth="80%" placeholder="Inserisci PG"
+					showSuggestion="false" showValueHelp="false" change=".onChange($event, 'idPGNPFPoP')"
+					valueHelpRequest=".onValueHelpRequest($event, 'idPGNPFPoP')"
+					suggestionItemSelected=".onSuggestionItemSelected($event, 'idPGNPFPoP')" suggest=".onSuggest($event, 'idPGNPFPoP')"/>
+					<!--suggestionItems="{path: '/ZES_PIANGEST_SET', sorter: { path: 'NumePig' }, templateShareable:false}">
+					<suggestionItems>
+						<core:ListItem text="{NumePig}" additionalText="{CapPgDescTestoI}"/>
+					</suggestionItems>
+				</Input>-->
+			</HBox>
+		</content>
+		<buttons>
+			<!--<Button id="btnScegliNumPG" text="Scegli" press="onPressLockNumPG"/>-->
+			<Button id="btnlockNumPG" text="" press="onPressLockNumPG"/>
+			<Button id="btnCloseScegliPGNPF" text="Annulla" press="onPressCloseScegliPGNPF"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

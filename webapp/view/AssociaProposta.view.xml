@@ -1,0 +1,352 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.f" xmlns:t="sap.ui.table"
+	xmlns:fb="sap.ui.comp.filterbar" xmlns:zcontrol="zsap.com.r3.cobi.s4.custposfin.z_s4_zposfin.controls" xmlns:zcontrollink="zsap.com.r3.cobi.s4.custposfin.z_s4_zposfinlink.controls"
+	controllerName="zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.AssociaProposta" xmlns:html="http://www.w3.org/1999/xhtml">
+	<f:DynamicPage id="dynamicPageAssociaProposta" headerExpanded="true" showFooter="true">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>title} > {i18n>PosFin} - {i18n>AssociaProposta}"/>
+				</f:heading>
+				<f:expandedContent>
+					<Label text=""/>
+				</f:expandedContent>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader pinnable="false">
+				<f:content>
+					<t:Table 
+					id="tableAssociaProposta"  
+					visibleRowCountMode="Fixed" 
+					visibleRowCount="10" 
+					showColumnVisibilityMenu="true"
+					selectionMode="None" 
+					enableSelectAll="False" 
+					enableColumnReordering="false"
+					>
+				<t:extension>
+					<OverflowToolbar class="sapUiSmallMarginTop">
+						<!--Aggiungere Crea Proposta-->
+						<!--<Button id="idBtnExport" visible="true" type="Emphasized" text="{i18n>Export}" icon="sap-icon://excel-attachment" press="onPressExport"/>-->
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column label="{i18n>PosFin}" width="14rem">
+						<t:template>
+							<zcontrollink:LinkPosizioneFinanziaria 
+							text="{Fipex}" 
+							anno="{AnnoFipex}" 
+							fikrs="{Fikrs}" 
+							fase="{Fase}" 
+							reale="{Reale}" 
+							versione="{Versione}" 
+							fipex="{ path: 'Fipex', formatter: '.formatter.formatterPosFin'}" 
+							datbis="{ path: 'Datbis', formatter: '.formatter.formatterDatbis'}"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<Panel headerText="{i18n>ListaProposte}" width="auto" class="sapUiResponsiveMargin">
+				
+			<t:TreeTable id="treeTableID" expandFirstLevel="false" visibleRowCountMode="Fixed" visibleRowCount="10"
+				selectionMode="None" enableSelectAll="False"
+				enableColumnReordering="false">
+				<t:extension>
+					<OverflowToolbar class="sapUiSmallMarginTop">
+						<Text id="prev-column" text="{modelIsAfterAvvio>/intialValue} - {modelIsAfterAvvio>/beginValueM1}" visible="{modelIsAfterAvvio>/enabledButtonPrev}"/>
+						<Button id="idPrev" icon="sap-icon://navigation-left-arrow" type="Emphasized" press="onPressPrevTreeTable" enabled="{modelIsAfterAvvio>/enabledButtonPrev}"/>
+						<ToolbarSpacer/>
+						<!--<ToolbarSpacer/>-->
+						<!--<Button id="idBtnDettaglioAnagraficoID" icon="sap-icon://form" type="Emphasized" text="{i18n>Anagrafica} {i18n>Proposta}" press="onPressNavToDettaglioAnagraficoID"/>-->
+						<!--<Button id="idBtnDettaglioContabileID" icon="sap-icon://detail-view" type="Emphasized" text="{i18n>Contabile} {i18n>Proposta}" press="onPressNavToDettaglioContabileID"/>-->
+						<!--<Button id="idBtnEsitoControlli" type="Emphasized" text="{i18n>EsitoControlli}" press="onPressEsitoControlli"/>-->
+						<!--<Button id="idBtnSwitchListaEstesaRidotta" type="Emphasized" icon="sap-icon://list" text="{i18n>Lista} {i18n>Estesa}" press="onPressSwitchListaEstesaRidotta"/>-->
+						<!--<Button id="idBtnAttivitaIdProposta" icon="sap-icon://display" type="Emphasized" text="{i18n>Gestisci}" press="onPressNavToTabGestisci"/>-->
+						<!--<Button id="idBtnAnagrafica" type="Emphasized" text="{i18n>Anagrafica}" press="onPressNavToAnagrafica"/>-->
+						<!--<Button id="idBtnAutorizzazione" type="Emphasized" text="{i18n>Competenza}" press="onPressNavToAutorizzazione"/>-->
+						<!--<Button id="idBtnCassa" type="Emphasized" text="{i18n>Cassa}" press="onPressNavToCassa"/>-->
+						<!--<Button id="idBtnDocumentale" icon="sap-icon://copy" type="Emphasized" tooltip="{i18n>Documentale}" press="onPressNavToDettaglio"/>-->
+						<Button id="idBtnAssocia" visible="true" type="Emphasized" text="{i18n>AssociaPropostaBtn}"  press="onPressAssocia"/>
+						<Button id="idBtnCreaProposta" type="Emphasized" text="{i18n>Crea} {i18n>Proposta}" press="onPressNavToCreaID"/>
+						<Button id="idNext" icon="sap-icon://navigation-right-arrow" type="Emphasized" press="onPressNextTreeTable" enabled="{modelIsAfterAvvio>/enabledButtonNext}"/>
+						<Text id="next-column" text="{modelIsAfterAvvio>/beginValueP1} - {modelIsAfterAvvio>/finalValue}" visible="{modelIsAfterAvvio>/enabledButtonNext}"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column label="{i18n>Seleziona}" width="5rem">
+						<t:template>
+							<RadioButton visible="{= ${modelTreeTable>HierarchyLevel} === '0' ? true : false}" select="onSelectCheckBox" selected="{modelTreeTable>SELECTED}"></RadioButton>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Proposta}" width="7rem">
+						<t:template>
+							<Text text="{= ${modelTreeTable>HierarchyLevel} === '1' ? '' : ${modelTreeTable>IdProposta} === '0000000000' ? '' : ${modelTreeTable>IdProposta} }" wrapping="false"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>NickName}" width="10rem">
+						<t:template>
+							<Text text="{modelTreeTable>Nickname}" wrapping="false"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Iter}" width="7rem">
+						<t:template>
+							<Text text="{modelTreeTable>Iter}" wrapping="true"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Tipo}" width="8rem">
+						<t:template>
+							<Text text="{ ${modelTreeTable>TipologiaProposta} === '1' ? 'COMPENSATIVA' : 'NON COMPENSATIVA'}" wrapping="true"/>
+						</t:template>
+					</t:Column>
+					<!--<t:Column label="{i18n>Parziale}" width="5rem">
+						<t:template>
+							<Text text="{ZSS4_COBI_PRSP_ESAMOD_SRV>Parziale} " wrapping="false"/>
+						</t:template>
+					</t:Column>-->
+					<t:Column width="8rem">
+						<Label text="{i18n>EsitoControllo}" wrapping="true"/>
+						<t:template>
+							<ObjectStatus text="{modelTreeTable>EsitoControllo}" icon="{= ${modelTreeTable>EsitoControllo}.toUpperCase() === 'POSITIVO' ? 'sap-icon://message-success' : ${modelTreeTable>EsitoControllo}.toUpperCase() === 'WARNING' ? 'sap-icon://message-warning' : '' }" state="{= ${modelTreeTable>EsitoControllo}.toUpperCase() === 'POSITIVO' ? 'Success' : ${modelTreeTable>EsitoControllo}.toUpperCase() === 'WARNING' ? 'Warning' : '' }"  tooltip=""/>
+						</t:template>
+					</t:Column>
+					<!--<t:Column width="6rem">
+						<Label text="{i18n>TipoVariazione}" wrapping="true"/>
+						<t:template>
+							<Text text="{ZSS4_COBI_PRSP_ESAMOD_SRV>TipoVariazioniId}" wrapping="false"/>
+						</t:template>
+					</t:Column>-->
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>Amministrazione}" width="8rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceAmmin}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>Ragioneria}" width="7rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceRagioneria}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Missione}" width="5rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceMissione}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Programma}" width="6rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceProgramma}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Azione}" width="5rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceAzione}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>CdR}" width="4rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceCdr}" wrapping="false"/>
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>Capitolo}" width="5rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceCapitolo}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>PG}" width="8rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodicePg}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>Titolo}" width="4rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceTitolo}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Categoria}" width="5rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceCategoria}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>CE2}" width="4rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceClaeco2}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>CE3}" width="4rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceClaeco3}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+						<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>TCRC}" width="4rem">
+						<t:template>
+							<Text text="{modelTreeTable>NumeTcrcSpe}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>TCRF}" width="4rem">
+						<t:template>
+							<Text text="{modelTreeTable>NumeTcrfSpe}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>Cofog}" width="4rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodcofogL3}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>PosFin}" width="13rem">
+						<t:template>
+							<!--<Link text="{Posfin}" press="onPressShowPosFin" class="sapUiTinyMarginTop"/>-->
+							<zcontrollink:LinkPosizioneFinanziaria text="{modelTreeTable>Fipex}"  anno="{modelTreeTable>AnnoFipex}" fikrs="{modelTreeTable>Fikrs}" fase="{modelTreeTable>Fase}" reale="{modelTreeTable>Reale}" versione="{modelTreeTable>Versione}" fipex="{ path: 'modelTreeTable>Fipex', formatter: '.formatter.formatterPosFin'}" datbis="{ path: 'modelTreeTable>Datbis', formatter: '.formatter.formatterDatbis'}"/>
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" width="8rem" >
+						<Label text="{i18n>TipoSpesaCapitolo}" wrapping="true"/>
+						<t:template>
+							<Text text="{modelTreeTable>CodiceTipospCapSpe} " wrapping="true" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" width="8rem" >
+						<Label text="{i18n>TipoSpesaPG}" wrapping="true"/>
+						<t:template>
+							<Text text="{modelTreeTable>CodiceTipospPSpe} " wrapping="true" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Autorizzazione}" width="16rem">
+						<t:template>
+							<Text text="{modelTreeTable>Autorizzazioni}" wrapping="true" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" width="10rem" wrapping="true" >
+						<Label text="{i18n>PosFinInclusaInPiuId}" wrapping="true"/>
+						<t:template>
+							<Text text="{modelTreeTable>CoinvoltaId} " textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>FOFP}" width="4rem">
+						<t:template>
+							<Text text="{ parts: [ 'modelTreeTable>HierarchyLevel', 'modelTreeTable>Fop'], formatter: '.formatter.formatterFlag'}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>APS}" width="3rem">
+						<t:template>
+							<Text text="{ parts: [ 'modelTreeTable>HierarchyLevel', 'modelTreeTable>ApsFl'], formatter: '.formatter.formatterFlag'}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" wrapping="true"  width="8rem">
+						<Label text="{i18n>EsitoEcobil}" wrapping="true"/>
+						<t:template>
+							<Text text="{modelTreeTable>Esito_Ecobil}" textAlign="Begin" wrapping="true" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>ECOBIL}" width="7rem">
+						<t:template>
+							<Text text="{ parts: [ 'modelTreeTable>HierarchyLevel', 'modelTreeTable>Ecobil'], formatter: '.formatter.formatterFlag'}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>BILGEN}" width="9rem">
+						<t:template>
+							<Text text="{ parts: [ 'modelTreeTable>HierarchyLevel', 'modelTreeTable>Bilgenere'], formatter: '.formatter.formatterFlag'}" wrapping="true" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>CedolinoUnico}" width="8rem">
+						<t:template>
+							<Text text="{ parts: [ 'modelTreeTable>HierarchyLevel', 'modelTreeTable>NoiPaSpe'], formatter: '.formatter.formatterNoiPA'}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>IRAP}" width="5rem">
+						<t:template>
+							<Text text="{ parts: [ 'modelTreeTable>HierarchyLevel', 'modelTreeTable>FlagCu01Spe'], formatter: '.formatter.formatterIrap'}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>PresenzaNote}" width="8rem">
+						<t:template>
+							<Text text="{modelTreeTable>PresenzaNote}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" width="10rem">
+						<Label text="{i18n>PresenzaVarAnagrafiche}" wrapping="true"/>
+						<t:template>
+							<Text text="{ parts: [ 'modelTreeTable>HierarchyLevel', 'modelTreeTable>FlagPAnag'], formatter: '.formatter.formatterFlag'}" wrapping="true" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>PresenzaVarCassa}" width="10rem">
+						<Label text="{i18n>PresenzaVarCassa}" wrapping="true"/>
+						<t:template>
+							<Text text="{modelTreeTable>VariazioniCassa}" wrapping="true" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>PresenzaVarCompetenza}" width="10rem">
+						<Label text="{i18n>PresenzaVarCompetenza}" wrapping="true"/>
+						<t:template>
+							<Text text="{modelTreeTable>VariazioniCompetenza}" wrapping="true" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem">
+						<Label text="{i18n>VarPropostaCompetenzaTot} {modelTriennio>/anno1}" wrapping="true"/>
+						<t:template>
+							<ObjectNumber
+								number="{parts:[{path:'modelTreeTable>Varpropcomp2023'},{path:'CurrencyCode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+								emphasized="false" textAlign="End"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem">
+						<Label text="{i18n>VarPropostaCompetenzaTot} {modelTriennio>/anno2}" wrapping="true"/>
+						<t:template>
+							<ObjectNumber
+								number="{parts:[{path:'modelTreeTable>Varpropcomp2024'},{path:'CurrencyCode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+								emphasized="false" textAlign="End"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem">
+						<Label text="{i18n>VarPropostaCompetenzaTot} {modelTriennio>/anno3}" wrapping="true"/>
+						<t:template>
+							<ObjectNumber
+								number="{parts:[{path:'modelTreeTable>Varpropcomp2025'},{path:'CurrencyCode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+								emphasized="false" textAlign="End"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="10rem">
+						<Label text="{i18n>VarPropostaCassaTot} {modelTriennio>/anno1}" wrapping="true"/>
+						<t:template>
+							<ObjectNumber
+								number="{parts:[{path:'modelTreeTable>Varpropcassa2023'},{path:'CurrencyCode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+								emphasized="false" textAlign="End"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="10rem">
+						<Label text="{i18n>VarPropostaCassaTot} {modelTriennio>/anno2}" wrapping="true"/>
+						<t:template>
+							<ObjectNumber
+								number="{parts:[{path:'modelTreeTable>Varpropcassa2024'},{path:'CurrencyCode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+								emphasized="false" textAlign="End"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="10rem">
+						<Label text="{i18n>VarPropostaCassaTot} {modelTriennio>/anno3}" wrapping="true"/>
+						<t:template>
+							<ObjectNumber
+								number="{parts:[{path:'modelTreeTable>Varpropcassa2025'},{path:'CurrencyCode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+								emphasized="false" textAlign="End"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:TreeTable>
+		</Panel>
+		
+		</f:content>
+
+		<f:footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button id="idBtnAPS" visible="true" type="Emphasized" text="{i18n>APS}" press="onPressNavToAPS"/>
+				<Button id="idBtnEcoBil" visible="true" type="Emphasized" text="{i18n>ECOBIL}" press="onPressNavToEcoBilancio"/>
+				<Button id="idBtnBilGen" visible="true" type="Emphasized" text="{i18n>BILGEN}" press="onPressNavToBilancioDiGenere"/>
+				<Button id="idBtnNPF" type="Emphasized" icon="sap-icon://form" text="{i18n>NuovaPosFin}" press="onPressNavToNuovaPosizione"/>
+				<Button type="Emphasized" text="{i18n>RimodulazioneVert}" icon="sap-icon://strikethrough" press="onPressNavToRV"/>
+				<Button type="Emphasized" text="{i18n>Indietro}" press="onPressBack"/>
+				<Button type="Emphasized" text="{i18n>Home}" press="onPressNavToHomeLoc"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>

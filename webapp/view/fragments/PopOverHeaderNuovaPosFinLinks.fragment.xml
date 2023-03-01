@@ -1,0 +1,62 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Popover id="idPopHeader" title="" class="sapUiContentPadding" resizable="true" contentWidth="100%" placement="Bottom" xmlns:l="sap.ui.layout"
+		xmlns:f="sap.ui.layout.form">
+		<content>
+			<l:HorizontalLayout id="idBoxPosFin" class="sapUiSmallMargin" >
+				<l:VerticalLayout class="sapUiSmallMargin">
+					<!--<ObjectStatus id="idPopHeaderAmm" title="{i18n>Amministrazione}" text="{modelNuovaPosFin>/AMM}" class="textBold"/>
+					<ObjectStatus id="idPopHeader-CdR" title="{i18n>CentroResp}" text="{modelNuovaPosFin>/CDR}" class="textBold"/>
+					<ObjectStatus id="idPopHeader-Rag" title="{i18n>Ragioneria}" text="{modelNuovaPosFin>/RAG}" class="textBold"/>-->
+					<ObjectStatus title="{i18n>Amministrazione}" text="A020" class="textBold"/>
+					<ObjectStatus title="{i18n>CentroResp}" text="001" class="textBold"/>
+					<ObjectStatus title="{i18n>Ragioneria}" text="001" class="textBold"/>
+					<ObjectStatus title="{i18n>Missione}" text="{modelNuovaPosFin>/MISS}" class="textBold"/>
+					<ObjectStatus title="{i18n>Programma}" text="{modelNuovaPosFin>/PROG}" class="textBold"/>
+					<ObjectStatus title="{i18n>Azione}" text="{modelNuovaPosFin>/AZIO}" class="textBold"/>
+					<ObjectStatus title="{i18n>Capitolo}" text="{modelNuovaPosFin>/CAP}" class="textBold"/>
+					<ObjectStatus title="{i18n>PG}" text="{modelNuovaPosFin>/PG}" class="textBold"/>
+					<ObjectStatus title="{i18n>Titolo}" text="{modelNuovaPosFin>/TIT}" class="textBold"/>
+					<ObjectStatus title="{i18n>Categoria}" text="{modelNuovaPosFin>/CAT}" class="textBold"/>
+					<ObjectStatus title="{i18n>CE2}" text="{modelNuovaPosFin>/CE2}" class="textBold"/>
+					<ObjectStatus title="{i18n>CE3}" text="{modelNuovaPosFin>/CE3}" class="textBold"/>
+				</l:VerticalLayout>
+				<l:VerticalLayout class="sapUiSmallMargin">
+					<!--<ObjectStatus title="{i18n>DescAmmin}" text="{modelNuovaPosFin>/DESCAMM}" class="textBold"/>
+					<ObjectStatus title="{i18n>DescCdr}" text="{modelNuovaPosFin>/DESCCDR}" class="textBold"/>
+					<ObjectStatus title="{i18n>DescRag}" text="{modelNuovaPosFin>/DESCRAG}" class="textBold"/>-->
+					<ObjectStatus title="{i18n>DescAmmin}" text="MINISTERO DELL'ECONOMIA E DELLE FINANZE" class="textBold"/>
+					<ObjectStatus title="{i18n>DescCdr}" text="GABINETTO E UFFICI DI DIRETTA COLLABORAZIONE ALL'OPERA DEL MINISTRO" class="textBold"/>
+					<ObjectStatus title="{i18n>DescRag}" text="RAGIONERIA GENERALE DELLO STATO" class="textBold"/>
+					<ObjectStatus title="{i18n>DescMiss}" text="{modelNuovaPosFin>/DESCMISS}" class="textBold"/>
+					<ObjectStatus title="{i18n>DescProg}" text="{modelNuovaPosFin>/DESCPROG}" class="textBold"/>
+					<ObjectStatus title="{i18n>DescAzio}" text="{modelNuovaPosFin>/DESCAZIO}" class="textBold"/>
+					<ObjectStatus title="{i18n>DescCap}" text="{modelNuovaPosFin>/DESCCAP}" class="textBold"/>
+					<ObjectStatus title="{i18n>DescPG}" text="{modelNuovaPosFin>/DESCPG}" class="textBold"/>
+					<ObjectStatus title="{i18n>DescTit}" text="{modelNuovaPosFin>/DESCTIT}" class="textBold"/>
+					<ObjectStatus title="{i18n>DescCat}" text="{modelNuovaPosFin>/DESCCAT}" class="textBold"/>
+					<ObjectStatus title="{i18n>DesCE2}" text="{modelNuovaPosFin>/DESCCE2}" class="textBold"/>
+					<ObjectStatus title="{i18n>DesCE3}" text="{modelNuovaPosFin>/DESCCE3}" class="textBold"/>
+				</l:VerticalLayout>
+			</l:HorizontalLayout>
+
+			<l:HorizontalLayout id="idBoxStruttAmmCen" class="sapUiSmallMargin" visible="false">
+				<l:VerticalLayout class="sapUiSmallMargin">
+					<ObjectStatus title="{i18n>Amministrazione}" text="{modelNuovaPosFin>/AMM}" class="textBold"/>
+					<ObjectStatus title="{i18n>CentroResp}" text="{modelNuovaPosFin>/CDR}" class="textBold"/>
+					<ObjectStatus title="{i18n>Ragioneria}" text="{modelNuovaPosFin>/RAG}" class="textBold"/>
+				</l:VerticalLayout>
+				<l:VerticalLayout class="sapUiSmallMargin">
+					<ObjectStatus title="{i18n>DescAmmin}" text="{modelNuovaPosFin>/DESCAMM}" class="textBold"/>
+					<ObjectStatus title="{i18n>DescCdr}" text="{modelNuovaPosFin>/DESCCDR}" class="textBold"/>
+					<ObjectStatus title="{i18n>DescRag}" text="{modelNuovaPosFin>/DESCRAG}" class="textBold"/>
+				</l:VerticalLayout>
+			</l:HorizontalLayout>
+		
+		</content>
+		<footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+			</OverflowToolbar>
+		</footer>
+	</Popover>
+</core:FragmentDefinition>

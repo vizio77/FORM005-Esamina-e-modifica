@@ -1,0 +1,16 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core">
+	<Dialog id="dialogIdPropostaRV" title="Proposta" icon="" showHeader="true">
+		<content>
+			<HBox justifyContent="Center">
+				<Input class="sapUiSmallMargin" width="auto" id="IdPropostaRV" maxSuggestionWidth="80%" placeholder="Inserisci {i18n>Proposta}"
+					showSuggestion="true" showValueHelp="true" change=".onChange($event, 'IdPropostaRV')"
+					valueHelpRequest="onValueHelpRequestIdPropostaRV"
+					suggestionItemSelected=".onSuggestionItemSelected($event, 'IdPropostaRV')" suggest="onSuggestIdPropostaRV"/>
+			</HBox>
+		</content>
+		<buttons>
+			<Button id="btnLockId" text="Scegli" press="lockId"/>
+			<Button id="btnCloseMatRV" text="{i18n>Annulla}" press="closeInputProposta"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

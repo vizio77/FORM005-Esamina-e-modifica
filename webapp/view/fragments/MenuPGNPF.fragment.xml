@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified">
+	<u:Menu>
+		<!--<u:MenuItem id="idMenuItemScegliPGNPF" visible="false" text="Scegli PG esistente" select="handleMenuItemPressPG"
+			icon="sap-icon://detail-view"/>-->
+		<u:MenuItem id="idMenuItemNuovoPGNPF" visible="false" text="Crea Nuovo PG" icon="sap-icon://write-new">
+			<u:Menu>
+				<u:MenuItem text="Genera N. PG automaticamente" icon="sap-icon://activate" select="handleMenuItemPressPG"/>
+				<u:MenuItem text="Inserisci N. PG manualmente" icon="sap-icon://edit" select="handleMenuItemPressPG"/>
+			</u:Menu>
+		</u:MenuItem>
+	</u:Menu>
+</core:FragmentDefinition>

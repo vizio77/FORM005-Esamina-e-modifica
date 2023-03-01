@@ -1,0 +1,48 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:c="sap.ui.core">
+	<Dialog id="idPopupSceltaValidatore" contentWidth="25%" contentHeight="45%" draggable="true" title="{i18n>scegliValidatore}" type="Standard"
+		verticalScrolling="true">
+		<ToolbarSeparator/>
+		<VBox height="20%" class="sapUiSmallMarginBeginEnd">
+			<HBox>
+				<Label labelFor="Cognome" required="false" text="{i18n>Cognome}:"/>
+				<ToolbarSpacer width="9em"></ToolbarSpacer>
+				<Label labelFor="Nome" required="false" text="{i18n>Nome}:" />
+			</HBox>
+			<HBox >
+				<Input id="Cognome" placeholder="{i18n>Cognome}" showSuggestion="false" value="{modelUserSearch>/Cognome}"></Input>
+				<ToolbarSpacer width="2em"/>
+				<Input class="sapUiSmallMarginEnd" id="Nome" placeholder="{i18n>Nome}" value="{modelUserSearch>/Nome}"></Input>
+			</HBox>
+		</VBox>
+		<OverflowToolbar >
+			<ToolbarSpacer/>
+			<Button activeIcon="" class="sapUiSmallMarginEnd" enabled="true" text="{i18n>Cerca}" press="onSearchUser" textDirection="Inherit" type="Emphasized" width=""></Button>
+		</OverflowToolbar>
+		<ToolbarSeparator/>
+		<VBox >
+			<Table id="idTableRisultatiRicercaValidatore" sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" class="sapUiSmallMarginEnd" growing="true" growingThreshold="10"
+				mode="SingleSelectLeft" items="{modelTableVal>/}">
+				<columns>
+					<Column width="auto" demandPopin="true">
+						<Text text="{i18n>Nome}"/>
+					</Column>
+					<Column width="auto" demandPopin="true">
+						<Text text="{i18n>Cognome}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem selected="false">
+						<cells >
+							<Text text="{modelTableVal>McNamefir}"/>
+							<Text text="{modelTableVal>McNamelas}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</VBox>
+		<buttons>
+			<Button type="Emphasized" press="onPressConfermaValidazione" text="{i18n>confermaInvioValidazione}"/>
+			<Button type="Emphasized" press="onCloseDialogVal" text="{i18n>Indietro}"/>
+		</buttons>
+	</Dialog>
+</c:FragmentDefinition>

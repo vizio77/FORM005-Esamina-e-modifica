@@ -1,0 +1,89 @@
+/* Enter your custom styles here */
+
+.textBold>.sapMObjStatusTitle {
+    padding-right: .25rem !important;
+    font-weight: bold !important;
+}
+
+.showTextAll .sapMITBText {
+    display: inline;
+    max-height: 3rem;
+    max-width: 4rem;
+    overflow: initial !Important;
+    text-align: left;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    white-space: normal;
+    width: auto;
+    color: #333333;
+    text-shadow: 0 0 0.125rem #ffffff;
+}
+
+.sapUxAPObjectPageLayout-Std-Desktop .sapUxAPBlockContainer {
+    padding: 0rem 0rem 0rem 0rem !important;
+}
+
+.sapUiTableGroupIcon.sapUiTableTreeIconNodeClosed::before {
+    content: "" !important;
+}
+
+.sapMText.redClass {
+color: #c14646;
+font-weight: 900;
+margin-right: 0 !important;
+}
+
+.sapUiFormEdit .sapMText {
+	display: none;
+}
+
+.sapMIBar .sapMBarChild {
+    margin-left: 0 !important;
+}
+
+.sapUiSizeCompact .sapUiCalHeadB {
+	width: 5rem !important;
+}
+
+#__label89.sapMLabel.sapUiSelectable.sapMLabelWrapped.sapMLabelRequired.sapMLabelMaxWidth.sapUiFormLabel-CTX::before, 
+#__label90.sapMLabel.sapUiSelectable.sapMLabelWrapped.sapMLabelRequired.sapMLabelMaxWidth.sapUiFormLabel-CTX::before,
+#__label91.sapMLabel.sapUiSelectable.sapMLabelWrapped.sapMLabelRequired.sapMLabelMaxWidth.sapUiFormLabel-CTX::before,
+#__label92.sapMLabel.sapUiSelectable.sapMLabelWrapped.sapMLabelRequired.sapMLabelMaxWidth.sapUiFormLabel-CTX::before,
+#__label93.sapMLabel.sapUiSelectable.sapMLabelWrapped.sapMLabelRequired.sapMLabelMaxWidth.sapUiFormLabel-CTX::before,
+#__label94.sapMLabel.sapUiSelectable.sapMLabelWrapped.sapMLabelRequired.sapMLabelMaxWidth.sapUiFormLabel-CTX::before{
+    display: none;
+}
+
+.sapMITBTab {
+    width: inherit !important;
+}
+
+.sapMITBVertical {
+    width: 7rem;
+}
+
+.sapMITH .sapMITBScrollContainer {
+	padding: 1rem 0rem;
+}
+
+.paddingLeft {
+    padding-left: 10.5px;
+}
+
+.paddingRight {
+    padding-right: 10.5px;
+}
+
+.grid {
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    align-items: center;
+}
+
+.gridRimodulazioneFilters {
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    align-items: flex-end;
+}

@@ -1,0 +1,35 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	<Dialog id="idFragCofog" title="{i18n>CreaCofog}">
+		<l:VerticalLayout width="6em" class="sapUiSmallMargin">
+			<Label text="{i18n>Liv1}:" labelFor="idCofogLiv1"/>
+			<Input id="idCofogLiv1" editable="false"/>
+		</l:VerticalLayout>
+		<l:VerticalLayout width="6em" class="sapUiSmallMargin">
+			<Label text="{i18n>Liv2}:" labelFor="idCofogLiv2"/>
+			<Input id="idCofogLiv2" editable="false"/>
+		</l:VerticalLayout>
+		<l:VerticalLayout  width="8em" class="sapUiSmallMargin">
+			<Label text="{i18n>Liv3}:" labelFor="idCofogLiv3"/>
+			<Input id="idCofogLiv3" required="true" maxSuggestionWidth="60%" placeholder="Scegli {i18n>Cofog}" showSuggestion="true" showValueHelp="true"
+				change=".onChange($event, 'idCofogLiv3')" valueHelpRequest=".onValueHelpRequest($event, 'idCofogLiv3')" suggest=".onSuggest($event, 'idCofogLiv3')"
+				suggestionItemSelected=".onSuggestionItemSelected($event, 'idCofogLiv3')"/>
+				<!--suggestionItems="{path: '/ZCA_AF_COFOG', sorter: { path: 'Codcofogl3' }, templateShareable:false}">
+				<suggestionItems>
+					<core:ListItem key="{Codconcatenato}" text="{Codcofogl3}"/>
+				</suggestionItems>
+			</Input>-->
+		</l:VerticalLayout>
+		<l:VerticalLayout width="35em" class="sapUiSmallMargin">
+			<Label text="{i18n>DescrCofog}" labelFor="idLiv1"/>
+			<Input id="idDescrCofog" editable="false"/>
+		</l:VerticalLayout>
+	
+		<OverflowToolbar>
+			<ToolbarSpacer/>
+			<!--<Button id="idSalvaBtn" type="Emphasized" text="{i18n>Salva}" press="onPressSalva"/>-->
+			<!--<Button type="Emphasized" text="{i18n>Indietro}" press="onPressIndietro"/>-->
+			<Button type="Emphasized" text="{i18n>Ok}" press="onPressOk"/>
+			<Button type="Emphasized" text="{i18n>Chiudi}" press="onPressChiudiCofog"/>
+		</OverflowToolbar>
+	</Dialog>
+</core:FragmentDefinition>

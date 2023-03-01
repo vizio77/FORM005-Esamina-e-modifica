@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified">
+	<u:Menu>
+		<u:MenuItem id="idMenuIdPropostaRV" visible="false" text="Scegli {i18n>Proposta} {i18n>esistente}" select="handleMenuItemPressIdPropostaRV"
+			icon="sap-icon://detail-view"/>
+		<u:MenuItem id="idMenuItemNuovoIdProposta" visible="false" text="Nuova {i18n>Proposta}" icon="sap-icon://write-new">
+			<u:Menu>
+				<u:MenuItem id="idMenuItemScegliIDAutomaticoRV" text="Genera {i18n>Proposta} automaticamente" select="onPressNavToCreaId"/>
+				<u:MenuItem id="idMenuItemScegliIDManualeRV" text="Inserisci {i18n>Proposta} manualmente" select="onPressNavToCreaId"/>
+			</u:Menu>
+		</u:MenuItem>
+	</u:Menu>
+</core:FragmentDefinition>

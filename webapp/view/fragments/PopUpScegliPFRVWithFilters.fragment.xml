@@ -1,0 +1,55 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:table="sap.ui.table">
+	<Dialog id="idPopupScegliPFRV" title="{i18n>PosFin}">
+		<content>
+			<f:SimpleForm id="formInserimentoPosFin" editable="true" singleContainerFullSize="false" adjustLabelSpan="false"
+				layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" emptySpanXL="1" emptySpanL="0" emptySpanM="0"
+				emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2">
+				<f:content>
+					<Label text="{i18n>Capitolo}" labelFor="Capitolo"/>
+					<Input width="80%" id="CapitoloRV" maxSuggestionWidth="80%" placeholder="Inserisci Capitolo" showSuggestion="true" showValueHelp="true"
+						change="onChange($event, 'CapitoloRV')" valueHelpRequest=".onValueHelpRequest($event, 'CapitoloRV')"
+						suggest=".onSuggest($event, 'CapitoloRV')" suggestionItemSelected=".onSuggestionItemSelected($event, 'CapitoloRV')"/>
+					<Label text="{i18n>PG}" labelFor="PG"/>
+					<Input width="80%" id="PGRV" maxSuggestionWidth="60%" placeholder="Inserisci Piano di Gestione" showSuggestion="true" showValueHelp="true"
+						change="onChange($event, 'PGRV')" valueHelpRequest=".onValueHelpRequest($event, 'PGRV')" suggest=".onSuggest($event, 'PGRV')"
+						suggestionItemSelected=".onSuggestionItemSelected($event, 'PGRV')"/>
+				</f:content>
+			</f:SimpleForm>
+			<table:Table id="TablePosFinRV" rows="{ZSS4_COBI_PRSP_ESAMOD_SRV>/PosFinRimVertSet}" selectionMode="Single" visibleRowCount="10"
+				ariaLabelledBy="title" rowSelectionChange="onChoosePF">
+				<table:toolbar>
+					<OverflowToolbar>
+						<content>
+							<Button id="filterRV" text="Filtra" press="onFilter" type="Emphasized"></Button>
+						</content>
+					</OverflowToolbar>
+				</table:toolbar>
+				<table:columns>
+					<table:Column >
+						<Label text="{i18n>PosFin}"/>
+						<table:template>
+							<Text text="{ZSS4_COBI_PRSP_ESAMOD_SRV>Fipex}" wrapping="false"/>
+						</table:template>
+					</table:Column>
+					<table:Column>
+						<Label text="{i18n>Capitolo}"/>
+						<table:template>
+							<Text text="{ZSS4_COBI_PRSP_ESAMOD_SRV>Descrbrevecap}" wrapping="true"/>
+						</table:template>
+					</table:Column>
+					<table:Column>
+						<Label text="{i18n>PG}"/>
+						<table:template>
+							<Text text="{ZSS4_COBI_PRSP_ESAMOD_SRV>Descrbrevepg}" wrapping="true"/>
+						</table:template>
+					</table:Column>
+				</table:columns>
+			</table:Table>
+		</content>
+		<OverflowToolbar>
+	<ToolbarSpacer/>
+	<Button type="Emphasized" text="{i18n>Chiudi}" press="onPressChiudiPopupScegliPFRV"/>
+</OverflowToolbar>
+	</Dialog>
+</core:FragmentDefinition>

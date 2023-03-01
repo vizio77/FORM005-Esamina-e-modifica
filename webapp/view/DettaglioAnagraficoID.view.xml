@@ -1,0 +1,126 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:m="sap.m" xmlns="sap.uxap" xmlns:l="sap.ui.layout"
+	xmlns:zcontrollink="zsap.com.r3.cobi.s4.custposfin.z_s4_zposfinlink.controls"
+	controllerName="zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.DettaglioAnagraficoID" xmlns:html="http://www.w3.org/1999/xhtml">
+	<ObjectPageLayout id="idObjectPageDettaglioAnagraficoID" upperCaseAnchorBar="false" useIconTabBar="true" headerContentPinnable="false"
+		showFooter="true">
+		<headerTitle>
+			<ObjectPageDynamicHeaderTitle>
+				<expandedHeading>
+					<m:Title id="idExpTitle" text="{i18n>title} > {i18n>Anagrafica} {i18n>Proposta}"/>
+				</expandedHeading>
+				<snappedHeading>
+					<l:VerticalLayout class="sapUiSmallMarginEnd">
+						<m:Title id="idSnapTitle" text="{i18n>title} > {i18n>Dettaglio} {i18n>Proposta}"/>
+						<m:VBox></m:VBox>
+
+						<m:HBox>
+							<m:HBox>
+								<m:ObjectStatus id="idTextIDPropostaSnap" title="{i18n>Proposta}" text="{modelDettaglioAnagraficoId>/0/IdProposta}" class="sapUiTinyMarginTop textBold"/>
+								</m:HBox>
+							<m:HBox>
+								<m:ObjectStatus id="idTextIterSnap" title="{i18n>Iter}" text="{modelDettaglioAnagraficoId>/0/Iter}" class="sapUiTinyMarginTop sapUiTinyMarginEnd textBold"/>
+							</m:HBox>
+							<m:HBox>
+								<m:ObjectStatus id="idTextNickNameSnap" title="{i18n>NickName}" text="{modelDettaglioAnagraficoId>/0/Nickname}"
+									class="sapUiTinyMarginTop sapUiTinyMarginEnd textBold"/>
+							</m:HBox>
+							<m:HBox>
+								<m:ObjectStatus id="idTextTipologiaSnap" title="{i18n>Tipologia}" text="{= ${modelDettaglioAnagraficoId>/0/Tipo} === '0' ? 'NON COMPENSATIVA' : 'COMPENSATIVA' }"
+									class="sapUiTinyMarginTop sapUiTinyMarginEnd textBold"/>
+							</m:HBox>
+							<m:HBox>
+								<m:ObjectStatus id="idTextEsitoControlloSnap" title="{i18n>EsitoControllo}"
+									text="{= ${modelDettaglioAnagraficoId>/0/EsitoControllo}.toUpperCase() === 'POSITIVO' ? 'sap-icon://message-success' : ${modelDettaglioAnagraficoId>/0/EsitoControllo}.toUpperCase() === 'WARNING' ? 'sap-icon://message-warning' : '' }"
+									state="{= ${modelDettaglioAnagraficoId>/0/EsitoControllo}.toUpperCase() === 'POSITIVO' ? 'Success' : ${modelDettaglioAnagraficoId>/0/EsitoControllo}.toUpperCase() === 'WARNING' ? 'Warning' : '' }"
+									class="sapUiTinyMarginTop sapUiTinyMarginEnd textBold"/>
+							</m:HBox>
+						</m:HBox>
+					</l:VerticalLayout>
+				</snappedHeading>
+
+				<snappedTitleOnMobile>
+					<m:Title text="{i18n>title} > {i18n>Dettaglio} {i18n>Proposta}"/>
+				</snappedTitleOnMobile>
+
+			</ObjectPageDynamicHeaderTitle>
+		</headerTitle>
+		<headerContent>
+			<l:VerticalLayout class="sapUiSmallMarginEnd">
+				<m:HBox>
+					<m:ObjectStatus id="idTextIDProposta" title="{i18n>Proposta}" text="{modelDettaglioAnagraficoId>/0/IdProposta}" class="sapUiTinyMarginTop textBold"/>
+				</m:HBox>
+			</l:VerticalLayout>
+			<l:VerticalLayout class="sapUiSmallMarginEnd">
+				<m:ObjectStatus id="idTextIter" title="{i18n>Iter}" text="{modelDettaglioAnagraficoId>/0/Iter}" class="sapUiTinyMarginTop textBold"/>
+			</l:VerticalLayout>
+			<l:VerticalLayout class="sapUiSmallMarginEnd">
+				<m:ObjectStatus id="idTextNickName" title="{i18n>NickName}" text="{modelDettaglioAnagraficoId>/0/Nickname}" class="sapUiTinyMarginTop textBold"/>
+			</l:VerticalLayout>
+			<l:VerticalLayout class="sapUiSmallMarginEnd">
+				<m:ObjectStatus id="idTextTipologia" title="{i18n>Tipologia}" text="{= ${modelDettaglioAnagraficoId>/0/Tipo} === '0' ? 'NON COMPENSATIVA' : 'COMPENSATIVA' }" class="sapUiTinyMarginTop textBold"/>
+			</l:VerticalLayout>
+			<l:VerticalLayout class="sapUiSmallMarginEnd">
+			</l:VerticalLayout>
+			<l:VerticalLayout class="sapUiSmallMarginEnd">
+				<m:ObjectStatus id="idTextEsitoControllo" title="{i18n>EsitoControllo}"
+					text="{= ${modelDettaglioAnagraficoId>/0/EsitoControllo}.toUpperCase() === 'POSITIVO' ? 'sap-icon://message-success' : ${modelDettaglioAnagraficoId>/0/EsitoControllo}.toUpperCase() === 'WARNING' ? 'sap-icon://message-warning' : '' }"
+					state="{= ${modelDettaglioAnagraficoId>/0/EsitoControllo}.toUpperCase() === 'POSITIVO' ? 'Success' : ${modelDettaglioAnagraficoId>/0/EsitoControllo}.toUpperCase() === 'WARNING' ? 'Warning' : '' }"
+					class="sapUiTinyMarginTop textBold"/>
+			</l:VerticalLayout>
+		</headerContent>
+		<sections>
+			<ObjectPageSection titleUppercase="false" title="{i18n>PosFin}" showTitle="true" titleLevel="H5">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<m:ScrollContainer class="sapUiSmallMarginTop">
+								<m:Table id="idTableDettAnagraficoID" inset="false" sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" growing="true" growingThreshold="10"
+									visible="true" items="{modelTableAnagraficaID>/}">
+									<m:headerToolbar>
+									</m:headerToolbar>
+									<m:columns>
+										<m:Column id="idColPosFinSel" width="14em" demandPopin="true" vAlign="Middle">
+											<m:Text text="{i18n>PosFin}"/>
+										</m:Column>
+										<m:Column id="idColStato" width="5em" demandPopin="true" vAlign="Middle">
+											<m:Text text="{i18n>Stato}"/>
+										</m:Column>
+					
+										<m:Column id="idColDenominazioneCapitolo" width="9em" demandPopin="true" vAlign="Middle">
+											<m:Text text="{i18n>DenominazioneCapitolo}"/>
+										</m:Column>
+										<m:Column id="idColDenominazionePG" width="9em" demandPopin="true" vAlign="Middle" >
+											<m:Text text="{i18n>DenominazionePG}"/>
+										</m:Column>
+									</m:columns>
+									<m:items>
+										<m:ColumnListItem id="idColTemplate" vAlign="Middle">
+											<m:cells vAlign="Middle">
+												<zcontrollink:LinkPosizioneFinanziaria id="idLinkDettAnagraficoID" tooltip="{i18n>PosFin}"  text="{modelTableAnagraficaID>Fipex}"
+													class="sapUiTinyMarginEnd" anno="{modelDettaglioAnagraficoId>/0/AnnoFipex}" fikrs="{modelDettaglioAnagraficoId>/0/Fikrs}" fase="{modelDettaglioAnagraficoId>/0/Fase}"
+													reale="{modelDettaglioAnagraficoId>/0/Reale}" versione="{modelDettaglioAnagraficoId>/0/Versione}"
+													fipex="{ path: 'modelDettaglioAnagraficoId>/0/Fipex', formatter: '.formatter.formatterPosFin'}"
+													datbis="{ path: 'modelDettaglioAnagraficoId>/0/Datbis', formatter: '.formatter.formatterDatbis'}"/>
+												<m:Text text="{= ${modelTableAnagraficaID>Statstatus} === '3' ? 'DISATTIVO' : 'ATTIVO'}" tooltip="{i18n>Stato}"/>
+												<m:Text text="{modelTableAnagraficaID>Descrizionecapitolo}" tooltip="{i18n>DenominazioneCapitolo}"/>
+												<m:Text text="{modelTableAnagraficaID>Descrizionepg}" tooltip="{i18n>DenominazionePG}"/>
+											</m:cells>
+										</m:ColumnListItem>
+									</m:items>
+								</m:Table>
+							</m:ScrollContainer>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+		<footer>
+			<m:OverflowToolbar>
+				<!--<m:Text id="AppVersion" class="sapUiTinyMarginBegin" />-->
+				<m:ToolbarSpacer/>
+				<m:Button type="Emphasized" text="{i18n>Indietro}" press="onNavBack"/>
+				<m:Button type="Emphasized" text="{i18n>Home}" press="onPressNavToHome"/>
+			</m:OverflowToolbar>
+		</footer>
+	</ObjectPageLayout>
+</mvc:View>

@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core">
+	<Dialog id="NPF_dialogCapitolo" title="Scegli Capitolo" icon="" showHeader="true">
+		<content>
+			<!--	<Label class="sapUiTinyMarginTop sapUiTinyMarginBeginEnd"  id="IdPropostaLabel" text="Id proposta" labelFor="IdProposta" design="Bold"/>
+		-->
+			<HBox justifyContent="Center">
+				<Input class="sapUiSmallMargin" maxLength="4" width="auto" id="idCapitoloNPFPoP" maxSuggestionWidth="80%" placeholder="Inserisci Capitolo"
+					showSuggestion="true" showValueHelp="true" change=".onChange($event, 'idCapitoloNPFPoP')"
+					valueHelpRequest=".onValueHelpRequest($event, 'idCapitoloNPFPoP')"
+					suggestionItemSelected=".onSuggestionItemSelected($event, 'idCapitoloNPFPoP')" suggest=".onSuggest($event, 'idCapitoloNPFPoP')"/>
+		
+			</HBox>
+		</content>
+		<buttons>
+			<!--<Button id="btnScegliNumCap" text="Scegli" press="onPressLockNumCap"/>-->
+			<Button id="btnlockNumCap" text="" press="onPressLockNumCap"/>
+			<Button id="btnCloseScegliCapitoloNPF" text="Annulla" press="onPressCloseScegliCapitoloNPF"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

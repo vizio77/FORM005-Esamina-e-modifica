@@ -1,0 +1,27 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	controllerName="zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.Home" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page id="idHomePage" title="{i18n>title}" class="sapUiNoContentPadding" showFooter="true">
+		<content>
+			<HBox justifyContent="Start" alignItems="Center" class="sapUiMediumMarginBegin">
+				<GenericTile header="{i18n>tile1Title}" press="onPressTile1"
+					class="centerTitle sapUiTinyMarginBegin sapUiMediumMarginTop sapUiMediumPadding">
+					<TileContent>
+						<ImageContent src="sap-icon://form"/>
+					</TileContent>
+				</GenericTile>
+				<GenericTile header="{i18n>tile2Title}" press="onPressTile2"
+					class="centerTitle sapUiTinyMarginBegin sapUiMediumMarginTop sapUiMediumPadding">
+					<TileContent>
+						<ImageContent src="sap-icon://form"/>
+					</TileContent>
+				</GenericTile>
+				<GenericTile header="{i18n>tile3Title}" press="onPressTile3"
+					class="centerTitle sapUiTinyMarginBegin sapUiMediumMarginTop sapUiMediumPadding">
+					<TileContent>
+						<ImageContent src="sap-icon://strikethrough"/>
+					</TileContent>
+				</GenericTile>
+			</HBox>
+		</content>
+	</Page>
+</mvc:View>

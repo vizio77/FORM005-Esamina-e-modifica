@@ -1,0 +1,144 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:fb="sap.ui.comp.filterbar" xmlns:zcontrol="zsap.com.r3.cobi.s4.custposfin.z_s4_zposfin.controls" xmlns:zcontrollink="zsap.com.r3.cobi.s4.custposfin.z_s4_zposfinlink.controls" 
+	xmlns:f="sap.ui.layout.form" xmlns:uxap="sap.uxap">
+	<Dialog id="idDialogGestisciIDPosFin" title="{i18n>cercaPosFin}" contentWidth="80%" contentHeight="60%">
+		<content>
+			<fb:FilterBar id="idfilterBarFragAggiungiPFGestisciId" showClearOnFB="true" clear="onClear" reset="onReset" search="onSearch" showGoOnFB="true"
+				showFilterConfiguration="false" useToolbar="false">
+				<fb:filterGroupItems>
+					<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1" groupTitle="{i18n>FiltriBase}" name="CodiceAmmin" label="{i18n>Amministrazione}"
+						labelTooltip="">
+						<fb:control>
+							<!--<Input width="80%" id="Amministrazione" maxSuggestionWidth="60%" placeholder="Inserisci amministrazione" showSuggestion="true"-->
+							<!--	showValueHelp="true" change=".onChange($event, 'Amministrazione')" valueHelpRequest=".onValueHelpRequest($event, 'Amministrazione')" suggest=".onSuggest($event, 'Amministrazione')"-->
+							<!--	suggestionItemSelected=".onSuggestionItemSelected($event, 'Amministrazione')"-->
+							<!--	editable = "false" value="A020"-->
+							<!--	/>-->
+							<Input id="Amministrazione" editable = "false" value="A020"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1" groupTitle="{i18n>FiltriBase}" name="CodiceRagioneria" label="{i18n>Ragioneria}"
+						labelTooltip="">
+						<fb:control>
+							<Input width="80%" id="Ragioneria" maxSuggestionWidth="80%" placeholder="Inserisci Ragioneria" showSuggestion="true" showValueHelp="true"
+								change=".onChange($event, 'Ragioneria')" valueHelpRequest=".onValueHelpRequest($event, 'Ragioneria')" suggest=".onSuggest($event, 'Ragioneria')"
+								suggestionItemSelected=".onSuggestionItemSelected($event, 'Ragioneria')"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1" groupTitle="{i18n>FiltriBase}" name="Fipex" label="{i18n>PosFin}" labelTooltip="">
+						<fb:control>
+							<zcontrol:InputPosizioneFinanziaria 
+							id="filterBarPosFin" 
+							anno="{gestTipologicheModel>/ANNO}" 
+							fase="{gestTipologicheModel>/FASE}"
+							reale="{gestTipologicheModel>/REALE_RIF}" 
+							maxSuggestionWidth="60%"
+							spesa="X"
+							change="onChangeT($event, 'posFin')"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					
+					<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1" groupTitle="{i18n>FiltriBase}" name="CodiceCdr" label="{i18n>CdR}" labelTooltip="">
+						<fb:control>
+							<Input width="80%" id="CentroResp" maxSuggestionWidth="80%" placeholder="Inserisci CdR" showSuggestion="true" showValueHelp="true"
+								change=".onChange($event, 'CentroResp')" valueHelpRequest=".onValueHelpRequest($event, 'CentroResp')" suggest=".onSuggest($event, 'CentroResp')"
+								suggestionItemSelected=".onSuggestionItemSelected($event, 'CentroResp')"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					
+					<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1" groupTitle="{i18n>FiltriBase}" name="CodiceMissione" label="{i18n>Missione}" labelTooltip="">
+						<fb:control>
+							<Input width="80%" id="Missione" maxSuggestionWidth="80%" placeholder="Inserisci Missione" showSuggestion="true" showValueHelp="true"
+								change=".onChange($event, 'Missione')" valueHelpRequest=".onValueHelpRequest($event, 'Missione')" suggest=".onSuggest($event, 'Missione')"
+								suggestionItemSelected=".onSuggestionItemSelected($event, 'Missione')"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1" groupTitle="{i18n>FiltriBase}" name="CodiceProgramma" label="{i18n>Programma}"
+						labelTooltip="">
+						<fb:control>
+							<Input width="80%" id="Programma" maxSuggestionWidth="80%" placeholder="Inserisci Programma" showSuggestion="true" showValueHelp="true"
+								change=".onChange($event, 'Programma')" valueHelpRequest=".onValueHelpRequest($event, 'Programma')" suggest=".onSuggest($event, 'Programma')"
+								suggestionItemSelected=".onSuggestionItemSelected($event, 'Programma')"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1" groupTitle="{i18n>FiltriBase}" name="CodiceAzione" label="{i18n>Azione}" labelTooltip="">
+						<fb:control>
+							<Input width="80%" id="Azione" maxSuggestionWidth="90%" placeholder="Inserisci Azione" showSuggestion="true" showValueHelp="true"
+								change=".onChange($event, 'Azione')" valueHelpRequest=".onValueHelpRequest($event, 'Azione')" suggest=".onSuggest($event, 'Azione')"
+								suggestionItemSelected=".onSuggestionItemSelected($event, 'Azione')"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1" groupTitle="{i18n>FiltriBase}" name="CodiceCapitolo" label="{i18n>Capitolo}" labelTooltip="">
+						<fb:control>
+							<Input width="80%" id="Capitolo" maxSuggestionWidth="80%" placeholder="Inserisci Capitolo" showSuggestion="true" showValueHelp="true"
+								change="onChange($event, 'Capitolo')" valueHelpRequest=".onValueHelpRequest($event, 'Capitolo')" suggest=".onSuggest($event, 'Capitolo')"
+								suggestionItemSelected=".onSuggestionItemSelected($event, 'Capitolo')"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1" groupTitle="{i18n>FiltriBase}" name="CodicePg" label="{i18n>PG}" labelTooltip="">
+						<fb:control>
+							<Input width="80%" id="PG" maxSuggestionWidth="60%" placeholder="Inserisci Piano di Gestione" showSuggestion="true" showValueHelp="true"
+								change="onChange($event, 'PG')" valueHelpRequest=".onValueHelpRequest($event, 'PG')" suggest=".onSuggest($event, 'PG')" 
+								suggestionItemSelected=".onSuggestionItemSelected($event, 'PG')"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1" groupTitle="{i18n>FiltriBase}" name="CodiceTitolo" label="{i18n>Titolo}" labelTooltip="">
+						<fb:control>
+							<Input width="80%" id="Titolo" maxSuggestionWidth="80%" placeholder="Inserisci Titolo" showSuggestion="true" showValueHelp="true"
+								change="onChange($event, 'Titolo')" valueHelpRequest=".onValueHelpRequest($event, 'Titolo')" suggest=".onSuggest($event, 'Titolo')"
+								suggestionItemSelected=".onSuggestionItemSelected($event, 'Titolo')"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1" groupTitle="{i18n>FiltriBase}" name="CodiceCategoria" label="{i18n>Categoria}"
+						labelTooltip="">
+						<fb:control>
+							<Input width="80%" id="Categoria" maxSuggestionWidth="80%" placeholder="Inserisci Categoria" showSuggestion="true" showValueHelp="true"
+								change="onChange($event, 'Categoria')" valueHelpRequest=".onValueHelpRequest($event, 'Categoria')" suggest=".onSuggest($event, 'Categoria')"
+								suggestionItemSelected=".onSuggestionItemSelected($event, 'Categoria')"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1" groupTitle="{i18n>FiltriBase}" name="CodiceClaeco2" label="{i18n>CE2}" labelTooltip="">
+						<fb:control>
+							<Input width="80%" id="CE2" maxSuggestionWidth="80%" placeholder="Inserisci CE2" showSuggestion="true" showValueHelp="true"
+								change="onChange($event, 'CE2')" valueHelpRequest=".onValueHelpRequest($event, 'CE2')" suggest=".onSuggest($event, 'CE2')" 
+								suggestionItemSelected=".onSuggestionItemSelected($event, 'CE2')"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1" groupTitle="{i18n>FiltriBase}" name="CodiceClaeco3" label="{i18n>CE3}" labelTooltip="">
+						<fb:control>
+							<Input width="80%" id="CE3" maxSuggestionWidth="80%" placeholder="Inserisci CE3" showSuggestion="true" showValueHelp="true"
+								change="onChange($event, 'CE3')" valueHelpRequest=".onValueHelpRequest($event, 'CE3')" suggest=".onSuggest($event, 'CE3')" 
+								suggestionItemSelected=".onSuggestionItemSelected($event, 'CE3')"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+				</fb:filterGroupItems>
+			</fb:FilterBar>
+			<!--Table-->
+			<Table id="idTableRisultatiRicercaPosFin" inset="false" sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" growing="true"
+				growingThreshold="10" visible="true" mode="MultiSelect">
+				<headerToolbar>
+					<OverflowToolbar>
+						<content>
+							<Title level="H2"/>
+							<CheckBox text="Seleziona/Deseleziona tutto" selected="false" select="onParentClicked" visible="false"/>
+							<ToolbarSpacer/>
+						</content>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column id="idcolPosFin" width="auto" demandPopin="true" vAlign="Middle" hAlign="Center">
+						<Text text="{i18n>PosFin}"/>
+					</Column>
+				</columns>
+				<items templateShareable="false">
+				
+				</items>
+			</Table>
+		</content>
+		<buttons>
+			<Button press="onCloseGestisciIDPosFin" text="{i18n>Chiudi}"></Button>
+			<!--<Button press="onClearGestisciIDPosFin" text="{i18n>Resetta}"></Button>-->
+			<Button press="onPressSelezionaPosFin" text="{i18n>Seleziona}"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

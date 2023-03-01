@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified">
+	<u:Menu>
+		<u:MenuItem id="idMenuItemScegliCapitoloNPF" visible="false" text="Scegli Capitolo esistente" select="handleMenuItemPressCapitolo"
+			icon="sap-icon://detail-view"/>
+		<u:MenuItem id="idMenuItemNuovoCapitoloNPF" visible="false" text="Crea Nuovo Capitolo" icon="sap-icon://write-new">
+			<u:Menu>
+				<u:MenuItem text="Genera N. Capitolo automaticamente" icon="sap-icon://activate" select="handleMenuItemPressCapitolo"/>
+				<u:MenuItem text="Inserisci N. Capitolo manualmente" icon="sap-icon://edit" select="handleMenuItemPressCapitolo"/>
+			</u:Menu>
+		</u:MenuItem>
+	</u:Menu>
+</core:FragmentDefinition>

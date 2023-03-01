@@ -1,0 +1,8 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	controllerName="zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.MessagePage" xmlns:html="http://www.w3.org/1999/xhtml">
+	<MessagePage id="messagePageId" showHeader="false" text="{i18n>pageUnderConstr}" icon="sap-icon://wrench">
+		<buttons>
+			<Button type="Emphasized" text="{i18n>Indietro}" press="_onNavBack"/>
+		</buttons>
+	</MessagePage>
+</mvc:View>

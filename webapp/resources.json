@@ -1,0 +1,226 @@
+{
+    "resources": [
+        {
+            "name": "manifest.json"
+        },
+        {
+            "name": "resources.json",
+            "merged": true
+        },
+        {
+            "name": "Component-preload.js",
+            "merged": true
+        },
+        {
+            "name": "css/style.css"
+        },
+        {
+            "name": "index.html"
+        },
+        {
+            "name": "model/models.js"
+        },
+        {
+            "name": "util/formatter.js"
+        },
+        {
+            "name": "Component.js"
+        },
+        {
+            "name": "localService/ZSS4_CO_GEST_TIPOLOGICHE_SRV/metadata.xml"
+        },
+        {
+            "name": "localService/metadata.xml"
+        },
+        {
+            "name": "localService/ZSS4_COBI_INVIO_VALID_SPESE_SRV/metadata.xml"
+        },
+        {
+            "name": ".user.project.json"
+        },
+        {
+            "name": "neo-app.json"
+        },
+        {
+            "name": ".project.json"
+        },
+        {
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "controller/App.controller.js"
+        },
+        {
+            "name": "controller/PosFin-IdProposta.controller.js"
+        },
+        {
+            "name": "controller/NuovaPosizioneFinanziaria.controller.js"
+        },
+        {
+            "name": "controller/PosizioneFinanziaria.controller.js"
+        },
+        {
+            "name": "controller/Home.controller.js"
+        },
+        {
+            "name": "controller/GestisciID.controller.js"
+        },
+        {
+            "name": "controller/CreaRimodulazioneVerticale.controller.js"
+        },
+        {
+            "name": "controller/AssociaProposta.controller.js"
+        },
+        {
+            "name": "controller/DettaglioAnagraficoID.controller.js"
+        },
+        {
+            "name": "controller/EsitoControlli.controller.js"
+        },
+        {
+            "name": "controller/MessagePage.controller.js"
+        },
+        {
+            "name": "controller/DettaglioContabile.controller.js"
+        },
+        {
+            "name": "controller/TabGestisci.controller.js"
+        },
+        {
+            "name": "controller/IdProposta.controller.js"
+        },
+        {
+            "name": "controller/BaseController.js"
+        },
+        {
+            "name": "view/PosizioneFinanziaria.view.xml"
+        },
+        {
+            "name": "view/AssociaProposta.view.xml"
+        },
+        {
+            "name": "view/CreaRimodulazioneVerticale.view.xml"
+        },
+        {
+            "name": "view/fragments/PopUpAggiungiCofog.fragment.xml"
+        },
+        {
+            "name": "view/fragments/PopUpScegliPFRVWithFilters.fragment.xml"
+        },
+        {
+            "name": "view/fragments/PopupSceltaValidatore.fragment.xml"
+        },
+        {
+            "name": "view/fragments/MenuPGNPF.fragment.xml"
+        },
+        {
+            "name": "view/fragments/GestisciIDPosFin.fragment.xml"
+        },
+        {
+            "name": "view/fragments/PopupStrAmmTabGestisci.fragment.xml"
+        },
+        {
+            "name": "view/fragments/GestisciID_idPropostaMenu.fragment.xml"
+        },
+        {
+            "name": "view/fragments/PopOverInfo.fragment.xml"
+        },
+        {
+            "name": "view/fragments/GestisciID_inputIDProposta.fragment.xml"
+        },
+        {
+            "name": "view/fragments/MenuIDPropostaNPF.fragment.xml"
+        },
+        {
+            "name": "view/fragments/Information.fragment.xml"
+        },
+        {
+            "name": "view/fragments/PopUpScegliCapitoloNPF.fragment.xml"
+        },
+        {
+            "name": "view/fragments/idPropostaInputRV.fragment.xml"
+        },
+        {
+            "name": "view/fragments/MenuIDPropostaRV.fragment.xml"
+        },
+        {
+            "name": "view/fragments/PosizioneFinanziaria.fragment.xml"
+        },
+        {
+            "name": "view/fragments/AssociaAutorizzazionePopOver.fragment.xml"
+        },
+        {
+            "name": "view/fragments/PopOverHeaderNuovaPosFinLinks.fragment.xml"
+        },
+        {
+            "name": "view/fragments/MenuCapitoloNPF.fragment.xml"
+        },
+        {
+            "name": "view/fragments/PopUpScegliIDNPF.fragment.xml"
+        },
+        {
+            "name": "view/fragments/PopUpScegliPGNPF.fragment.xml"
+        },
+        {
+            "name": "view/fragments/InfoAutPopOver.fragment.xml"
+        },
+        {
+            "name": "view/fragments/PopUpScegliPFPageRV.fragment.xml"
+        },
+        {
+            "name": "view/fragments/PopupShowReiscrizioni.fragment.xml"
+        },
+        {
+            "name": "view/fragments/PopUpAggiungiFOFP.fragment.xml"
+        },
+        {
+            "name": "view/fragments/PopupAttributiProposta.fragment.xml"
+        },
+        {
+            "name": "view/NuovaPosizioneFinanziaria.view.xml"
+        },
+        {
+            "name": "view/DettaglioAnagraficoID.view.xml"
+        },
+        {
+            "name": "view/PosFin-IdProposta.view.xml"
+        },
+        {
+            "name": "view/DettaglioContabile.view.xml"
+        },
+        {
+            "name": "view/MessagePage.view.xml"
+        },
+        {
+            "name": "view/EsitoControlli.view.xml"
+        },
+        {
+            "name": "view/IdProposta.view.xml"
+        },
+        {
+            "name": "view/Home.view.xml"
+        },
+        {
+            "name": "view/GestisciID.view.xml"
+        },
+        {
+            "name": "view/TabGestisci.view.xml"
+        },
+        {
+            "name": "view/App.view.xml"
+        },
+        {
+            "name": "data/infoCompentenza.json"
+        },
+        {
+            "name": "data/infoDettaglioContID.json"
+        },
+        {
+            "name": "data/infoCassa.json"
+        },
+        {
+            "name": "data/infoDettaglioContPF.json"
+        }
+    ]
+}

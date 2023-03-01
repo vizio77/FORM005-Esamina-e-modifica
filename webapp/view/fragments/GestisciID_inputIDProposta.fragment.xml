@@ -1,0 +1,16 @@
+<core:FragmentDefinition id="addMaterialFragment" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core">
+	<Dialog id="idFragment_GestisciID_InputIdProposta" title="{i18n>Proposta}" icon="" showHeader="true">
+		<content>
+		<!--	<Label class="sapUiTinyMarginTop sapUiTinyMarginBeginEnd"  id="IdPropostaLabel" text="Id proposta" labelFor="IdProposta" design="Bold"/>
+		-->
+		<HBox justifyContent="Center">
+			<Input class="sapUiSmallMargin" width="auto" id="IdProposta" change="onChangeInputIdPopUp" type="Number" maxLength="10" valueHelpRequest=".onValueHelpRequest($event, 'IdProposta')"/>
+		</HBox>
+		</content>
+		<buttons>
+			<Button id="btnlockId" text="{i18n>Scegli}" press="lockId"/>
+			<Button id="btnCloseMat" text="{i18n>Annulla}" press="close"/>
+		</buttons>
+	
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<ResponsivePopover id="AssociaAutPopover" title="{i18n>AssociaAutorizzazione}" class="sapUiContentPadding" beforeOpen="onBeforeOpen"
+		placement="PreferredLeftOrFlip" modal="true">
+		<beginButton>
+			<Button text="{i18n>Ok}" press="onPressOkAssAut"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>Chiudi}" press="onPressChiudiAssAut"/>
+		</endButton>
+		<content>
+			<VBox>
+				<Label design="Bold" text="Autorizzazione:" labelFor="idAutorizz" class="sapUiTinyMarginTopBottom"/>
+				<Input id="idAutorizzPop" width="30em" class="sapUiTinyMarginBegin" maxSuggestionWidth="40%" placeholder="Inserisci {i18n>Autorizzazione}"
+					showSuggestion="true" showValueHelp="true" change=".onChange($event, 'idAutorizzPop')"
+					valueHelpRequest=".onValueHelpRequest($event, 'idAutorizzPop')" suggest=".onSuggest($event, 'idAutorizzPop')"
+					suggestionItemSelected=".onSuggestionItemSelected($event, 'idAutorizzPop')" />
+			</VBox>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

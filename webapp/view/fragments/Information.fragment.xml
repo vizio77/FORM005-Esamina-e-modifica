@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:richtexteditor="sap.ui.richtexteditor"
+	xmlns:f="sap.ui.layout.form">
+	<ResponsivePopover id="InfoPopover" resizable="true" title="{i18n>Info}" class="sapUiContentPadding" placement="Bottom" modal="true"
+		contentWidth="80%">
+		<endButton>
+			<Button text="{i18n>Chiudi}" press="onPressChiudiInfoPopOver"/>
+		</endButton>
+		<content>
+				<FormattedText htmlText="{infoModel>/HTML}"/>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

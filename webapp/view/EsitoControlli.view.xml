@@ -1,0 +1,115 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f"
+	controllerName="zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.EsitoControlli" xmlns:html="http://www.w3.org/1999/xhtml">
+	<f:DynamicPage id="dynamicPageIdPosFin" headerExpanded="true" showFooter="true">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>title} > {i18n>Proposta} > {i18n>EsitoControlli}"/>
+				</f:heading>
+				<!--<f:expandedContent >
+					<Label text=""/>
+				</f:expandedContent>-->
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader pinnable="false">
+				<f:content></f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<ScrollContainer height="100%" width="100%" >
+				<Table id="idTableEsitoControlli" sticky="ColumnHeaders" items="" contextualWidth="Inherit" >
+				<!--items="{
+			path: '/ProductCollection',
+			sorter: {
+					path: 'Name'
+				}
+			}"-->
+		<!--<headerToolbar>
+			<OverflowToolbar>
+				<content>
+					<Title text="" level="H2"/>
+					<ToolbarSpacer />
+					<ToggleButton id="toggleInfoToolbar"
+						text="Hide/Show InfoToolbar"
+						press="onToggleInfoToolbar" />
+				</content>
+			</OverflowToolbar>
+		</headerToolbar>-->
+		<!--<infoToolbar>
+			<OverflowToolbar>
+				<Label text=""/>
+			</OverflowToolbar>
+		</infoToolbar>-->
+		<columns>
+			<Column width="6em">
+				<Text text="{i18n>Proposta}" />
+			</Column>
+			<Column width="15em" >
+				<Text text="{i18n>EsitoControllo} {i18n>Amministrazione}" wrapping="true" />
+			</Column>
+			<Column width="8em">
+				<Text text="{i18n>Tipo}" />
+			</Column>
+			<Column width="15em">
+				<Text text="{i18n>NickName}" wrapping="true" />
+			</Column>
+			<Column width="10em">
+				<Text text="{i18n>Iter}" />
+			</Column>
+			<Column width="15em">
+				<Text text="{i18n>CompNote}" wrapping="true" />
+			</Column>
+			<Column width="5em">
+				<Text text="{i18n>Cdr}" />
+			</Column>
+			<Column width="15em">
+				<Text text="{i18n>PosFin}" />
+			</Column>
+			<Column width="15em">
+				<Text text="{i18n>Autorizzazione}" wrapping="true" />
+			</Column>
+			<Column width="12em">
+				<Text text="{i18n>Utente}" />
+			</Column>
+			<Column width="12em">
+				<Text text="{i18n>Data}" />
+			</Column>
+			<Column width="12em">
+				<Text text="{i18n>Ora}" />
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{SupplierName}" />
+					<Text text="{SupplierName}" />
+					<Text text="{SupplierName}" />
+					<Text text="{SupplierName}" />
+					<Text text="{SupplierName}" />
+					<Text text="{SupplierName}" />
+					<Text text="{SupplierName}" />
+					<Text text="{SupplierName}" />
+					<Text text="{SupplierName}" />
+					<Text text="{SupplierName}" />
+					<Text text="{SupplierName}" />
+					<Text text="{SupplierName}" />
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+			</ScrollContainer>
+			
+		</f:content>
+		<f:footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<!--<Button type="Emphasized" text="{i18n>CreaID}" press="onPressCreaId"/>-->
+				<!--<Button type="Emphasized" text="{i18n>GestisciID}" press="onPressGestisciID"/>-->
+				<!--<Button type="Emphasized" text="{i18n>NuovaPosFin}" press="onPressNavToNuovaPosizione"/>-->
+				<Button type="Emphasized" text="{i18n>Indietro}" press="onNavBack"/>
+				<Button type="Emphasized" text="{i18n>Home}" press="onPressNavToHome"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>

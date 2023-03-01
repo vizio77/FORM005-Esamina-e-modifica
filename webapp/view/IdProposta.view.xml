@@ -1,0 +1,1062 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f"
+	xmlns:t="sap.ui.table"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:zcontrollink="zsap.com.r3.cobi.s4.custposfin.z_s4_zposfinlink.controls"
+	controllerName="zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.IdProposta"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<f:DynamicPage id="dynamicPageIdIdProposta" headerExpanded="true" showFooter="true">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>title} > {i18n>Proposta}" />
+				</f:heading>
+				<!--<f:expandedContent
+				>
+					<Label text=""/>
+				</f:expandedContent>-->
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader pinnable="false">
+				<f:content>
+					<fb:FilterBar id="filterBar2" showClearOnFB="true" clear="onClear"
+						reset="onReset" search="onSearch" showGoOnFB="true"
+						showFilterConfiguration="true" useToolbar="false">
+						<fb:filterGroupItems>
+							<fb:FilterGroupItem visibleInFilterBar="true" enabled="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="CodiceAmmin"
+								label="{i18n>Amministrazione}" labelTooltip="">
+								<fb:control>
+									<Input width="80%" id="AmmFA" maxSuggestionWidth="60%"
+										placeholder="Inserisci amministrazione"
+										value="A020"
+										editable="false"
+										showSuggestion="true" showValueHelp="true"
+										change=".onChange($event, 'AmmFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'AmmFA')"
+										suggest=".onSuggest($event, 'AmmFA')"
+										suggestionItemSelected=".onSuggestionItemSelectedAmmin" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1"
+								groupTitle="{i18n>Filtri} {i18n>Base}" name="IdProposta"
+								label="{i18n>Proposta}"
+								labelTooltip="">
+								<fb:control>
+									<Input id="IDPropostaFA" maxSuggestionWidth="80%"
+										placeholder="Inserisci {i18n>Proposta}"
+										showSuggestion="true" showValueHelp="true"
+										change="onChange($event, 'IDPropostaFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'IDPropostaFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'IDPropostaFA')"
+										suggest=".onSuggest($event, 'IDPropostaFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1"
+								groupTitle="{i18n>Filtri} {i18n>Base}" name="Iter"
+								label="{i18n>Iter}" labelTooltip="">
+								<fb:control>
+									<ComboBox id="Iter" enabled="true" change="onChange"
+										placeholder="Inserisci Iter"
+										items="{ path: '/ZCA_AF_ITERPROSet', sorter: { path: 'Iter' }, templateShareable:false }">
+										<items>
+											<core:Item text="{DescIter}" key="{Iter}" />
+										</items>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1"
+								groupTitle="{i18n>FiltriBase}" name="Nickname"
+								label="{i18n>NickName}" labelTooltip="">
+								<fb:control>
+									<Input id="NickNameFA" maxSuggestionWidth="80%"
+										placeholder="Inserisci NickName Proposta"
+										showSuggestion="true" showValueHelp="true"
+										change=".onChange($event, 'NickNameFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'NickNameFA')"
+										suggest=".onSuggest($event, 'NickNameFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1"
+								groupTitle="{i18n>Filtri} {i18n>Base}" name="TipologiaProposta"
+								label="{i18n>Tipo}" labelTooltip="">
+								<fb:control>
+									<ComboBox id="TipoFA" enabled="true" change="onChange"
+										placeholder="Inserisci Tipologia">
+										<items>
+											<core:Item key="1" text="{i18n>Comp}" />
+											<core:Item key="0" text="{i18n>NoComp}" />
+										</items>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<!--<fb:FilterGroupItem
+							visibleInFilterBar="true" groupName="G1" groupTitle="{i18n>Filtri}
+							{i18n>Base}" name="F" label="{i18n>PropostaParziale}">
+								<fb:control>
+									<CheckBox text="" id="PropostaParzialeFA" textAlign="Begin"/>
+								</fb:control>
+							</fb:FilterGroupItem>-->
+							<fb:FilterGroupItem visibleInFilterBar="true" groupName="G1"
+								groupTitle="{i18n>Filtri} {i18n>Base}" name="EsitoControlli"
+								label="{i18n>AmmProp}"
+								labelTooltip="">
+								<fb:control>
+									<ComboBox id="idEsitoControllo" enabled="true"
+										change="onChangeEsitoControllo"
+										placeholder="Inserisci {i18n>AmmProp}">
+										<items>
+											<core:Item key="{i18n>Positivo}" text="{i18n>Positivo}" />
+											<core:Item key="{i18n>Bloccante}"
+												text="{i18n>Bloccante}" />
+											<core:Item key="{i18n>Warning}" text="{i18n>Warning}" />
+										</items>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<!--***************FILTRI
+							AVANZATI G2***************************-->
+							
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="CodiceCdr" label="{i18n>CdR}"
+								labelTooltip="">
+								<fb:control>
+									<Input width="80%" id="CentroRespFA" maxSuggestionWidth="80%"
+										placeholder="Inserisci CdR" showSuggestion="true"
+										showValueHelp="true"
+										change=".onChange($event, 'CentroRespFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'CentroRespFA')"
+										suggest=".onSuggest($event, 'CentroRespFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'CentroRespFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="CodiceRagioneria" label="{i18n>Ragioneria}"
+								labelTooltip="">
+								<fb:control>
+									<Input width="80%" id="RagioneriaFA" maxSuggestionWidth="80%"
+										placeholder="Inserisci Ragioneria" showSuggestion="true"
+										showValueHelp="true"
+										change=".onChange($event, 'RagioneriaFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'RagioneriaFA')"
+										suggest=".onSuggest($event, 'RagioneriaFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'RagioneriaFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="CodiceMissione" label="{i18n>Missione}"
+								labelTooltip="">
+								<fb:control>
+									<Input width="80%" id="MissioneFA" maxSuggestionWidth="80%"
+										placeholder="Inserisci Missione" showSuggestion="true"
+										showValueHelp="true"
+										change=".onChange($event, 'MissioneFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'MissioneFA')"
+										suggest=".onSuggest($event, 'MissioneFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'MissioneFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="CodiceProgramma" label="{i18n>Programma}"
+								labelTooltip="">
+								<fb:control>
+									<Input width="80%" id="ProgrammaFA" maxSuggestionWidth="80%"
+										placeholder="Inserisci Programma" showSuggestion="true"
+										showValueHelp="true"
+										change=".onChange($event, 'ProgrammaFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'ProgrammaFA')"
+										suggest=".onSuggest($event, 'ProgrammaFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'ProgrammaFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="CodiceAzione" label="{i18n>Azione}"
+								labelTooltip="">
+								<fb:control>
+									<Input width="80%" id="AzioneFA" maxSuggestionWidth="90%"
+										placeholder="Inserisci Azione" showSuggestion="true"
+										showValueHelp="true"
+										change=".onChange($event, 'AzioneFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'AzioneFA')"
+										suggest=".onSuggest($event, 'AzioneFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'AzioneFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="CodiceCapitolo" label="{i18n>Capitolo}"
+								labelTooltip="">
+								<fb:control>
+									<Input width="80%" id="CapitoloFA" maxSuggestionWidth="80%"
+										placeholder="Inserisci Capitolo" showSuggestion="true"
+										showValueHelp="true"
+										change="onChange($event, 'CapitoloFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'CapitoloFA')"
+										suggest=".onSuggest($event, 'CapitoloFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'CapitoloFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>FiltriAvanzatiPosFin}" name="CodicePg"
+								label="{i18n>PG}"
+								labelTooltip="">
+								<fb:control>
+									<Input width="80%" id="PGFA" maxSuggestionWidth="60%"
+										placeholder="Inserisci Piano di Gestione"
+										showSuggestion="true" showValueHelp="true"
+										change="onChange($event, 'PGFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'PGFA')"
+										suggest=".onSuggest($event, 'PGFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'PGFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="CodiceTitolo" label="{i18n>Titolo}"
+								labelTooltip="">
+								<fb:control>
+									<Input id="TitoloFA" maxSuggestionWidth="80%"
+										placeholder="Inserisci Titolo" showSuggestion="true"
+										showValueHelp="true"
+										change="onChange($event, 'TitoloFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'TitoloFA')"
+										suggest=".onSuggestTitolo"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'TitoloFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="CodiceCategoria" label="{i18n>Categoria}"
+								labelTooltip="">
+								<fb:control>
+									<Input width="80%" id="CategoriaFA" maxSuggestionWidth="80%"
+										placeholder="Inserisci Categoria" showSuggestion="true"
+										showValueHelp="true"
+										change="onChange($event, 'CategoriaFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'CategoriaFA')"
+										suggest=".onSuggest($event, 'CategoriaFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'CategoriaFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="CodiceClaeco2" label="{i18n>CE2}"
+								labelTooltip="">
+								<fb:control>
+									<Input width="80%" id="CE2FA" maxSuggestionWidth="80%"
+										placeholder="Inserisci CE2" showSuggestion="true"
+										showValueHelp="true"
+										change="onChange($event, 'CE2FA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'CE2FA')"
+										suggest=".onSuggest($event, 'CE2FA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'CE2FA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="CodiceClaeco3" label="{i18n>CE3}"
+								labelTooltip="">
+								<fb:control>
+									<Input width="80%" id="CE3FA" maxSuggestionWidth="80%"
+										placeholder="Inserisci CE3" showSuggestion="true"
+										showValueHelp="true"
+										change="onChange($event, 'CE3FA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'CE3FA')"
+										suggest=".onSuggest($event, 'CE3FA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'CE3FA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="CodiceTipospCapSpe"
+								label="{i18n>TipoSpesaCapitolo}" labelTooltip="">
+								<fb:control>
+									<ComboBox id="TipoSpesaCapitolo" enabled="true"
+										change="onChange" placeholder="Scegli Tipo Spesa Capitolo"
+										showSecondaryValues="true"
+										items="{ path: '/ZCA_AF_TIPOSPCAPSet', sorter: { path: 'Codicetipospcapspe' }, templateShareable:false }">
+										<items>
+											<core:ListItem text="{Codicetipospcapspe}"
+												additionalText="{Descrestesa}" />
+										</items>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="FlagMemcor01" label="{i18n>IndCapMemoria}"
+								labelTooltip="">
+								<fb:control>
+									<CheckBox id="indCapMemoria" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="NumeTcrcSpe" label="{i18n>TcrC}"
+								labelTooltip="">
+								<fb:control>
+									<Input id="TcrCFA" maxSuggestionWidth="60%"
+										placeholder="Inserisci Tcr C" showSuggestion="true"
+										showValueHelp="true"
+										change=".onChange($event, 'TcrCFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'TcrCFA')"
+										suggest=".onSuggest($event, 'TcrCFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'TcrCFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="NumeTcrfSpe" label="{i18n>TcrF}"
+								labelTooltip="">
+								<fb:control>
+									<Input id="TcrFFA" maxSuggestionWidth="60%"
+										placeholder="Inserisci Tcr F" showSuggestion="true"
+										showValueHelp="true"
+										change=".onChange($event, 'TcrFFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'TcrFFA')"
+										suggest=".onSuggest($event, 'TcrFFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'TcrFFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="CodConcatenato" label="{i18n>Cofog}"
+								labelTooltip="">
+								<fb:control>
+									<Input id="COFOG3FA" maxSuggestionWidth="60%"
+										placeholder="Inserisci {i18n>Cofog}" showSuggestion="true"
+										showValueHelp="true"
+										change=".onChange($event, 'COFOG3FA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'COFOG3FA')"
+										suggest=".onSuggest-($event, 'COFOG3FA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'COFOG3FA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="CodiceTipospPSpe" label="{i18n>TipoSpesPG}"
+								labelTooltip="">
+								<fb:control>
+									<ComboBox id="TipoSpesPGFA" enabled="true" change="onChange"
+										placeholder="Inserisci {i18n>TipoSpesPG}"
+										showSecondaryValues="true"
+										items="{ path: '/ZCA_AF_TIPOSPPGSet', sorter: { path: 'Codicetiposppspe' }, templateShareable:false }">
+										<items>
+											<core:ListItem text="{Codicetiposppspe}"
+												additionalText="{Descrestesapr}" />
+										</items>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<!--<fb:FilterGroupItem
+							visibleInFilterBar="false" groupName="G2" groupTitle="{i18n>Filtri}
+							{i18n>Avanzati} {i18n>PosFin}" name="AB" label="{i18n>DenominazPG}"
+								labelTooltip="">
+								<fb:control>
+									<Input id="DenominazPGFA" maxSuggestionWidth="60%" placeholder="Inserisci {i18n>DenominazPG}"
+							showSuggestion="true" showValueHelp="true"
+										change=".onChange($event, 'DenominazPGFA')" valueHelpRequest=".onValueHelpRequest($event,
+							'DenominazPGFA')" suggest=".onSuggest($event, 'DenominazPGFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'DenominazPGFA')"/>
+								</fb:control>
+							</fb:FilterGroupItem>-->
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}" name="Fop"
+								label="{i18n>FOFP}">
+								<fb:control>
+									<ComboBox id="FOFPFA" enabled="true" change="onChange"
+										placeholder="Inserisci {i18n>FOFP}"
+										showSecondaryValues="true"
+										items="{ path: '/ZCA_AF_FOFPSet', sorter: { path: 'Fop' }, templateShareable:false }">
+										<items>
+											<core:Item key="{Fop}" text="{Fop}" />
+										</items>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="ApsFl" label="{i18n>APS}">
+								<fb:control>
+									<CheckBox id="APSFA" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="EsitoEcobil"
+								label="{i18n>EsitoEcobil}">
+								<fb:control>
+									<ComboBox id="EsitoEcobilFA" enabled="true" change="onChange"
+										placeholder="Inserisci {i18n>EsitoEcobil}"
+										showSecondaryValues="true"
+										items="{ path: '/ZCA_AF_ESITOECOSet', sorter: { path: 'DescEsito' }, templateShareable:false }">
+										<items>
+											<core:ListItem additionalText="{DescEsito}"
+												text="{EsitoEco}" />
+										</items>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="Ecobil" label="{i18n>ECOBIL}">
+								<fb:control>
+									<CheckBox id="ECOBILFA" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="Bilgenere" label="{i18n>BILGEN}">
+								<fb:control>
+									<CheckBox id="BILGENFA" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="NoiPaSpe" label="{i18n>CedolinoUnico}">
+								<fb:control>
+									<ComboBox id="cedUnicoFA" enabled="true" change="onChange"
+										placeholder="Inserisci {i18n>CedolinoUnico}">
+										<items>
+											<core:Item key="SI" text="SI" />
+											<core:Item key="NO" text="NO" />
+										</items>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G2"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>PosFin}"
+								name="FlagCu01Spe" label="{i18n>IRAP}">
+								<fb:control>
+									<ComboBox id="IrapFA" enabled="true" change="onChange"
+										placeholder="Inserisci {i18n>IRAP}">
+										<items>
+											<core:Item key="SI" text="SI" />
+											<core:Item key="NO" text="NO" />
+										</items>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<!--****************FILTRI
+							AVANZATI 2*******************-->
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G3"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>Autorizzazione}"
+								name="Tipostr" label="{i18n>TipoAut}">
+								<fb:control>
+									<ComboBox id="TipoAutFA" enabled="true" change="onChange"
+										placeholder="Inserisci {i18n>TipoAut}"
+										showSecondaryValues="true"
+										items="{ path: '/ZCA_AF_TIPOAUTSet', sorter: { path: 'Desctesto' }, templateShareable:false }">
+										<items>
+											<core:ListItem additionalText="{Desctesto}"
+												text="{Tipostr}" />
+										</items>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G3"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>Autorizzazione}"
+								name="Zznumero" label="{i18n>NumAut}">
+								<fb:control>
+									<Input id="NumAutFA" maxSuggestionWidth="60%"
+										placeholder="Inserisci {i18n>NumAut}" showSuggestion="true"
+										showValueHelp="true"
+										change=".onChange($event, 'NumAutFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'NumAutFA')"
+										suggest=".onSuggest($event, 'NumAutFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'NumAutFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G3"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>Autorizzazione}"
+								name="Zzanno" label="{i18n>AnnoAut}">
+								<fb:control>
+									<Input id="AnnoAutFA" maxSuggestionWidth="60%"
+										placeholder="Inserisci {i18n>AnnoAut}" showSuggestion="true"
+										showValueHelp="true"
+										change=".onChange($event, 'AnnoAutFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'AnnoAutFA')"
+										suggest=".onSuggest($event, 'AnnoAutFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'AnnoAutFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G3"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>Autorizzazione}"
+								name="Zzarticolo" label="{i18n>ArtAut}">
+								<fb:control>
+									<Input id="ArtAutFA" maxSuggestionWidth="60%"
+										placeholder="Inserisci {i18n>ArtAut}" showSuggestion="true"
+										showValueHelp="true"
+										change=".onChange($event, 'ArtAutFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'ArtAutFA')"
+										suggest=".onSuggest($event, 'ArtAutFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'ArtAutFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G3"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>Autorizzazione}"
+								name="Zzsubarticolo" label="{i18n>SubArtAut}">
+								<fb:control>
+									<Input id="SubArtAutFA" maxSuggestionWidth="60%"
+										placeholder="Inserisci {i18n>SubArtAut}"
+										showSuggestion="true" showValueHelp="true"
+										change=".onChange($event, 'SubArtAutFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'SubArtAutFA')"
+										suggest=".onSuggest($event, 'SubArtAutFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'SubArtAutFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G3"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>Autorizzazione}"
+								name="Zzcomma" label="{i18n>CommaAut}">
+								<fb:control>
+									<Input id="CommaAutFA" maxSuggestionWidth="60%"
+										placeholder="Inserisci {i18n>CommaAut}"
+										showSuggestion="true" showValueHelp="true"
+										change=".onChange($event, 'CommaAutFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'CommaAutFA')"
+										suggest=".onSuggest($event, 'CommaAutFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'CommaAutFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G3"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>Autorizzazione}"
+								name="Zzsubcomma" label="{i18n>SubCommaAut}"
+								labelTooltip="">
+								<fb:control>
+									<Input id="SubCommaAutFA" maxSuggestionWidth="60%"
+										placeholder="Inserisci {i18n>SubCommaAut}"
+										showSuggestion="true" showValueHelp="true"
+										change=".onChange($event, 'SubCommaAutFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'SubCommaAutFA')"
+										suggest=".onSuggest($event, 'SubCommaAutFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'SubCommaAutFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G3"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>Autorizzazione}"
+								name="ZznumeroLettera" label="{i18n>LetteraAut}"
+								labelTooltip="">
+								<fb:control>
+									<Input id="LetteraAutFA" maxSuggestionWidth="60%"
+										placeholder="Inserisci {i18n>LetteraAut}"
+										showSuggestion="true" showValueHelp="true"
+										change=".onChange($event, 'LetteraAutFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'LetteraAutFA')"
+										suggest=".onSuggest($event, 'LetteraAutFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'LetteraAutFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G3"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>Autorizzazione}"
+								name="ZznumeroSublettera" label="{i18n>SubLetteraAut}"
+								labelTooltip="">
+								<fb:control>
+									<Input id="SubLetteraAutFA" maxSuggestionWidth="60%"
+										placeholder="Inserisci {i18n>SubLetteraAut}"
+										showSuggestion="true" showValueHelp="true"
+										change=".onChange($event, 'SubLetteraAutFA')"
+										valueHelpRequest=".onValueHelpRequest($event, 'SubLetteraAutFA')"
+										suggest=".onSuggest($event, 'SubLetteraAutFA')"
+										suggestionItemSelected=".onSuggestionItemSelected($event, 'SubLetteraAutFA')" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G3"
+								groupTitle="{i18n>Filtri} {i18n>Avanzati} {i18n>Autorizzazione}"
+								name="Zzclassificazione" label="{i18n>ClassAut}"
+								labelTooltip="">
+								<fb:control>
+									<ComboBox id="ClassAutFA" enabled="true" change="onChange"
+										placeholder="Inserisci {i18n>ClassAut}"
+										showSecondaryValues="true"
+										items="{ path: '/ZCA_AF_CLASSAUTSet', sorter: { path: 'Zzclassificazione' }, templateShareable:false }">
+										<items>
+											<core:Item key="{Zzclassificazione}"
+												text="{Zzclassificazione}" />
+										</items>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G3"
+								groupTitle="{i18n>FiltriAvanzatiAut}" name="PropostaStabFin"
+								label="{i18n>AutStabilizzFinalizz}"
+								labelTooltip="">
+								<fb:control>
+									<ComboBox id="AutStabilizzFinalizzFA" enabled="true"
+										change="onChange"
+										placeholder="Scegli {i18n>Stabilizz} / {i18n>Finalizz}">
+										<items>
+											<core:Item key="{i18n>Stabilizz}"
+												text="{i18n>Stabilizz}" />
+											<core:Item key="{i18n>Finalizz}" text="{i18n>Finalizz}" />
+										</items>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<!--****************ALTRI
+							FILTRI*******************-->
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G4"
+								groupTitle="{i18n>Altri} {i18n>Filtri}" name="FlagPAnag"
+								label="{i18n>PresenzaVarAnagrafiche}">
+								<fb:control>
+									<CheckBox id="PresenzaVarAnagraficheFA" text=""
+										textAlign="Begin" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G4"
+								groupTitle="{i18n>Altri} {i18n>Filtri}" name="VariazioniCompetenza"
+								label="{i18n>PresenzaVarCompetenza}">
+								<fb:control>
+									<CheckBox id="PresenzaVarCompetenzaFA" text="" textAlign="Begin" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G4"
+								groupTitle="{i18n>Altri} {i18n>Filtri}" name="VariazioniCassa"
+								label="{i18n>PresenzaVarCassa}">
+								<fb:control>
+									<CheckBox text="" id="PresenzaVarCassaFA" textAlign="Begin" />
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G4"
+								groupTitle="{i18n>Altri} {i18n>Filtri}" name="CoinvoltaId"
+								label="{i18n>CoinvoltaInUnaOPiuProposte}"
+								labelTooltip="">
+								<fb:control>
+									<ComboBox id="CoinvoltaInUnaOPiuProposteFA" enabled="true"
+										change="onChange"
+										placeholder="Inserisci {i18n>CoinvoltaInUnaOPiuProposte}">
+										<items>
+											<core:Item key="SI" text="SI" />
+											<core:Item key="NO" text="NO" />
+										</items>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<!--<fb:FilterGroupItem
+							visibleInFilterBar="false" groupName="G4" groupTitle="{i18n>Altri}
+							{i18n>Filtri}" name="CdrCompensazione"
+							label="{i18n>CdRDiCompensazione}">
+								<fb:control>
+									<CheckBox text="" id="CdRDiCompensazioneFA" textAlign="Begin"/>
+								</fb:control>
+							</fb:FilterGroupItem>-->
+							<fb:FilterGroupItem visibleInFilterBar="false" groupName="G4"
+								groupTitle="{i18n>Altri} {i18n>Filtri}" name="PresenzaNote"
+								label="{i18n>PresenzaNote}">
+								<fb:control>
+									<CheckBox text="" id="PresenzaNoteFA" textAlign="Begin" />
+								</fb:control>
+							</fb:FilterGroupItem>
+
+						</fb:filterGroupItems>
+					</fb:FilterBar>
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<t:TreeTable id="treeTableID" 
+			visibleRowCountMode="Fixed" 
+			visibleRowCount="10"
+				selectionMode="MultiToggle"
+				enableSelectAll="false"
+				rows="{
+				path:'modelTreeTableProposta>/ZES_AVVIOIDSet',
+				parameters: {
+					countMode: 'Inline',
+					treeAnnotationProperties: {
+						hierarchyLevelFor: 'HierarchyLevel',
+						hierarchyNodeFor: 'Node',
+						hierarchyParentNodeFor: 'ParentNodeId',
+						hierarchyDrillStateFor: 'DrillState'
+					}
+				}
+				}"
+				enableColumnReordering="false">
+				<t:extension>
+					<OverflowToolbar class="sapUiSmallMarginTop">
+						<Text id="prev-column"
+							text="{modelIsAfterAvvio>/intialValue} - {modelIsAfterAvvio>/beginValueM1}"
+							visible="{modelIsAfterAvvio>/enabledButtonPrev}" />
+						<Button id="idPrev" icon="sap-icon://navigation-left-arrow"
+							type="Emphasized" press="onPressPrevTreeTable"
+							enabled="{modelIsAfterAvvio>/enabledButtonPrev}" />
+						<ToolbarSpacer />
+						<Button id="idBtnDettaglioAnagraficoID" icon="sap-icon://form"
+							type="Emphasized" text="{i18n>Anagrafica} {i18n>Proposta}"
+							press="onPressNavToDettaglioAnagraficoID" />
+						<Button id="idBtnDettaglioContabileID" icon="sap-icon://detail-view"
+							type="Emphasized" 
+							 press="onPressNavToDettaglioContabileID" />
+						<Button id="idBtnEsitoControlli" type="Emphasized"
+							text="{i18n>EsitoControlli}" press="onPressEsitoControlli" />
+						<Button id="idBtnSwitchListaEstesaRidotta" type="Emphasized"
+							icon="sap-icon://list" text="{i18n>Lista} {i18n>Estesa}"
+							press="onPressSwitchListaEstesaRidotta" />
+						<Button id="idBtnAttivitaIdProposta" icon="sap-icon://display"
+							type="Emphasized" text="{i18n>Gestisci}" press="onPressNavToTabGestisci" />
+						<Button id="idBtnDocumentale" icon="sap-icon://copy" type="Emphasized"
+							tooltip="{i18n>Documentale}" press="onPressNavToDettaglio" />
+						<Button id="idBtnExport" visible="true" type="Emphasized"
+							text="{i18n>Export}" icon="sap-icon://excel-attachment"
+							press="onPressExport" />
+						<Button id="idNext" icon="sap-icon://navigation-right-arrow"
+							type="Emphasized" press="onPressNextTreeTable"
+							enabled="{modelIsAfterAvvio>/enabledButtonNext}" />
+						<Text id="next-column"
+							text="{modelIsAfterAvvio>/beginValueP1} - {modelIsAfterAvvio>/finalValue}"
+							visible="{modelIsAfterAvvio>/enabledButtonNext}" />
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<!-- <t:Column label="{i18n>Seleziona}" width="6rem">
+						<t:template>
+							<RadioButton visible="{= ${modelTreeTableProposta>HierarchyLevel} === '0' ? false : true}"
+					select="onSelectCheckBox" selected="{modelTreeTableProposta>SELECTED}"></RadioButton>
+						</t:template>
+					</t:Column> -->
+					<t:Column label="{i18n>Proposta}" width="6rem">
+						<t:template>
+							<Text
+								text="{= ${modelTreeTableProposta>HierarchyLevel} === '1' ? '' : ${modelTreeTableProposta>IdProposta} === '0000000000' ? '' : ${modelTreeTableProposta>IdProposta} }"
+								wrapping="false" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>NickName}" width="9rem">
+						<t:template> 
+							<Text text="{= ${modelTreeTableProposta>HierarchyLevel} === '1' ? '' : (${modelTreeTableProposta>Nickname} ) }" wrapping="false" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Iter}" width="8rem">
+						<t:template> 
+							<Text text="{= ${modelTreeTableProposta>HierarchyLevel} === '1' ? '' : (${modelTreeTableProposta>Iter} ) }" wrapping="true" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Tipo}" width="8rem">
+						<t:template><!-- {=${modelTreeTableProposta>TipologiaProposta} === '1' ?
+							'COMPENSATIVA' : 'NON COMPENSATIVA'}-->
+							<Text
+								text="{= ${modelTreeTableProposta>HierarchyLevel} === '1' ? '' : (${modelTreeTableProposta>TipologiaProposta} === '0' ? 'NON COMPENSATIVA' : 'COMPENSATIVA') }"
+								wrapping="true" />
+						</t:template>
+					</t:Column>
+					<!--<t:Column
+					label="{i18n>Parziale}" width="5rem">
+						<t:template>
+							<Text text="{ZSS4_COBI_PRSP_ESAMOD_SRV>Parziale} " wrapping="false"/>
+						</t:template>
+					</t:Column>-->
+					<t:Column width="8rem">
+						<Label text="{i18n>AmmProp}" wrapping="true" />
+						<t:template>
+							<ObjectStatus text="{modelTreeTableProposta>EsitoControllo}"
+								icon="{= ${modelTreeTableProposta>EsitoControllo}.toUpperCase() === 'POSITIVO' ? 'sap-icon://message-success' : ${modelTreeTableProposta>EsitoControllo}.toUpperCase() === 'WARNING' ? 'sap-icon://message-warning' : '' }"
+								state="{= ${modelTreeTableProposta>EsitoControllo}.toUpperCase() === 'POSITIVO' ? 'Success' : ${modelTreeTableProposta>EsitoControllo}.toUpperCase() === 'WARNING' ? 'Warning' : '' }"
+								tooltip="" />
+						</t:template>
+					</t:Column>
+					<!--<t:Column
+					width="6rem">
+						<Label text="{i18n>TipoVariazione}" wrapping="true"/>
+						<t:template>
+							<Text text="{ZSS4_COBI_PRSP_ESAMOD_SRV>TipoVariazioniId}" wrapping="false"/>
+						</t:template>
+					</t:Column>-->
+					<t:Column visible="{modelListaEstesaRidotta>/visible}"
+						label="{i18n>Amministrazione}" width="8rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>CodiceAmmin}" wrapping="false"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>Ragioneria}"
+						width="8rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>CodiceRagioneria}" wrapping="false"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Missione}" width="6rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>CodiceMissione}" wrapping="false"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Programma}" width="6rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>CodiceProgramma}" wrapping="false"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Azione}" width="6rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>CodiceAzione}" wrapping="false"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>CdR}" width="6rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>CodiceCdr}" wrapping="false" />
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>Capitolo}"
+						width="6rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>CodiceCapitolo}" wrapping="false"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>PG}"
+						width="8rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>CodicePg}" wrapping="false"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>Titolo}"
+						width="6rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>CodiceTitolo}" wrapping="false"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Categoria}" width="6rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>CodiceCategoria}" wrapping="false"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>CE2}" width="4rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>CodiceClaeco2}" wrapping="false"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>CE3}" width="4rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>CodiceClaeco3}" wrapping="false"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>TCRC}"
+						width="4rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>NumeTcrcSpe}" wrapping="false"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>TCRF}"
+						width="4rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>NumeTcrfSpe}" wrapping="false"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<!-- <t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>Cofog}"
+						width="4rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>CodcofogL3}" wrapping="false"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column> -->
+					<t:Column label="{i18n>PosFin}" width="13rem">
+						<t:template>
+							<!--<Link
+							text="{Posfin}" press="onPressShowPosFin"
+							class="sapUiTinyMarginTop"/>-->
+							<zcontrollink:LinkPosizioneFinanziaria text="{modelTreeTableProposta>Fipex}"
+								anno="{modelTreeTableProposta>AnnoFipex}" fikrs="{modelTreeTableProposta>Fikrs}"
+								fase="{modelTreeTableProposta>Fase}" reale="{modelTreeTableProposta>Reale}"
+								versione="{modelTreeTableProposta>Versione}"
+								fipex="{ path: 'modelTreeTableProposta>Fipex', formatter: '.formatter.formatterPosFin'}"
+								datbis="{ path: 'modelTreeTableProposta>Datbis', formatter: '.formatter.formatterDatbis'}" />
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" width="8rem">
+						<Label text="{i18n>TipoSpesaCapitolo}" wrapping="true" />
+						<t:template>
+							<Text text="{modelTreeTableProposta>CodiceTipospCapSpe} " wrapping="true"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" width="8rem">
+						<Label text="{i18n>TipoSpesaPG}" wrapping="true" />
+						<t:template>
+							<Text text="{modelTreeTableProposta>CodiceTipospPSpe} " wrapping="true"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Autorizzazione}" width="8rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>Autorizzazioni}" wrapping="true"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" width="10rem"
+						wrapping="true">
+						<Label text="{i18n>PosFinInclusaInPiuId}" wrapping="true" />
+						<t:template>
+							<Text text="{modelTreeTableProposta>CoinvoltaId} " textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>FOFP}" width="4rem">
+						<t:template>
+							<Text
+								text="{ parts: [ 'modelTreeTableProposta>HierarchyLevel', 'modelTreeTableProposta>Fop'], formatter: '.formatter.formatterFlag'}"
+								wrapping="false" textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>APS}" width="4rem">
+						<t:template>
+							<Text
+								text="{ parts: [ 'modelTreeTableProposta>HierarchyLevel', 'modelTreeTableProposta>ApsFl'], formatter: '.formatter.formatterFlag'}"
+								wrapping="false" textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" wrapping="true"
+						width="9rem">
+						<Label text="{i18n>EsitoEcobil}" wrapping="true" />
+						<t:template>
+							<Text text="{modelTreeTableProposta>Esito_Ecobil}" textAlign="Begin"
+								wrapping="true" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>ECOBIL}" width="8rem">
+						<t:template>
+							<Text
+								text="{ parts: [ 'modelTreeTableProposta>HierarchyLevel', 'modelTreeTableProposta>Ecobil'], formatter: '.formatter.formatterFlag'}"
+								wrapping="false" textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>BILGEN}" width="9rem">
+						<t:template>
+							<Text
+								text="{ parts: [ 'modelTreeTableProposta>HierarchyLevel', 'modelTreeTableProposta>Bilgenere'], formatter: '.formatter.formatterFlag'}"
+								wrapping="true" textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<!--<t:Column visible="{modelListaEstesaRidotta>/visible}"-->
+					<!--	label="{i18n>CedolinoUnico}" width="8rem">-->
+					<!--	<t:template>-->
+					<!--		<Text-->
+					<!--			text="{ parts: [ 'modelTreeTableProposta>HierarchyLevel', 'modelTreeTableProposta>NoiPaSpe'], formatter: '.formatter.formatterNoiPA'}"-->
+					<!--			wrapping="false" textAlign="Begin" />-->
+					<!--	</t:template>-->
+					<!--</t:Column>-->
+					<!--<t:Column visible="{modelListaEstesaRidotta>/visible}" label="{i18n>IRAP}"-->
+					<!--	width="6rem">-->
+					<!--	<t:template>-->
+					<!--		<Text-->
+					<!--			text="{ parts: [ 'modelTreeTableProposta>HierarchyLevel', 'modelTreeTableProposta>FlagCu01Spe'], formatter: '.formatter.formatterIrap'}"-->
+					<!--			wrapping="false" textAlign="Begin" />-->
+					<!--	</t:template>-->
+					<!--</t:Column>-->
+					<t:Column visible="{modelListaEstesaRidotta>/visible}"
+						label="{i18n>PresenzaNote}" width="8rem">
+						<t:template>
+							<Text text="{modelTreeTableProposta>PresenzaNote}" wrapping="false"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}" width="8rem">
+						<Label text="{i18n>PresenzaVarAnagrafiche}" wrapping="true" />
+						<t:template>
+							<Text
+								text="{ parts: [ 'modelTreeTableProposta>HierarchyLevel', 'modelTreeTableProposta>FlagPAnag'], formatter: '.formatter.formatterFlag'}"
+								wrapping="true" textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}"
+						label="{i18n>PresenzaVarCassa}" width="8rem">
+						<Label text="{i18n>PresenzaVarCassa}" wrapping="true" />
+						<t:template>
+							<Text text="{modelTreeTableProposta>VariazioniCassa}" wrapping="true"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column visible="{modelListaEstesaRidotta>/visible}"
+						label="{i18n>PresenzaVarCompetenza}" width="8rem">
+						<Label text="{i18n>PresenzaVarCompetenza}" wrapping="true" />
+						<t:template>
+							<Text text="{modelTreeTableProposta>VariazioniCompetenza}" wrapping="true"
+								textAlign="Begin" />
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem">
+						<Label text="{i18n>VarPropostaCompetenzaTot} &#xA; {modelTriennio>/anno1}"
+							wrapping="true" />
+						<t:template>
+							<ObjectNumber
+								number="{parts:[{path:'modelTreeTableProposta>Varpropcomp2023'},{path:'CurrencyCode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+								emphasized="false" textAlign="End" />
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem">
+						<Label text="{i18n>VarPropostaCompetenzaTot} &#xA; {modelTriennio>/anno2}"
+							wrapping="true" />
+						<t:template>
+							<ObjectNumber
+								number="{parts:[{path:'modelTreeTableProposta>Varpropcomp2024'},{path:'CurrencyCode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+								emphasized="false" textAlign="End" />
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem">
+						<Label text="{i18n>VarPropostaCompetenzaTot} &#xA; {modelTriennio>/anno3}"
+							wrapping="true" />
+						<t:template>
+							<ObjectNumber
+								number="{parts:[{path:'modelTreeTableProposta>Varpropcomp2025'},{path:'CurrencyCode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+								emphasized="false" textAlign="End" />
+						</t:template>
+					</t:Column>
+					<t:Column width="10rem">
+						<Label text="{i18n>VarPropostaCassaTot} &#xA; {modelTriennio>/anno1}"
+							wrapping="true" />
+						<t:template>
+							<ObjectNumber
+								number="{parts:[{path:'modelTreeTableProposta>Varpropcassa2023'},{path:'CurrencyCode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+								emphasized="false" textAlign="End" />
+						</t:template>
+					</t:Column>
+					<t:Column width="10rem">
+						<Label text="{i18n>VarPropostaCassaTot} &#xA; {modelTriennio>/anno2}"
+							wrapping="true" />
+						<t:template>
+							<ObjectNumber
+								number="{parts:[{path:'modelTreeTableProposta>Varpropcassa2024'},{path:'CurrencyCode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+								emphasized="false" textAlign="End" />
+						</t:template>
+					</t:Column>
+					<t:Column width="10rem">
+						<Label text="{i18n>VarPropostaCassaTot} &#xA; {modelTriennio>/anno3}"
+							wrapping="true" />
+						<t:template>
+							<ObjectNumber
+								number="{parts:[{path:'modelTreeTableProposta>Varpropcassa2025'},{path:'CurrencyCode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+								emphasized="false" textAlign="End" />
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:TreeTable>
+		</f:content>
+		<f:footer>
+			<OverflowToolbar>
+				<ToolbarSpacer />
+				<Button id="idBtnCreaProposta" type="Emphasized" text="{i18n>Crea} {i18n>Proposta}"
+					press="onPressNavToCreaID" />
+				<Button id="idBtnGestisciProposta" type="Emphasized"
+					text="{i18n>Gestisci} {i18n>Proposta}" press="onPressNavToGestisciId" />
+				<Button type="Emphasized" text="{i18n>NuovaPosFin}" icon="sap-icon://form"
+					press="onPressNavToNuovaPosizione" />
+				<Button type="Emphasized" text="{i18n>RimodulazioneVert}"
+					icon="sap-icon://strikethrough" press="onPressNavToRV" />
+				<Button type="Emphasized" text="{i18n>Home}" press="onPressNavToHomeFromIDProposta" />
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>

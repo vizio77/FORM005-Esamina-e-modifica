@@ -1,0 +1,75 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:m="sap.m" xmlns="sap.uxap" xmlns:l="sap.ui.layout" xmlns:zcontrollink="zsap.com.r3.cobi.s4.custposfin.z_s4_zposfinlink.controls"
+	controllerName="zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.DettaglioContabile" xmlns:html="http://www.w3.org/1999/xhtml">
+	<ObjectPageLayout id="idObjectPageDettaglioContabile" upperCaseAnchorBar="false" useIconTabBar="true" headerContentPinnable="false" showFooter="true">
+		<headerTitle>
+			<ObjectPageDynamicHeaderTitle>
+				<expandedHeading>
+					<m:Title id="idExpTitle" text=""/>
+				</expandedHeading>
+				<snappedHeading>
+					<l:VerticalLayout class="sapUiSmallMarginEnd">
+						<m:Title id="idSnapTitle" text=""/>
+						<m:VBox></m:VBox>
+						<!--<m:HBox>
+						<m:ObjectStatus id="idTextSubTitleSnapped" text="{i18n>subtitleDettaglioContabile}" class="textBold"/>
+						</m:HBox>-->
+						<m:HBox>
+							<m:HBox id="hBoxLinkPF">
+								<m:ObjectStatus id="idTextIDPropostaSnap" title="{i18n>IDProposta}" class="sapUiTinyMarginTop textBold" visible="false"/>
+								<m:ObjectStatus id="idTextPosFinSnap" active="true" title="{i18n>PosFin}" press="onPressShowPosFin" class="sapUiTinyMarginTop textBold"
+									visible="false"/>
+								<!--<m:Link text="{path: 'localModel>/PosFin', formatter: '.formatter.posFinFormat'}" press="onPressShowPosFin"/>-->
+								<!--<m:Link id="idLinkPosFinSnap"  press="onPressShowPosFin" class="sapUiTinyMarginTop" visible="false"/>-->
+								<zcontrollink:LinkPosizioneFinanziaria id="idLinkPosFinSnap" text=""  class="sapUiTinyMarginTop" visible="false" />
+							</m:HBox>
+						</m:HBox>
+					</l:VerticalLayout>
+				</snappedHeading>
+				<!--<expandedContent>
+					<m:ObjectStatus id="idTextSubTitleExpanded" text="{i18n>subtitleDettaglioContabile}" class="sapUiTinyMarginTop textBold"/>
+				</expandedContent>-->
+				<snappedTitleOnMobile>
+					<m:Title text="{i18n>titolo}"/>
+				</snappedTitleOnMobile>
+					<actions>
+					<m:Button type="Emphasized" icon="sap-icon://hint" tooltip="{i18n>info}" press=".onPressInformationsLocal($event)"/>
+				</actions>
+				<!--<actions>
+					<m:Button type="Transparent" text="{i18n>CreaNota}" press=".onPressCreaNota" class="sapUiTinyMargin"/>
+				</actions>-->
+			</ObjectPageDynamicHeaderTitle>
+		</headerTitle>
+		<headerContent>
+			<l:VerticalLayout class="sapUiSmallMarginEnd">
+				<m:HBox>
+					<m:ObjectStatus id="idTextIDProposta" title="{i18n>IDProposta}" class="sapUiTinyMarginTop textBold" visible="false"/>
+					<m:ObjectStatus id="idTextPosFin" active="true" title="{i18n>PosFin}" text="" class="sapUiTinyMarginTop textBold"
+						press="onObjectStatusPosFinPress" visible="false"/>
+					<!--<m:Link text="{path: 'localModel>/PosFin', formatter: '.formatter.posFinFormat'}" press="onPressShowPosFin"/>-->
+					<!--<m:Link id="idLinkPosFin"  press="onPressShowPosFin" class="sapUiTinyMarginTop" visible="false"/>-->
+					<zcontrollink:LinkPosizioneFinanziaria id="idLinkPosFin" text="" class="sapUiTinyMarginTop" visible="false"/>
+				</m:HBox>
+			</l:VerticalLayout>
+		</headerContent>
+		<sections>
+			<ObjectPageSection titleUppercase="true" title="{i18n>Competenza}" showTitle="false">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<!--<html:iframe width="100%" height="400em" src="https://www.youtube.com/embed/tgbNymZ7vqY"></html:iframe>-->
+							<html:iframe id="linkSac" frameBorder="0" target="_top" width="100%" height="500em"></html:iframe>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+		<footer>
+			<m:OverflowToolbar>
+				<!--<m:Text id="AppVersion" class="sapUiTinyMarginBegin" />-->
+				<m:ToolbarSpacer/>
+				<m:Button type="Emphasized" text="{i18n>Indietro}" press="onNavBack"/>
+				<m:Button type="Emphasized" text="{i18n>Home}" press="onPressNavToHome"/>
+			</m:OverflowToolbar>
+		</footer>
+	</ObjectPageLayout>
+</mvc:View>

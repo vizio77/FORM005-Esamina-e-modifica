@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified">
+	<u:Menu>
+		<!--<u:MenuItem id="idMenuItemScegliIDNPF" visible="false" text="Scegli ID esistente" select="handleMenuItemPressID"
+			icon="sap-icon://detail-view"/>
+		<u:MenuItem id="idMenuItemNuovoIDNPF" visible="false" text="Crea Nuovo ID" icon="sap-icon://write-new">
+			<u:Menu>
+				<u:MenuItem text="Genera ID automaticamente" icon="sap-icon://activate" select="handleMenuItemPressID"/>
+				<u:MenuItem text="Inserisci ID manualmente" icon="sap-icon://edit" select="handleMenuItemPressID"/>
+			</u:Menu>
+		</u:MenuItem>-->
+		<u:MenuItem id="idMenuItemScegliIDNPF" visible="false" text="Scegli {i18n>Proposta} esistente" select="handleMenuItemPressID"
+			icon="sap-icon://detail-view"/>
+		<u:MenuItem id="idMenuItemNuovoIDNPF" visible="false" text="Crea Nuova {i18n>Proposta}" icon="sap-icon://write-new">
+			<u:Menu>
+				<u:MenuItem text="Genera {i18n>Proposta} automaticamente" icon="sap-icon://activate" select="handleMenuItemPressID"/>
+				<u:MenuItem text="Inserisci {i18n>Proposta} manualmente" icon="sap-icon://edit" select="handleMenuItemPressID"/>
+			</u:Menu>
+		</u:MenuItem>
+	</u:Menu>
+</core:FragmentDefinition>

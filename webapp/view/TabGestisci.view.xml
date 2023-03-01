@@ -1,0 +1,509 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:layout="sap.ui.layout"
+	xmlns:commons="sap.suite.ui.commons" xmlns:card="sap.f.cards" xmlns:form="sap.ui.layout.form"
+	xmlns:zcontrollink="zsap.com.r3.cobi.s4.custposfin.z_s4_zposfinlink.controls"
+	controllerName="zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.TabGestisci" xmlns:html="http://www.w3.org/1999/xhtml">
+	<f:DynamicPage id="idTab-ID" stickySubheaderProvider="iconTabBar" class="sapUiNoContentPadding" showFooter="true"
+		toggleHeaderOnTitleClick="true">
+		<f:header>
+			<f:DynamicPageHeader pinnable="false">
+				<f:content>
+					<Panel class="noMarginTest">
+						<FlexBox alignItems="Center" justifyContent="SpaceBetween">
+							<layout:VerticalLayout class="sapUiTinyMargin">
+								<VBox direction='Row' visible="true">
+									<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+										<ObjectStatus id="idPropostaTabID" title="{i18n>Proposta}" active="true" press="onPressShowAttributiProposta"
+											text="{modelPageAut>/0/IdProposta}" class="sapUiTinyMarginEnd sapUiTinyMarginTop textBold"/>
+										<layout:HorizontalLayout>
+											<ObjectStatus id="idTextPosFinTabID" active="true" title="{i18n>PosFin}" text="" class="textBold sapUiNoMarginBegin sapUiTinyMarginTop "
+												press="onObjectStatusPosFinPress"/>
+											<zcontrollink:LinkPosizioneFinanziaria id="idLinkPosfinTab" text="{= ${modelPageAut>/0/IdPosfin} ? ${modelPageAut>/0/IdPosfin} : ${modelPageAut>/0/Fipex} }" class="sapUiTinyMarginEnd sapUiTinyMarginTop"
+												anno="{modelPageAut>/0/AnnoFipex}" fikrs="{modelPageAut>/0/Fikrs}" fase="{modelPageAut>/0/Fase}" reale="{modelPageAut>/0/Reale}"
+												versione="{modelPageAut>/0/Versione}" fipex="{ path: 'modelPageAut>/0/Fipex', formatter: '.formatter.formatterPosFin'}"
+												datbis="{ path: 'modelPageAut>/0/Datbis', formatter: '.formatter.formatterDatbis'}"/>
+										</layout:HorizontalLayout>
+									</layout:VerticalLayout>
+									<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+										<ObjectStatus id="idNickNameTabID" title="{i18n>NickName}" text="{modelPageAut>/0/Nickname}"
+											class="sapUiTinyMarginEnd sapUiTinyMarginTop textBold"/>
+										<layout:HorizontalLayout>
+											<ObjectStatus id="idTextPosStrutturaTabID" active="true" title="{i18n>StrAmm}" class="sapUiTinyMarginTop textBold"/>
+											<Link id="idPopStrAmmCenTabID" text="S{modelStrAmm>/Codiceammin}{modelStrAmm>/Codicecdr}{modelStrAmm>/Codiceragioneria}000"
+												press="onPressShowPopupStrAmm" class="sapUiTinyMarginEnd sapUiTinyMarginTop "/>
+										</layout:HorizontalLayout>
+									</layout:VerticalLayout>
+									<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+										<ObjectStatus id="idIterTabID" title="{i18n>Iter}" text="{modelPageAut>/0/Iter}" class="sapUiTinyMarginEnd sapUiTinyMarginTop textBold"/>
+										<ObjectStatus id="idTipologiaTabID" title="{i18n>Tipo}" text="{= ${modelPageAut>/0/Tipo} === '0' ? 'Non Compensativa' : 'Compensativa'}"
+											class="sapUiTinyMarginEnd sapUiTinyMarginTop textBold"/>
+									</layout:VerticalLayout>
+									<!-- CAMPO NOTE PROPOSTA
+									<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+										<ObjectStatus title="{i18n>noteProposta}" text="{path: 'modelPropostaDett>/Note', formatter: '.formatter.truncNote'}..."
+											tooltip="{modelPropostaDett>/Note}" class="sapUiTinyMarginEnd sapUiTinyMarginTop textBold"/>
+									</layout:VerticalLayout>-->
+								</VBox>
+							</layout:VerticalLayout>
+							<HBox width="">
+								<OverflowToolbar style="Clear">
+									<ToolbarSpacer/>
+									<Button id="btnInfoCassaTabID" type="Emphasized" icon="sap-icon://hint" tooltip="{i18n>info}" class="sapUiNoMarginEnd sapUiNoPaddingTop"
+										visible="false" press=".onPressInformations($event, 'cassa')"/>
+									<Button id="btnInfoCompetenzaTabID" type="Emphasized" icon="sap-icon://hint" tooltip="{i18n>info}" visible="false"
+										press=".onPressInformations($event, 'competenza')"/>
+								</OverflowToolbar>
+							</HBox>
+						</FlexBox>
+					</Panel>
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<IconTabBar tabDensityMode="Compact" id="idIconTabBar" class="sapUiNoContentPadding showTextAll" expandable="false"
+				select="onPressIconTabBar">
+				<items>
+					<IconTabFilter key="Tab6" id="Tab6" icon="sap-icon://course-book" text="{i18n>Anagrafica}" enabled="true" class="sapUiTinyMarginEnd">
+						<Panel id="idPanel" visible="true" class="sapUiSmallMargin">
+							<headerToolbar>
+								<OverflowToolbar>
+									<Title text="{i18n>Anagrafica} {i18n>PosFin}"/>
+								</OverflowToolbar>
+							</headerToolbar>
+							<layout:VerticalLayout width="100%">
+								<layout:HorizontalLayout>
+									<ObjectStatus id="idSwitchLabelSnap" title="{i18n>attivoDescrPosFin}" class="sapUiTinyMarginTop textBold"/>
+									<Switch id="idSwitchSnapID" type="AcceptReject" state="{= ${modelAnagraficaPf>/Statstatus} === '3' ? false : true}" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+								</layout:HorizontalLayout>
+								<VBox width="100%"></VBox>
+							</layout:VerticalLayout>
+							<form:SimpleForm editable="true" layout="ColumnLayout" labelSpanXL="1" labelSpanL="1" labelSpanM="1" labelSpanS="12" adjustLabelSpan="true"
+								emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"
+								id="AmmCapPG">
+								<form:content>
+									<!--<core:Title text=""/>-->
+									<core:Title text=""/>
+									<Label text="Amm."/>
+									<Input value="{modelAnagraficaPf>/Codiceammin}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}">
+										<layoutData>
+											<form:ColumnElementData cellsSmall="4" cellsLarge="2"/>
+										</layoutData>
+									</Input>
+									<Input value="{modelAnagraficaPf>/Descrestamministr}" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<!--Capitoli e PG con relative switch e label  -->
+									<!-- <Toolbar visible="false"/> -->
+									<Label text="{i18n>pg}" required="true"/>
+									<Input value="{modelAnagraficaPf>/Codicepg}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false">
+										<layoutData>
+											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
+										</layoutData>
+									</Input>
+									<Label text="{i18n>Capitolo}" required="true"/>
+									<Input id="idCodCap" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" value="{modelAnagraficaPf>/Codicecapitolo}" textAlign="Center" width="30%" showValueHelp="false"
+										valueHelpOnly="false">
+										<layoutData>
+											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
+										</layoutData>
+									</Input>
+									<Label text="{i18n>CdR}" required="true"/>
+									<Input editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" value="{modelAnagraficaPf>/Codicecdr}" textAlign="Center" width="30%" showValueHelp="false" valueHelpOnly="false">
+										<layoutData>
+											<form:ColumnElementData cellsSmall="4" cellsLarge="2"/>
+										</layoutData>
+									</Input>
+									<Input showValueHelp="false" value="{modelAnagraficaPf>/Descrestcdr}" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Label text="{i18n>Ragioneria}" required="false"/>
+									<Input editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" value="{modelAnagraficaPf>/Codiceragioneria}" textAlign="Center" width="30%" showValueHelp="falsefalse"
+										valueHelpOnly="false">
+										<layoutData>
+											<form:ColumnElementData cellsSmall="4" cellsLarge="2"/>
+										</layoutData>
+									</Input>
+									<Input value="{modelAnagraficaPf>/Descrestragioneria}" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+								</form:content>
+							</form:SimpleForm>
+							<form:SimpleForm editable="true" layout="ColumnLayout" labelSpanXL="1" labelSpanL="1" labelSpanM="1" labelSpanS="12" adjustLabelSpan="false"
+								emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+								<form:content>
+									<core:Title text=""/>
+									<Label text="{i18n>Missione}" required="true"/>
+									<Input showValueHelp="false" value="{modelAnagraficaPf>/Codicemissione}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}">
+										<layoutData>
+											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
+										</layoutData>
+									</Input>
+									<Input value="{= ${modelAnagraficaPf>/Descrestesami}.toUpperCase()}" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false"/>
+									<Label text="{i18n>Programma}" required="true"/>
+									<Input showValueHelp="false" value="{modelAnagraficaPf>/Codiceprogramma}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}">
+										<layoutData>
+											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
+										</layoutData>
+									</Input>
+									<Input value="{= ${modelAnagraficaPf>/Descrestesapr}.toUpperCase()}" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false"/>
+									<Label text="{i18n>Azione}" required="true"/>
+									<Input showValueHelp="false" value="{modelAnagraficaPf>/Codiceazione}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}">
+										<layoutData>
+											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
+										</layoutData>
+									</Input>
+									<Input value="{= ${modelAnagraficaPf>/Descrestesaaz}.toUpperCase() }" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false"/>
+								</form:content>
+							</form:SimpleForm>
+							<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" emptySpanL="9" labelSpanS="12" layout="ColumnLayout" columnsM="1"
+								columnsL="1" columnsXL="1">
+								<form:content>
+									<Label text="{i18n>Udv}" labelFor="idInputUdv"/>
+									<Input id="idInputUdv" showValueHelp="true" value=" " textAlign="Center" width="100%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" valueHelpRequest="onHVFormPosFin"
+										valueHelpOnly="true"/>
+									<Input id="idInputDescUdv" width="100%" value=" " editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false" class=""></Input>
+								</form:content>
+							</form:SimpleForm>
+							<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" labelSpanS="12" layout="ColumnLayout" columnsM="1" columnsL="1" columnsXL="1">
+								<form:content>
+									<Label text="{i18n>Titolo}" required="true"/>
+									<Input value="{modelAnagraficaPf>/Codicetitolo}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false" valueHelpOnly="false">
+										<layoutData>
+											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
+										</layoutData>
+									</Input>
+									<Input value="{modelAnagraficaPf>/Descrtitolo}" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Label text="{i18n>Categoria}" required="true"/>
+									<Input value="{modelAnagraficaPf>/Codicecategoria}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false"
+										valueHelpOnly="false">
+										<layoutData>
+											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
+										</layoutData>
+									</Input>
+									<Input value="{modelAnagraficaPf>/Descrcategoria}" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Label text="{i18n>CE2}" required="true"/>
+									<Input value="{modelAnagraficaPf>/Codiceclaeco2}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false"
+										valueHelpOnly="false">
+										<layoutData>
+											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
+										</layoutData>
+									</Input>
+									<Input value="{modelAnagraficaPf>/Descrclaeco2}" width="90%" showValueHelp="false" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Label text="{i18n>CE3}" required="true"/>
+									<Input value="{modelAnagraficaPf>/Codiceclaeco3}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="falsefalse"
+										valueHelpOnly="false">
+										<layoutData>
+											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
+										</layoutData>
+									</Input>
+									<Input value="{modelAnagraficaPf>/Descrclaeco3}" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									</form:content>
+							</form:SimpleForm>
+										<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" labelSpanS="12" layout="ColumnLayout" columnsM="1" columnsL="1" columnsXL="1">
+								<form:content>
+									<Label text="{i18n>Mac}"/>
+									<Input value="{modelAnagraficaPf>/Numemacspe}" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false" valueHelpOnly="false">
+										<layoutData>
+											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
+										</layoutData>
+									</Input>
+									<Input width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" tooltip=" " value="{modelAnagraficaPf>/Descrestesamacroagg}"/>
+								</form:content>
+							</form:SimpleForm>
+							<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" labelSpanS="12" layout="ColumnLayout" columnsM="1"
+								columnsL="1" columnsXL="1">
+								<form:content>
+									<core:Title text=""/>
+									<Label text="{i18n>TipoSpesa}"/>
+									<Select width="35%" selectedKey="{modelAnagraficaPf>/Desctipocap}" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}">
+										<core:Item key="{modelAnagraficaPf>/Desctipocap}" text="{modelAnagraficaPf>/Desctipocap}"/>
+									</Select>
+									<Label text="{i18n>TipoFondo}"/>
+									<Select width="35%" selectedKey="{modelAnagraficaPf>/Descrestesafon}" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}">
+										<core:Item key="" text=""/>
+									</Select>
+									<Label text="{i18n>PerMemoria}"/>
+									<!-- <CheckBox selected="{= ${modelAnagraficaPf>/Flagmemcor01}.toUpperCase() === 'X' ? true : false}" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/> -->
+								</form:content>
+							</form:SimpleForm>
+							<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" labelSpanS="12" layout="ColumnLayout" columnsM="1" columnsL="1" columnsXL="1">
+								<form:content>
+									<core:Title id="titleDenCaap" text="{i18n>DenominazioneCapitolo}" class="sapUiNoPadding"/>
+									<Label text="{i18n>CodStandard}" labelFor="test"/>
+									<Input width="10%" required="true" id="idCodStdCap" value="{modelAnagraficaPf>/Coddenomstdcap}" showValueHelp="false"
+										editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Label text="{i18n>DenInt}" labelFor="test"/>
+									<!-- DA VERIFICARE CONDIZIONE EDITABLE
+									<TextArea id="idDenIntCap" required="true" rows="5" maxLength="4000" showExceededText="true" width="85%"
+										value="{= ${modelAnagraficaPf>/Descrizionecapitolo}}" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" editable="{= (${modelAnagraficaPf>Coddenomstdcap} == '000' ? true : false )}"/>-->
+									<TextArea id="idDenIntCap" required="true" rows="5" maxLength="4000" showExceededText="true" width="85%"
+										value="{= ${modelAnagraficaPf>/Descrizionecapitolo}}" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Label text="{i18n>DenRid}" labelFor="test"/>
+									<!--<TextArea rows="5" maxLength="4000" showExceededText="true" width="85%" required="true" id="idDenRidCap" value="{modelAnagraficaPf>/Descrbrevecap}"
+										visible="true" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" editable="{= (${modelAnagraficaPf>Coddenomstdcap} == '000' ? true : false )}"/>-->
+									<TextArea rows="5" maxLength="4000" showExceededText="true" width="85%" required="true" id="idDenRidCap" value="{modelAnagraficaPf>/Descrbrevecap}"
+										visible="true" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+								</form:content>
+							</form:SimpleForm>
+							<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" labelSpanS="12" layout="ColumnLayout" columnsM="1" columnsL="1" columnsXL="1">
+								<form:content>
+									<core:Title text="{i18n>DenominazionePG}"/>
+									<Label text="{i18n>CodStandard}" labelFor="test"/>
+									<Input width="10%" required="true" id="idCodStdPG" value="{modelAnagraficaPf>/Coddenomstdpg}" showValueHelp="false"
+										editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Label text="{i18n>DenInt}" labelFor="test"/>
+									<!--<TextArea rows="5" maxLength="4000" showExceededText="true" required="true" id="idDenIntPG" value="{modelAnagraficaPf>/Descrizionepg}"
+										width="85%" visible="true" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" editable="{= (${modelAnagraficaPf>Coddenomstdcap} == '000' ? true : false )}"/>-->
+									<TextArea rows="5" maxLength="4000" showExceededText="true" required="true" id="idDenIntPG" value="{modelAnagraficaPf>/Descrizionepg}"
+										width="85%" visible="true" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Label text="{i18n>DenRid}" labelFor="test"/>
+									<!--<TextArea rows="5" maxLength="4000" showExceededText="true" width="85%" required="true" id="idDenRidPG" value="{modelAnagraficaPf>/Descrbrevepg}"
+										visible="true" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" editable="{= (${modelAnagraficaPf>Coddenomstdcap} == '000' ? true : false )}"/>-->
+									<TextArea rows="5" maxLength="4000" showExceededText="true" width="85%" required="true" id="idDenRidPG" value="{modelAnagraficaPf>/Descrbrevepg}"
+										visible="true" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+								</form:content>
+							</form:SimpleForm>
+							<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" labelSpanS="12" layout="ColumnLayout" columnsM="1" columnsL="1" columnsXL="1">
+								<form:content>
+									<core:Title text="{i18n>AltriValori}"/>
+									<Label text="{i18n>TipoSpesaPG}" required="false" labelFor="test"/>
+									<Select width="35%" selectedKey="{modelAnagraficaPf>/Desctipopg}" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}">
+										<core:Item key="{modelAnagraficaPf>/Desctipopg}" text="{modelAnagraficaPf>/Desctipopg}"/>
+									</Select>
+									<Label text="{i18n>ObMinisteri}"/>
+									<!-- <CheckBox selected="{modelAnagraficaPf>/Flagobmin01spe}" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/> -->
+								</form:content>
+							</form:SimpleForm>
+						</Panel>
+						<Panel expandable="true" visible="true" expanded="false">
+							<headerToolbar>
+								<OverflowToolbar>
+									<Text text="*" class="redClass sapUiNoMargin"/>
+									<Title text="{i18n>Cofog}"/>
+								</OverflowToolbar>
+							</headerToolbar>
+							<Table id="TableCofogTab-Id" width="auto" items="{modelAnagraficaCofog>/}">
+								<headerToolbar>
+									<Toolbar >
+										<ToolbarSpacer/>
+										<Button type="Emphasized" icon="sap-icon://add" text="{i18n>Aggiungi} {i18n>COFOG}" press="handleAddCOFOG"
+											enabled="{= (${modelPG80>/pg80btnEnable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									</Toolbar>
+								</headerToolbar>
+								<columns>
+									<Column id="colLiv1TabID" width="8em" demandPopin="true" vAlign="Middle" hAlign="Center">
+										<Text text="{i18n>Liv1}"/>
+									</Column>
+									<Column id="colLiv2TabID" visible="true" width="8em" demandPopin="true" vAlign="Middle" hAlign="Center">
+										<Text text="{i18n>Liv2}"/>
+									</Column>
+									<Column id="colLiv3TabID" visible="true" width="8em" demandPopin="true" vAlign="Middle" hAlign="Center">
+										<Text text="{i18n>Liv3}"/>
+									</Column>
+									<Column id="colDescrTabID" width="30em" demandPopin="true" vAlign="Middle" hAlign="Center">
+										<Text text="{i18n>DescrCofog}"/>
+									</Column>
+									<Column id="colPercentualeTabID" width="10em" demandPopin="true" visible="true" vAlign="Middle" hAlign="Center">
+										<Text text="{i18n>Percent}"/>
+									</Column>
+									<Column id="colEliminaTabID" visible="{modelPG80>/pg80Enable}" width="auto" demandPopin="true" vAlign="Middle" hAlign="Center">
+										<Text text="" tooltip=""/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem >
+										<cells>
+											<Text text="{modelAnagraficaCofog>Codcofogl1}" textAlign="Begin"/>
+											<Text text="{modelAnagraficaCofog>Codcofogl2}" textAlign="Begin"/>
+											<Text text="{modelAnagraficaCofog>Codcofogl3}" textAlign="Begin"/>
+											<Text text="{modelAnagraficaCofog>Descrcofog}" textAlign="Begin"/>
+											<Input editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" 
+											value="{path : 'modelAnagraficaCofog>Perccofog',
+											formatter: '.formatter.formatterInt'
+											}"
+												type="Number" textAlign="End" change="changeToInt" />
+											<Button type="Transparent" tooltip="{i18n>Elimina}" icon="sap-icon://delete" press=".onPressDeleteRow"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</Panel>
+						<Panel expandable="true" expanded="false" visible="{modelvisibleAnag>/visible}">
+							<headerToolbar>
+								<OverflowToolbar>
+									<Title text="{i18n>FOFP}"/>
+								</OverflowToolbar>
+							</headerToolbar>
+							<form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12"
+								adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2"
+								singleContainerFullSize="false" visible="{modelvisibleAnag>/visible}">
+								<form:content>
+									<!-- <Label id="idLabelFo" text="{i18n>FODescr}" design="Bold"/>
+									<Checkbox id="checkboxFO"
+										selected="{= ${modelAnagraficaPf>Codifofpspe} === '' ? false : ${modelAnagraficaPf>Codifofpspe}.toUpperCase() === 'FO' ? true : false }" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"
+										select="onSelectionFO"/>
+									<Label id="idLabelFP" text="{i18n>FPDescr}" design="Bold"/>
+									<Checkbox id="checkboxFP"
+										selected="{= ${modelAnagraficaPf>Codifofpspe} === '' ? false : ${modelAnagraficaPf>Codifofpspe}.toUpperCase() === 'FP' ? true : false }" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"
+										select="onSelectionFP"/> -->
+								</form:content>
+							</form:SimpleForm>
+						</Panel>
+						<Panel expandable="true" visible="true" expanded="false">
+							<headerToolbar>
+								<OverflowToolbar>
+									<Title text="{i18n>TCRCode}"/>
+								</OverflowToolbar>
+							</headerToolbar>
+							<ObjectStatus id="idLabelTCRC" title="{i18n>TCRC}" class="sapUiTinyMarginTop textBold"/>
+							<Input id="inputTCRC" placeholder="{i18n>TcrC}" width="10em"
+								value="{modelAnagraficaPf>/Numetcrcspe}" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+							<Toolbar height="0"/>
+							<ObjectStatus id="idLabelTCRF" title="{i18n>TCRF}" class="sapUiTinyMarginTop textBold"/>
+							<Input id="switchTCRF" placeholder="{i18n>TcrF}" width="10em" liveChange="onlyInteger" maxLength="2"
+								editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"
+								value="{modelAnagraficaPf>/Numetcrfspe}"/>
+									<Table id="TableFOFPTabID-underTCR" width="auto" items="{modelAnagraficaFOP>/}">
+								<headerToolbar>
+									<Toolbar >
+										<ToolbarSpacer/>
+									</Toolbar>
+								</headerToolbar>
+								<columns>
+									<Column width="15em">
+										<Text text=""/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem>
+										<cells>
+											<Text text="{modelAnagraficaFOP>Beschr}"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</Panel>
+						<Panel expandable="true" visible="true" expanded="false">
+							<headerToolbar>
+								<OverflowToolbar>
+									<Title text="{i18n>Autorizzazioni}"/>
+								</OverflowToolbar>
+							</headerToolbar>
+							<Table id="TableFOFPTabID" width="auto" items="{modelAnagraficaFOP>/}">
+								<headerToolbar>
+									<Toolbar >
+										<ToolbarSpacer/>
+									</Toolbar>
+								</headerToolbar>
+								<columns>
+									<Column width="15em">
+										<Text text=""/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem>
+										<cells>
+											<Text text="{modelAnagraficaFOP>Beschr}"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</Panel>
+					</IconTabFilter>
+					<IconTabFilter key="Tab1" id="Tab1" icon="sap-icon://process" text="{i18n>Competenza}" enabled="true" design="Vertical"
+						class="sapUiSmallMarginEnd">
+						<ScrollContainer horizontal="false" vertical="true" height="100%" width="100%">
+							<VBox>
+								<layout:VerticalLayout id="idBoxAut" class="sapUiTinyMarginTop" visible="false">
+									<HBox class="sapUiMediumMarginBegin">
+										<Label design="Bold" text="Autorizzazione:" labelFor="idAutorizz" class="sapUiTinyMarginBeginEnd sapUiTinyMarginTop"/>
+										<Input id="idAutorizz" required="true" value="" width="20em" class="sapUiTinyMarginEnd" maxSuggestionWidth="60%"
+											placeholder="Inserisci {i18n>Autorizzazione}" showSuggestion="true" showValueHelp="true" change=".onChange($event, 'idAutorizz')"
+											valueHelpRequest=".onValueHelpRequest($event, 'idAutorizz')" suggest=".onSuggest($event, 'idAutorizz')"
+											suggestionItemSelected=".onSuggestionItemSelected($event, 'idAutorizz')"/>
+										<Button type="Emphasized" icon="sap-icon://hint" press=".onPressInfo" tooltip="{i18n>info}" class="sapUiTinyMarginBottom"/>
+										<OverflowToolbar style="Clear" width="44em" class="sapUiTinyMarginBegin">
+											<HBox id="idBoxReiscrizioni" visible="true">
+												<Button id="idBtnMostraReiscrizioni" type="Emphasized" text="{i18n>EconomieAut}" visible="false" class="sapUiTinyMarginBegin textBold"
+													press="onPressShowReiscrizioni"/>
+											</HBox>
+											<Button id="BtnAssociaAutTabID" type="Emphasized" text="{i18n>AssociaAutorizzazione}" class="sapUiTinyMarginBegin textBold"
+												press="onPressAssociaAut"/>
+											<ToolbarSpacer/>
+											<Button id="idBtnAvvio" type="Emphasized" text="{i18n>Avvio}" class="sapUiTinyMarginBegin textBold" press="onPressAvvio"/>
+										</OverflowToolbar>
+									</HBox>
+								</layout:VerticalLayout>
+								<html:iframe id="linkSacCompetenza" frameBorder="0" target="_top" width="100%" height="1000rem"></html:iframe>
+							</VBox>
+						</ScrollContainer>
+					</IconTabFilter>
+					<IconTabFilter key="Tab2" id="Tab2" icon="sap-icon://accounting-document-verification" text="{i18n>Cassa}" enabled="true"
+						class="sapUiTinyMarginEnd">
+						<ScrollContainer horizontal="false" vertical="true" height="100%" width="100%">
+							<VBox>
+								<layout:VerticalLayout id="idBoxcassa" class="sapUiTinyMarginTop sapUiMediumMarginBegin" visible="true">
+									<HBox></HBox>
+								</layout:VerticalLayout>
+								<html:iframe id="linkSacCassa" frameBorder="0" target="_top" width="100%" height="1000rem"></html:iframe>
+							</VBox>
+						</ScrollContainer>
+					</IconTabFilter>
+					<IconTabFilter key="Tab8" id="Tab8" icon="sap-icon://history" text="{i18n>WorkFlow}" enabled="true" design="Vertical"
+						class="sapUiSmallMarginEnd">
+						<ScrollContainer horizontal="false" vertical="true" height="100%" width="100%">
+							<VBox>
+								<FlexBox alignItems="Center" justifyContent="Center" class="sapUiSmallMarginTop">
+									<Panel height="550px">
+										<commons:Timeline id="idTimeline" enableDoubleSided="false" growingThreshold="0" enableScroll="true" showFilterBar="false"
+											enableSocial="false" alignment="Right" axisOrientation="Vertical" sortOldestFirst="true" sort="false" content="{modelTimeLineWorkFlow>/}">
+											<commons:content>
+												<!---->
+												<commons:TimelineItem text="{modelTimeLineWorkFlow>DescrizioneEstesa}"
+													dateTime="{= ${modelTimeLineWorkFlow>DataCreazione}.toLocaleDateString().replaceAll('/', '.') } {path: 'modelTimeLineWorkFlow>OraCreazione', formatter: '.formatter.dataCreazione'}"
+													status="{= ${modelTimeLineWorkFlow>LastItem}.toUpperCase() === 'X' ? 'Warning' : 'Neutral'}"
+													icon="{= ${modelTimeLineWorkFlow>LastItem}.toUpperCase() === 'X' ? 'sap-icon://favorite' : 'sap-icon://employee'}"
+													userName="{modelTimeLineWorkFlow>User}" userNameClickable="false" title="{modelTimeLineWorkFlow>IterDescr}" class=""/>
+											</commons:content>
+										</commons:Timeline>
+									</Panel>
+								</FlexBox>
+							</VBox>
+						</ScrollContainer>
+					</IconTabFilter>
+					<IconTabFilter key="Tab9" id="Tab9" icon="sap-icon://calendar" text="{i18n>Nota}" enabled="true" design="Vertical"
+						class="sapUiSmallMarginEnd">
+						<ScrollContainer horizontal="false" vertical="true" height="100%" width="100%">
+							<VBox>
+								<FlexBox alignItems="Center" justifyContent="Center" class="sapUiSmallMarginTop">
+									<Panel height="550px" headerText="{i18n>Nota} {i18n>Proposta}">
+										<VBox class="sapUiTinyMarginTop">
+											<Label text="{i18n>ScegliNota}"/>
+											<ComboBox id="idInputScegliNoteIDProposta" enabled="true" change="onChangeNota" selectionChange="onSelChangeNota"
+												placeholder="{i18n>ScegliNota} {i18n>Standard}"
+												items="{path: 'ZSS4_COBI_PRSP_ESAMOD_SRV>/ZES_NOTE_IDSet', sorter: { path: 'TestoNota' }, templateShareable:false}">
+												<items>
+													<core:Item key="{ZSS4_COBI_PRSP_ESAMOD_SRV>TestoNotaId}" text="{ZSS4_COBI_PRSP_ESAMOD_SRV>TestoNota}"/>
+												</items>
+											</ComboBox>
+											<Label text="Testo" class="sapUiTinyMarginTop"/>
+											<TextArea required="true" id="idCreaNotaIDPF" width="30em" value="{ZSS4_COBI_PRSP_ESAMOD_SRV>Testonota}" liveChange="onLiveChangeCreaNota"
+												maxLength="4000" showExceededText="true"/>
+											<Button id="idBtnSalvaNota" type="Emphasized" text="{i18n>Salva} {i18n>Nota}" press="onPressSalvaNotaTabGestisci"
+												enabled="{= ${modelInLavorazione>/value}}"/>
+										</VBox>
+									</Panel>
+								</FlexBox>
+							</VBox>
+						</ScrollContainer>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</f:content>
+		<!-- DynamicPage Footer -->
+		<f:footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button id='btnSalvaModificheAnagrafiche' visible="{modelPG80>/pg80btnEnable}" enabled="{= ${modelInLavorazione>/value}}"
+					text="{i18n>Salva}" type="Emphasized" press=".onPressSalva"/>
+				<Button id='btnInvioRevocaValidazione' enabled="true" type="Emphasized" text="" press=".onPressNavToInvioAllaValidazione"/>
+				<Button type="Emphasized" text="{i18n>RimodulazioneVert}" icon="sap-icon://strikethrough" press="onPressNavToRV"/>
+				<Button type="Emphasized" text="{i18n>Indietro}" press="onNavBackToPreviousPage"/>
+				<Button type="Emphasized" text="{i18n>Home}" press="onPressNavToHome"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>

@@ -1,0 +1,70 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:c="sap.ui.core">
+	<Popover id="idPopupShowReiscrizioni" title="{i18n>DettReiscrizioni}" class="sapUiContentPadding" resizable="true" contentWidth="100%"
+		placement="Bottom" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+		<content>
+			<VBox >
+				<Table id="idTableDettReiscrizioni" sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" class="sapUiSmallMarginEnd" growing="true"
+					growingThreshold="10" items="{modelTableReiscrizioni>/}">
+					<columns>
+						<Column width="12em" demandPopin="true">
+							<footer label="{i18n>EconomieReiscrAut}">
+								<Text text="{i18n>EconomieReiscrAut}"/>
+							</footer>
+						</Column>
+						<Column width="auto" demandPopin="true">
+							<Text text="{i18n>Autorizzazione}"/>
+							<footer>
+								<Text id="idFooterAut" text=""/>
+							</footer>
+						</Column>
+						<Column width="auto" demandPopin="true">
+							<Text text="{i18n>EsFinanziario}"/>
+						</Column>
+						<Column width="auto" demandPopin="true">
+							<Text text="{i18n>Amministrazione}"/>
+						</Column>
+						<Column width="auto" demandPopin="true">
+							<Text text="{i18n>PosFin}"/>
+						</Column>
+						<Column width="8em" demandPopin="true">
+							<Text text="{i18n>Capitolo}"/>
+						</Column>
+						<Column width="auto" demandPopin="true">
+							<Text text="{i18n>PG}"/>
+						</Column>
+						<Column width="auto" demandPopin="true">
+							<Text text="{i18n>EPR}"/>
+						</Column>
+						<Column width="auto" demandPopin="true">
+							<Text text="{i18n>EconomieAut}" tooltip="{i18n>tooltipEconomieAut}"/>
+							<footer>
+								<Text id="idFooterImporto" />
+									<!-- text="{parts:[{path:'modelPreAutInfoPopUp>/Reiscrizioni'},{path:'CurrencyCode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"/> -->
+							</footer>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem selected="false">
+							<cells >
+								<Text text=""/>
+								<Text text="{modelTableReiscrizioni>Beschr}"/>
+								<Text text="{modelTableReiscrizioni>AnnoFase}"/>
+								<Text text="{modelTableReiscrizioni>Amministrazione}"/>
+								<Text text="{modelTableReiscrizioni>PosFin}"/>
+								<Text text="{modelTableReiscrizioni>Capitolo}"/>
+								<Text text="{modelTableReiscrizioni>Pg}"/>
+								<Text text="{modelTableReiscrizioni>AnnoProvenienza}"/>
+								<Text text="{modelTableReiscrizioni>ImportoReiscrizioni}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</VBox>
+		</content>
+		<footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+			</OverflowToolbar>
+		</footer>
+	</Popover>
+</c:FragmentDefinition>

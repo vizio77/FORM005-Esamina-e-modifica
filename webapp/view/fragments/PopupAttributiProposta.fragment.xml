@@ -1,0 +1,19 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Popover id="idPopupAttributiProposta" title="{i18n>AttProposta}" class="sapUiContentPadding" resizable="true" contentWidth="80%" placement="Bottom" xmlns:l="sap.ui.layout"
+		xmlns:f="sap.ui.layout.form">
+		<content>
+			<l:HorizontalLayout id="idBoxAttributiProposta" class="sapUiSmallMargin" visible="true">
+					<ObjectStatus id="idPropostaTabIDPopup" title="{i18n>Proposta}" active="true" press="onPressShowAttributiProposta" text="{modelPageAut>/0/IdProposta}" class="sapUiTinyMarginEnd sapUiTinyMarginTop textBold"/>
+					<ObjectStatus id="idNickNameTabIDPopup" title="{i18n>NickName}" text="{modelPageAut>/0/Nickname}" class="sapUiTinyMarginEnd sapUiTinyMarginTop textBold"/>
+					<ObjectStatus id="idIterTabIDPopup" title="{i18n>Iter}" text="{modelPageAut>/0/Iter}" class="sapUiTinyMarginEnd sapUiTinyMarginTop textBold"/>
+					<ObjectStatus id="idTipologiaTabIDPopup" title="{i18n>Tipo}" text="{= ${modelPageAut>/0/Tipo} === '0' ? 'Non Compensativa' : 'Compensativa'}"
+						class="sapUiTinyMarginEnd sapUiTinyMarginTop textBold"/>
+			</l:HorizontalLayout>
+		</content>
+		<footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+			</OverflowToolbar>
+		</footer>
+	</Popover>
+</core:FragmentDefinition>

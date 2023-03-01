@@ -1,0 +1,131 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form">
+	<Popover id="InfoAutPopOver" resizable="true" title="{i18n>Info}" class="sapUiContentPadding" 
+		placement="Bottom" modal="false" contentWidth="80%" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+		<beginButton>
+			<!--<Button text="{i18n>Ok}" press="onPressOkAssAut"/>-->
+		</beginButton>
+		<endButton>
+			<!--<Button text="{i18n>Chiudi}" press="onPressChiudiInfoAutPopOver"/>-->
+		</endButton>
+		<content>
+			<l:VerticalLayout width="100%" class="sapUiTinyMargin">
+						<HBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>Tipo}:" labelFor="idTipoPopUp"/>
+								<Input id="idTipoPopUp" value="{modelPreAutInfoPopUp>/Type}" editable="false"/>
+							</VBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>Numero}:" labelFor="idNumeroPopUp" />
+								<Input id="idNumeroPopUp" value="{modelPreAutInfoPopUp>/Zznumero}" editable="false"/>
+							</VBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>Anno}:" labelFor="idAnnoPopUp"/>
+								<Input id="idAnnoPopUp" value="{modelPreAutInfoPopUp>/Zzanno}" editable="false"/>
+							</VBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>Articolo}:" labelFor="idArticoloPopUp"/>
+								<Input id="idArticoloPopUp" value="{modelPreAutInfoPopUp>/Zzarticolo}" editable="false"/>
+							</VBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>SubArticolo}:" labelFor="idSubArticoloPopUp"/>
+								<Input id="idSubArticoloPopUp" value="{modelPreAutInfoPopUp>/Zzsubarticolo}" editable="false"/>
+							</VBox>
+						</HBox>
+					</l:VerticalLayout>
+					<l:VerticalLayout width="100%" class="sapUiTinyMargin">
+						<HBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>Comma}:" labelFor="idCommaPopUp"/>
+								<Input id="idCommaPopUp" value="{modelPreAutInfoPopUp>/Zzcomma}" editable="false"/>
+							</VBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>SubComma}:" labelFor="idSubCommaPopUp"/>
+								<Input id="idSubCommaPopUp" value="{modelPreAutInfoPopUp>/Zzsubcomma}" editable="false"/>
+							</VBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>Lettera}:" labelFor="idPuntoPopUp"/>
+								<Input id="idLetteraPopUp" value="{modelPreAutInfoPopUp>/Zznumerolettera}" editable="false"/>
+							</VBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>Sublett}:" labelFor="idSubPuntoPopUp"/>
+								<Input id="idSubLettPopUp" value="{modelPreAutInfoPopUp>/Zznumerosublettera}" editable="false"/>
+							</VBox>
+						</HBox>
+					</l:VerticalLayout>
+					<l:VerticalLayout width="100%" class="sapUiTinyMargin">
+						<Label design="Bold" text="{i18n>Descrizione}:" labelFor="idDescrizionePopUp"/>
+						<TextArea id="idDescrizionePopUp" value="{modelPreAutInfoPopUp>/Zzdescrestesa}" width="95%" editable="false"/>
+					</l:VerticalLayout>
+					<l:VerticalLayout width="100%" class="sapUiTinyMargin">
+						<HBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>Attivazione}:" labelFor="idAttivazionePopUp"/>
+								<Input id="idAttivazionePopUp" value="{modelPreAutInfoPopUp>/Zzannoattivazione}" editable="false"/>
+							</VBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>Scadenza}:" labelFor="idScadenzaPopUp"/>
+								<Input id="idScadenzaPopUp" value="{modelPreAutInfoPopUp>/Zzannoscadenza}" editable="false"/>
+							</VBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>TutteLeAmmin}:" labelFor="idTutteLeAmminPopUp"/>
+								<CheckBox id="idTutteLeAmminPopUp" selected="{modelPreAutInfoPopUp>/Zzallprctr}" editable="false"/>
+							</VBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>AmmPertinenza}:" labelFor="idAmmPertinenzaPopUp"/>
+								<Input id="idAmmPertinenzaPopUp" value="" editable="false"/>
+							</VBox>
+						</HBox>
+					</l:VerticalLayout>
+					<l:VerticalLayout width="100%" class="sapUiTinyMargin">
+						<HBox>
+							<VBox class="sapUiSmallMarginEnd">
+								<RadioButtonGroup id="GroupA">
+									<RadioButton text="{i18n>Spesa}" selected="true" editable="false"/>
+									<RadioButton text="{i18n>Entrata}" editable="false"/>
+								</RadioButtonGroup>
+							</VBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>TipoNaturaSpesa}:" labelFor="idTipoNaturaSpesaPopUp"/>
+								<Input id="idTipoNaturaSpesaPopUp" value="" editable="false"/>
+							</VBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>TipoFondo}:" labelFor="idTipoFondoPopUp"/>
+								<Input id="idTipoFondoPopUp" value="" editable="false"/>
+							</VBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>Classificaz}:" labelFor="idClassificazPopUp"/>
+								<Input id="idClassificazPopUp" value="{modelPreAutInfoPopUp>/Zzclassificazione}" editable="false"/>
+							</VBox>
+						</HBox>
+					</l:VerticalLayout>
+					<l:VerticalLayout width="100%" class="sapUiTinyMargin">
+						<HBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>TipoAut}:" labelFor="idTipoAutPopUp"/>
+								<Input id="idTipoAutPopUp" value="" editable="false"/>
+							</VBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<Label design="Bold" text="{i18n>SpesaPluriennale}:" labelFor="idSpesaPluriennalePopUp"/>
+								<CheckBox id="idSpesaPluriennalePopUp" selected="" editable="false"/>
+							</VBox>
+							<VBox class="sapUiSmallMarginEnd">
+								<Label design="Bold" text="{i18n>SpesaPermanente}:" labelFor="idSpesaPermanentePopUp"/>
+								<CheckBox id="idSpesaPermanentePopUp" selected="{modelPreAutInfoPopUp>/Zzflagpermanente}" editable="false"/>
+							</VBox>
+							<VBox class="sapUiTinyMarginEnd">
+								<RadioButtonGroup id="GroupB">
+									<RadioButton text="{i18n>SpesaPLURLegge}" selected="false" editable="false"/>
+									<RadioButton text="{i18n>EntrataPLURContributo}" editable="false"/>
+								</RadioButtonGroup>
+							</VBox>
+						</HBox>
+					</l:VerticalLayout>
+		</content>
+		<footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+			</OverflowToolbar>
+		</footer>
+	</Popover>
+</core:FragmentDefinition>

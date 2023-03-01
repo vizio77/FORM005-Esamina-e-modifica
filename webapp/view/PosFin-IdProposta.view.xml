@@ -1,0 +1,197 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:t="sap.ui.table"
+	xmlns:fb="sap.ui.comp.filterbar" xmlns:zcontrollink="zsap.com.r3.cobi.s4.custposfin.z_s4_zposfinlink.controls"
+	controllerName="zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.PosFin-IdProposta" xmlns:html="http://www.w3.org/1999/xhtml">
+	<f:DynamicPage id="dynamicPageIdPosFin" headerExpanded="true" showFooter="true">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>title} > {i18n>PosFin} - {i18n>Proposta}"/>
+				</f:heading>
+				<f:expandedContent>
+					<Label text=""/>
+				</f:expandedContent>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader pinnable="false">
+				<f:content></f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<t:TreeTable id="treeTablePFID"  visibleRowCountMode="Fixed" visibleRowCount="10" expandFirstLevel="false" showColumnVisibilityMenu="true"
+				selectionMode="None" enableSelectAll="false" enableColumnReordering="false">
+				<t:extension>
+					<OverflowToolbar class="sapUiSmallMarginTop">
+						<Text id="prev-column" text="{modelIsAfterAvvio>/intialValue} - {modelIsAfterAvvio>/beginValueM1}" visible="{modelIsAfterAvvio>/enabledButtonPrev}"/>
+						<Button id="idPrev" icon="sap-icon://navigation-left-arrow" type="Emphasized" press="onPressPrevTreeTable" enabled="{modelIsAfterAvvio>/enabledButtonPrev}"/>
+						<ToolbarSpacer/>
+						<Button id="idBtnDettaglioPF-ID" icon="sap-icon://display" type="Emphasized" text="{i18n>Gestisci}" press="onPressNavToTabGestisci"/>
+						<Button id="idBtnAssociaProposta" type="Emphasized" text="{i18n>Associa} {i18n>Proposta}" press="onPressNavToAssociaID"/>
+						<Button id="idBtnDocumentale" icon="sap-icon://copy" type="Emphasized" tooltip="{i18n>Documentale}" press="onPressNavToDettaglio"/>
+						<Button id="idBtnExport" visible="true" type="Emphasized" text="{i18n>Export}" icon="sap-icon://excel-attachment" press="onPressExport"/>
+						<Button id="idNext" icon="sap-icon://navigation-right-arrow" type="Emphasized" press="onPressNextTreeTable" enabled="{modelIsAfterAvvio>/enabledButtonNext}"/>
+						<Text id="next-column" text="{modelIsAfterAvvio>/beginValueP1} - {modelIsAfterAvvio>/finalValue}" visible="{modelIsAfterAvvio>/enabledButtonNext}"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column label="{i18n>Seleziona}" width="5rem">
+						<t:template>
+							<CheckBox id="check" visible="{= ${modelTreeTable>HierarchyLevel} === '0' ? true : false}" select="onSelectCheckBox" selected="{modelTreeTable>SELECTED}" />
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Missione}" width="5rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceMissione}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Programma}" width="6rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceProgramma}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Azione}" width="5rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceAzione}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>CdR}" width="5rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceCdr}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Categoria}" width="5rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceCategoria}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>CE2}" width="4rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceClaeco2}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>CE3}" width="4rem">
+						<t:template>
+							<Text text="{modelTreeTable>CodiceClaeco3}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>FOFP}" width="5rem">
+						<t:template>
+							<Text text="{ parts: [ 'modelTreeTable>HierarchyLevel', 'modelTreeTable>Fop'], formatter: '.formatter.formatterFlag'}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<!--<t:Column label="{i18n>APS}" width="3rem">
+						<t:template>
+							<Text text="{Aps}" wrapping="false" textAlign="Begin"/>
+						</t:template>
+					</t:Column>-->
+					<t:Column label="{i18n>PosFin}" width="14rem">
+						<t:template>
+							<zcontrollink:LinkPosizioneFinanziaria text="{modelTreeTable>Fipex}"  anno="{modelTreeTable>AnnoFipex}" fikrs="{modelTreeTable>Fikrs}" fase="{modelTreeTable>Fase}" reale="{modelTreeTable>Reale}" versione="{modelTreeTable>Versione}" fipex="{ path: 'modelTreeTable>Fipex', formatter: '.formatter.formatterPosFin'}" datbis="{ path: 'modelTreeTable>Datbis', formatter: '.formatter.formatterDatbis'}"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Autorizzazione}" width="16rem">
+						<t:template>
+							<Text text="{modelTreeTable>Autorizzazioni}" wrapping="true" textAlign="Begin"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Proposta}" width="8rem">
+						<t:template>
+							<Text text="{= (${modelTreeTable>IdProposta} === '0000000000') ||  (${modelTreeTable>IdProposta} === '0')  ? '' : ${modelTreeTable>IdProposta} }" visible="{= ${modelTreeTable>IdProposta} !== '0000000000' ? true : false}" wrapping="false"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>NickName}" width="10rem">
+						<t:template>
+							<Text text="{modelTreeTable>Nickname}" wrapping="true"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Iter}" width="10rem">
+						<t:template>
+							<Text text="{modelTreeTable>Iter}" wrapping="true"/>
+						</t:template>
+					</t:Column>
+					<t:Column label="{i18n>Tipo}" width="10rem">
+						<t:template>
+							<Text text="{= ${modelTreeTable>HierarchyLevel} !== '0' ? '' : ${modelTreeTable>TipologiaProposta} === '0' ? 'NON COMPENSATIVA' : 'COMPENSATIVA' }" wrapping="true"/>
+						</t:template>
+					</t:Column>
+					<!--<t:Column label="{i18n>Parziale}" width="5rem">
+						<t:template>
+							<Text text="{ZSS4_COBI_PRSP_ESAMOD_SRV>Parziale}" wrapping="false"/>
+						</t:template>
+					</t:Column>-->
+					<t:Column width="10rem">
+						<Label text="{i18n>EsitoControllo}" wrapping="true"/>
+						<t:template>
+							<!--<Text text="{Esitocontrollo}" wrapping="false"/>-->
+							<!--<ObjectStatus text="{ZSS4_COBI_PRSP_ESAMOD_SRV>EsitoControlli}" icon="sap-icon://message-success" state="Success" tooltip=""/>-->
+							<ObjectStatus text="{modelTreeTable>EsitoControlli}" icon="{= ${modelTreeTable>EsitoControlli}.toUpperCase() === 'POSITIVO' ? 'sap-icon://message-success' : ${modelTreeTable>EsitoControlli}.toUpperCase() === 'BLOCCANTE' ? 'sap-icon://message-error' : 'sap-icon://message-success' : ${modelTreeTable>EsitoControlli}.toUpperCase() === 'WARNING' ? 'sap-icon://message-warning' : ''}" state="{= ${modelTreeTable>EsitoControlli}.toUpperCase() === 'POSITIVO' ? 'Success' : ${modelTreeTable>EsitoControlli}.toUpperCase() === 'BLOCCANTE' ? 'Error' : 'Warning' }" tooltip=""/>
+						</t:template>
+					</t:Column>
+					<!--<t:Column width="6rem">
+						<Label text="{i18n>TipoVariazione}" wrapping="true"/>
+						<t:template>
+							<Text text="{ZSS4_COBI_PRSP_ESAMOD_SRV>TipoVariazioniId}" wrapping="false"/>
+						</t:template>
+					</t:Column>-->
+					<t:Column width="11rem">
+						<Label text="{i18n>VarPropostaCompetenzaTot} {modelTriennio>/anno1}" wrapping="true"/>
+						<t:template>
+							<ObjectNumber number="{parts:[{path:'modelTreeTable>Varpropcomp2023'},{path:'CurrencyCode'}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {showMeasure: false}}" emphasized="false" textAlign="End"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem">
+						<Label text="{i18n>VarPropostaCompetenzaTot} {modelTriennio>/anno2}" wrapping="true"/>
+						<t:template>
+							<ObjectNumber number="{parts:[{path:'modelTreeTable>Varpropcomp2024'},{path:'CurrencyCode'}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {showMeasure: false}}" emphasized="false" textAlign="End"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem">
+						<Label text="{i18n>VarPropostaCompetenzaTot} {modelTriennio>/anno3}" wrapping="true"/>
+						<t:template>
+							<ObjectNumber number="{parts:[{path:'modelTreeTable>Varpropcomp2025'},{path:'CurrencyCode'}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {showMeasure: false}}" emphasized="false" textAlign="End"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="10rem">
+						<Label text="{i18n>VarPropostaCassaTot} {modelTriennio>/anno1}" wrapping="true"/>
+						<t:template>
+							<ObjectNumber number="{parts:[{path:'modelTreeTable>Varpropcassa2023'},{path:'CurrencyCode'}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {showMeasure: false}}" emphasized="false" textAlign="End"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="10rem">
+						<Label text="{i18n>VarPropostaCassaTot} {modelTriennio>/anno2}" wrapping="true"/>
+						<t:template>
+							<ObjectNumber number="{parts:[{path:'modelTreeTable>Varpropcassa2024'},{path:'CurrencyCode'}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {showMeasure: false}}" emphasized="false" textAlign="End"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="10rem">
+						<Label text="{i18n>VarPropostaCassaTot} {modelTriennio>/anno3}" wrapping="true"/>
+						<t:template>
+							<ObjectNumber number="{parts:[{path:'modelTreeTable>Varpropcassa2025'},{path:'CurrencyCode'}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {showMeasure: false}}" emphasized="false" textAlign="End"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:TreeTable>
+		</f:content>
+		<f:footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button id="idBtnNPF" type="Emphasized" icon="sap-icon://form" text="{i18n>NuovaPosFin}" press="onPressNavToNuovaPosizione"/>
+				<Button type="Emphasized" text="{i18n>RimodulazioneVert}" icon="sap-icon://strikethrough" press="onPressNavToRV"/>
+				<Button type="Emphasized" text="{i18n>Indietro}" press="onNavBackToPosFin"/>
+				<Button type="Emphasized" text="{i18n>Home}" press="onPressNavToHome($Evt)"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>

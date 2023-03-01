@@ -1,0 +1,28 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	<Dialog id="idFragFOFPTab" title="{i18n>AggiungiFOFP}">
+		<l:VerticalLayout width="95%" class="sapUiTinyMargin sapUiSmallMarginBegin">
+			<Label text="{i18n>Autorizzazione}:" labelFor="idInputAutTab"/>
+			<Input id="idInputAutTab" required="true" width="70%" maxSuggestionWidth="60%" placeholder="Scegli {i18n>Autorizzazione}" showSuggestion="false" showValueHelp="true"
+				change=".onChange($event, 'idInputAutTab')" valueHelpRequest=".onValueHelpRequest($event, 'idInputAutTab')" suggest=".onSuggest($event, 'idInputAutTab')"
+				suggestionItemSelected=".onSuggestionItemSelected($event, 'idInputAutTab')"/>
+				<!--suggestionItems="{path: '/ZES_COFOG_SET', sorter: { path: 'NumeLiv3' }, templateShareable:false}">
+				<suggestionItems>
+					<core:ListItem key="{IdCofog}" text="{NumeLiv3}"/>
+				</suggestionItems>
+			</Input>-->
+		</l:VerticalLayout>
+		<l:VerticalLayout class="sapUiTinyMargin sapUiSmallMarginLeft">
+			<RadioButtonGroup id="idRBGroupFoFp" columns="1" selectedIndex="2" class="sapUiMediumMarginBottom">
+				<buttons>
+					<RadioButton id="FO" text="{i18n>FO}"/>
+					<RadioButton id="FP" text="{i18n>FP}"/>
+				</buttons>
+			</RadioButtonGroup>
+		</l:VerticalLayout>
+		<OverflowToolbar>
+			<ToolbarSpacer/>
+			<Button type="Emphasized" text="{i18n>Ok}" press="onPressOkAggiungiFOFP"/>
+			<Button type="Emphasized" text="{i18n>Chiudi}" press="onPressChiudiFOFP"/>
+		</OverflowToolbar>
+	</Dialog>
+</core:FragmentDefinition>

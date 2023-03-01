@@ -1,0 +1,163 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns:uxap="sap.uxap">
+	<Dialog id="idDialogPosizioneFinanziaria" title="{i18n>cercaPosFin}" contentWidth="80%" contentHeight="60%">
+		<content>
+			<f:SimpleForm id="formInserimentoPosFin" editable="true" singleContainerFullSize="false" adjustLabelSpan="false"
+				layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" emptySpanXL="1" emptySpanL="0" emptySpanM="0"
+				emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2">
+				<f:content>
+					<core:Title/>
+					<Label text="{i18n>PosFin}" labelFor="PosFin"/>
+					<Input id="PosFin" width="80%" maxSuggestionWidth="80%" placeholder="Inserisci Posizione Finanziaria" showSuggestion="true"
+						showValueHelp="false" change="onChange($event, 'PosFin')" valueHelpRequest="onValueHelpRequestPosFin" suggest="onSuggestPosFin"
+						suggestionItemSelected="onSuggestionItemSelectedPosFin" >
+						<suggestionItems>
+							<core:ListItem text="" additionalText=""/>
+						</suggestionItems>
+					</Input>
+					<Label text="{i18n>Amministrazione}" labelFor="Amministrazione"/>
+					<Input width="80%" id="Amministrazione" maxSuggestionWidth="60%" placeholder="Inserisci amministrazione" showSuggestion="true"
+						showValueHelp="true" change=".onChange($event, 'Amm')" valueHelpRequest=".onValueHelpRequest($event, 'Amm')" suggest=".onSuggest($event, 'Amm')"
+						suggestionItemSelected=".onSuggestionItemSelected($event, 'Amm')" />
+						<!--suggestionItems="{path: 'modelConoVisibilita>/ZES_AMMINISTRAZIONE_SET', sorter: { path: 'NumeAmmMess' }}">
+						<suggestionItems>
+							<core:ListItem text="{modelConoVisibilita>NumeAmmMess}" additionalText="{modelConoVisibilita>DescAmm}"/>
+						</suggestionItems>
+					</Input>-->
+					<Label text="{i18n>CdR}" labelFor="CentroResp"/>
+					<Input width="80%" id="CentroResp" maxSuggestionWidth="80%" placeholder="Inserisci CdR" showSuggestion="true" showValueHelp="true"
+						change=".onChange($event, 'CentroResp')" valueHelpRequest=".onValueHelpRequest($event, 'CentroResp')" suggest=".onSuggest($event, 'CentroResp')"
+						suggestionItemSelected=".onSuggestionItemSelected($event, 'CentroResp')" />
+						<!--suggestionItems="{path: 'modelConoVisibilita>/ZES_CDR_SET', sorter: { path: 'NumeCdr' }}">
+						<suggestionItems>
+							<core:ListItem text="{modelConoVisibilita>NumeCdr}" additionalText="{modelConoVisibilita>DescCdr}"/>
+						</suggestionItems>
+					</Input>-->
+					<Label text="{i18n>Ragioneria}" labelFor="Ragioneria"/>
+					<Input width="80%" id="Ragioneria" maxSuggestionWidth="80%" placeholder="Inserisci Ragioneria" showSuggestion="true" showValueHelp="true"
+						change=".onChange($event, 'Ragioneria')" valueHelpRequest=".onValueHelpRequest($event, 'Ragioneria')" suggest=".onSuggest($event, 'Ragioneria')"
+						suggestionItemSelected=".onSuggestionItemSelected($event, 'Ragioneria')" />
+						<!--suggestionItems="{path: 'modelConoVisibilita>/ZES_RAGIONERIA_SET', sorter: { path: 'NumeRag' }}">
+						<suggestionItems>
+							<core:ListItem text="{modelConoVisibilita>NumeRag}" additionalText="{modelConoVisibilita>DescRag}"/>
+						</suggestionItems>
+					</Input>-->
+					<Label text="{i18n>Missione}" labelFor="Missione"/>
+					<Input width="80%" id="Missione" maxSuggestionWidth="80%" placeholder="Inserisci Missione" showSuggestion="true" showValueHelp="true"
+						change=".onChange($event, 'Missione')" valueHelpRequest=".onValueHelpRequest($event, 'Missione')" suggest=".onSuggest($event, 'Missione')"
+						suggestionItemSelected=".onSuggestionItemSelected($event, 'Missione')" />
+						<!--suggestionItems="{path: '/ZES_MISSIONEEXT_SET', sorter: { path: 'Numemissione' }}">
+						<suggestionItems>
+							<core:ListItem text="{Numemissione}" additionalText="{Descmiss}"/>
+						</suggestionItems>
+					</Input>-->
+					<Label text="{i18n>Programma}" labelFor="Programma"/>
+					<Input width="80%" id="Programma" maxSuggestionWidth="80%" placeholder="Inserisci Programma" showSuggestion="true" showValueHelp="true"
+						change=".onChange($event, 'Programma')" valueHelpRequest=".onValueHelpRequest($event, 'Programma')" suggest=".onSuggest($event, 'Programma')"
+						suggestionItemSelected=".onSuggestionItemSelected($event, 'Programma')" />
+						<!--suggestionItems="{path: '/ZES_PROGRAMMAEXT_SET', sorter: { path: 'Numeprogramma' }}">
+						<suggestionItems>
+							<core:ListItem text="{Numeprogramma}" additionalText="{Descprog}"/>
+						</suggestionItems>
+					</Input>-->
+					<Label text="{i18n>Azione}" labelFor="Azione"/>
+					<Input width="80%" id="Azione" maxSuggestionWidth="90%" placeholder="Inserisci Azione" showSuggestion="true" showValueHelp="true"
+						change=".onChange($event, 'Azione')" valueHelpRequest=".onValueHelpRequest($event, 'Azione')" suggest=".onSuggest($event, 'Azione')"
+						suggestionItemSelected=".onSuggestionItemSelected($event, 'Azione')" />
+						<!--suggestionItems="{path: '/ZES_AZIONEEXT_SET', sorter: { path: 'Codiazione' }}">
+						<suggestionItems>
+							<core:ListItem text="{Codiazione}" additionalText="{Descazione}"/>
+						</suggestionItems>
+					</Input>-->
+					<Label text="{i18n>Capitolo}" labelFor="Capitolo"/>
+					<Input width="80%" id="Capitolo" maxSuggestionWidth="80%" placeholder="Inserisci Capitolo" showSuggestion="true" showValueHelp="true"
+						change="onChange($event, 'Capitolo')" valueHelpRequest=".onValueHelpRequest($event, 'Capitolo')" suggest=".onSuggest($event, 'Capitolo')"
+						suggestionItemSelected=".onSuggestionItemSelected($event, 'Capitolo')" />
+						<!--suggestionItems="{path: '/ZES_CAPITOLO_SET', sorter: { path: 'NumeCap' }}">
+						<suggestionItems>
+							<core:ListItem text="{NumeCap}" additionalText="{CapDescTestoI}"/>
+						</suggestionItems>
+					</Input>-->
+					<Label text="{i18n>PG}" labelFor="PG"/>
+					<Input width="80%" id="PG" maxSuggestionWidth="60%" placeholder="Inserisci Piano di Gestione" showSuggestion="true" showValueHelp="true"
+						change="onChange($event, 'PG')" valueHelpRequest=".onValueHelpRequest($event, 'PG')" suggest=".onSuggest($event, 'PG')" suggestionItemSelected=".onSuggestionItemSelected($event, 'PG')"/>
+						<!--suggestionItems="{path: '/ZES_PIANGEST_SET', sorter: { path: 'NumePig' }}">
+						<suggestionItems>
+							<core:ListItem text="{NumePig}" additionalText="{CapPgDescTestoI}"/>
+						</suggestionItems>
+					</Input>-->
+					<Label text="{i18n>Titolo}" labelFor="Titolo"/>
+					<Input width="80%" id="Titolo" maxSuggestionWidth="80%" placeholder="Inserisci Titolo" showSuggestion="true" showValueHelp="true"
+						change="onChange($event, 'Titolo')" valueHelpRequest=".onValueHelpRequest($event, 'Titolo')" suggest=".onSuggest($event, 'Titolo')"
+						suggestionItemSelected=".onSuggestionItemSelected($event, 'Titolo')" />
+						<!--suggestionItems="{path: '/ZES_CE_TIT_SET', sorter: { path: 'Numecodtitolo' }}">
+						<suggestionItems>
+							<core:ListItem text="{Numecodtitolo}" additionalText="{Desctit}"/>
+						</suggestionItems>
+					</Input>-->
+					<Label text="{i18n>Categoria}" labelFor="Categoria"/>
+					<Input width="80%" id="Categoria" maxSuggestionWidth="80%" placeholder="Inserisci Categoria" showSuggestion="true" showValueHelp="true"
+						change="onChange($event, 'Categoria')" valueHelpRequest=".onValueHelpRequest($event, 'Categoria')" suggest=".onSuggest($event, 'Categoria')"
+						suggestionItemSelected=".onSuggestionItemSelected($event, 'Categoria')" />
+						<!--suggestionItems="{path: '/ZES_CE_CAT_SET', sorter: { path: 'Numecodcategoria' }}">
+						<suggestionItems>
+							<core:ListItem text="{Numecodcategoria}" additionalText="{Desccat}"/>
+						</suggestionItems>
+					</Input>-->
+					<Label text="{i18n>CE2}" labelFor="CE2"/>
+					<Input width="80%" id="CE2" maxSuggestionWidth="80%" placeholder="Inserisci CE2" showSuggestion="true" showValueHelp="true" change="onChange($event, 'CE2')"
+						valueHelpRequest=".onValueHelpRequest($event, 'CE2')" suggest=".onSuggest($event, 'CE2')" 
+						suggestionItemSelected=".onSuggestionItemSelected($event, 'CE2')"/>
+						<!--suggestionItems="{path: '/ZES_CE_CE2_SET', sorter: { path: 'Numecodce2' }}">
+						<suggestionItems>
+							<core:ListItem text="{Numecodce2}" additionalText="{Descce2}"/>
+						</suggestionItems>
+					</Input>-->
+					<Label text="{i18n>CE3}" labelFor="CE3"/>
+					<Input width="80%" id="CE3" maxSuggestionWidth="80%" placeholder="Inserisci CE3" showSuggestion="true" showValueHelp="true" change="onChange($event, 'CE3')"
+						valueHelpRequest=".onValueHelpRequest($event, 'CE3')" suggest=".onSuggest($event, 'CE3')" suggestionItemSelected=".onSuggestionItemSelected($event, 'CE3')"/>
+						<!--suggestionItems="{path: '/ZES_CE_CE3_SET', sorter: { path: 'Numecodce3' }}">
+						<suggestionItems>
+							<core:ListItem text="{Numecodce3}" additionalText="{Descce3}"/>
+						</suggestionItems>
+					</Input>-->
+					<core:Title/>
+					<!--<Label text="{i18n>maxRis}" labelFor="idMaxRis"/>
+					<Input id="idMaxRis" value="{modelFragmPosFin>/MAX_RICERCA}" width="80%"/>-->
+					<!--<Label text="{i18n>DescPosFin}" labelFor="idDescPosFin"/>-->
+					<!--<Input id="idDescPosFin" width="90%" editable="true" visible="false"/>-->
+					<VBox width="90%" height="24px"/>
+					<Label text="{i18n>DescAmmin}" labelFor="idDescAmm"/>
+					<Input id="idDescAmm" width="90%" editable="true"/>
+					<Label text="{i18n>DescCdr}" labelFor="idDescCdr"/>
+					<Input id="idDescCdr" width="90%" editable="true"/>
+					<Label text="{i18n>DescRag}" labelFor="idDescRag"/>
+					<Input id="idDescRag" width="90%" editable="true"/>
+					<Label text="{i18n>DescMiss}" labelFor="idDescMiss"/>
+					<Input id="idDescMiss" width="90%" editable="true"/>
+					<Label text="{i18n>DescProg}" labelFor="idDescProg"/>
+					<Input id="idDescProg" width="90%" editable="true"/>
+					<Label text="{i18n>DescAzio}" labelFor="idDescAzione"/>
+					<Input id="idDescAzione" width="90%" editable="true"/>
+					<Label text="{i18n>DescCap}" labelFor="idDescCapitolo"/>
+					<Input id="idDescCapitolo" width="90%" editable="true"/>
+					<Label text="{i18n>DescPG}" labelFor="idDescrPg"/>
+					<Input id="idDescrPg" width="90%" editable="true"/>
+					<Label text="{i18n>DescTit}" labelFor="idDescrTitolo"/>
+					<Input id="idDescrTitolo" width="90%" editable="true"/>
+					<Label text="{i18n>DescCat}" labelFor="idDescCategoria"/>
+					<Input id="idDescCategoria" width="90%" editable="true"/>
+					<Label text="{i18n>DescCE2}" labelFor="idDescCe2"/>
+					<Input id="idDescCe2" width="90%" editable="true"/>
+					<Label text="{i18n>DescCE3}" labelFor="idDescCe3"/>
+					<Input id="idDescCe3" width="90%" editable="true"/>
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<buttons>
+			<Button press="onClosePosizioneFinanziaria" text="{i18n>Chiudi}"></Button>
+			<Button press="onClearPosFinFrag" text="{i18n>Resetta}"></Button>
+			<Button press="onPressCercaPosizioneFinanziariaFrag" text="{i18n>Cerca}"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

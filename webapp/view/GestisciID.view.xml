@@ -1,0 +1,97 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:zcontrollink="zsap.com.r3.cobi.s4.custposfin.z_s4_zposfinlink.controls"
+	controllerName="zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.GestisciID" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page id="idPageGestisciId" showFooter="true" title="{i18n>title}">
+		<content>
+			<Panel id="idPanelForm" headerText="" width="auto" class="sapUiResponsiveMargin">
+				<f:Form editable="true" id="formNuovaPosFin">
+					<!--<f:title>
+					<core:Title text="{i18n>formTitle}" />
+				</f:title>-->
+					<f:layout>
+						<f:ResponsiveGridLayout labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="12" adjustLabelSpan="true" emptySpanXL="4" emptySpanL="4"
+							emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"></f:ResponsiveGridLayout>
+					</f:layout>
+					<f:formContainers>
+						<f:FormContainer>
+							<f:formElements>
+								<f:FormElement label="{i18n>Proposta}">
+									<Input id="InputNoEdit" class="sapUiTinyMarginEnd" type="Number" placeholder="Scegli {i18n>Proposta}" value="" editable="false">
+										<layoutData>
+											<l:GridData id="idGridInputID" span="XL4 L4 M4 S12"/>
+										</layoutData>
+									</Input>
+									<Button id="openMenu" type="Emphasized" text="{i18n>Proposta}" press="handlePressOpenMenu"/>
+								</f:FormElement>
+								<f:FormElement label="{i18n>NickName}">
+									<Input id="idNickName" editable="{modelChangeControlsStatus>/Editable}" placeholder="Inserisci {i18n>NickName}"/>
+								</f:FormElement>
+								<!--<f:FormElement label="{i18n>Tipologia}">
+								<Input id="idTipologia" editable="false"/>
+							</f:FormElement>-->
+								<f:FormElement label="{i18n>Iter}">
+									<ComboBox id="idIter" editable="{modelChangeControlsStatus>/Iter}" value="" placeholder="Inserisci {i18n>Iter}"
+										items="{ path: 'ZSS4_COBI_PRSP_ESAMOD_SRV>/ZS_VALORI_ITERSet', sorter: { path: 'Ddtext' }, templateShareable:false }">
+										<items>
+											<core:Item key="{ZSS4_COBI_PRSP_ESAMOD_SRV>DomvalueL}" text="{ZSS4_COBI_PRSP_ESAMOD_SRV>Ddtext}"/>
+										</items>
+									</ComboBox>
+								</f:FormElement>
+								<f:FormElement label="{i18n>ScegliNota}" visible="true">
+									<!--change="onChangeNota" selectionChange="onSelChangeNota"-->
+											<Input id="idInputScegliNoteIDProposta" class="sapUiTinyMarginEnd" enabled="true" 
+												placeholder="{i18n>ScegliNota} {i18n>Standard}" showSuggestion="true" showValueHelp="true" 
+												submit="onSubmitIdNota" valueHelpRequest="handleValueHelpScegliNota"/>
+											<Button id="btnCreaNota" type="Emphasized" text="{i18n>Resetta}" press="handlePressResettaNota"/>
+								</f:FormElement>
+								<f:FormElement label="Testo" visible="true">
+									<TextArea id="idNota"  placeholder="Crea {i18n>Nota}" maxLength="2000"
+										showExceededText="true" liveChange="onLiveWriteNota"/>
+								</f:FormElement>
+							</f:formElements>
+						</f:FormContainer>
+					</f:formContainers>
+				</f:Form>
+			</Panel>
+			<Panel headerText="{i18n>PosizioniFin}" width="auto" class="sapUiResponsiveMargin">
+				<!--<VBox class="sapUiSmallMargin">-->
+				<Table id="idTablePosFinGestisciID" inset="false" sticky="HeaderToolbar,ColumnHeaders" growing="true" growingThreshold="10"
+					visible="true">
+					<headerToolbar>
+						<OverflowToolbar>
+							<content>
+								<!--<Title level="H2"/>-->
+								<!--<CheckBox text="Seleziona/Deseleziona tutto" selected="false" select="onParentClicked" visible="false"/>-->
+								<ToolbarSpacer/>
+								<Button id="idBtnAggiungi" enabled="{modelChangeControlsStatus>/Enable}" type="Emphasized" text="{i18n>Aggiungi}" icon="sap-icon://add"
+									press="onPressAggiungiPosFin" tooltip="Scegli {i18n>PosFin}"/>
+							</content>
+						</OverflowToolbar>
+					</headerToolbar>
+					<columns>
+						<Column id="colIdPosFinSel" width="15em" demandPopin="true" vAlign="Middle" hAlign="Center">
+							<Text text="{i18n>PosFin}"/>
+						</Column>
+						<Column id="colTogli" width="6em" demandPopin="true" vAlign="Middle" hAlign="Center">
+							<Text text="{i18n>Elimina}"/>
+						</Column>
+					</columns>
+					<items templateShareable="false">
+					</items>
+				</Table>
+				<!--</VBox>-->
+			</Panel>
+		</content>
+		<footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<!--<Button type="Emphasized" text="{i18n>CreaID}" press="onPressCreaId"/>-->
+				<!--<Button type="Emphasized" text="{i18n>GestisciID}" press="onPressGestisciID"/>-->
+				<Button type="Emphasized" enabled="{modelChangeControlsStatus>/Visible}" text="{i18n>Salva}" press="onPressSalva"/>
+				<Button type="Emphasized" id="btnEliminaProposta" enabled="{modelChangeControlsStatus>/Visible}" text="{i18n>EliminaProposta}" press="onPressEliminaProposta" icon="sap-icon://delete"/>
+				<Button type="Emphasized" text="{i18n>Indietro}" press="onNavBack"/>
+				<Button type="Emphasized" text="{i18n>Home}" press="onPressNavToHome"/>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</mvc:View>
