@@ -72,7 +72,7 @@
 							<layout:VerticalLayout width="100%">
 								<layout:HorizontalLayout>
 									<ObjectStatus id="idSwitchLabelSnap" title="{i18n>attivoDescrPosFin}" class="sapUiTinyMarginTop textBold"/>
-									<Switch id="idSwitchSnapID" type="AcceptReject" state="{= ${modelAnagraficaPf>/Statstatus} === '3' ? false : true}" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Switch tooltip="{i18n>attivaDisattiva}" id="idSwitchSnapID" type="AcceptReject" state="{= ${modelAnagraficaPf>/Statstatus} === '3' ? false : true}" enabled="false"/>
 								</layout:HorizontalLayout>
 								<VBox width="100%"></VBox>
 							</layout:VerticalLayout>
@@ -82,43 +82,43 @@
 								<form:content>
 									<!--<core:Title text=""/>-->
 									<core:Title text=""/>
-									<Label text="Amm."/>
-									<Input value="{modelAnagraficaPf>/Codiceammin}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}">
+									<Label required="true" text="Amm."/>
+									<Input value="{modelAnagraficaPf>/Codiceammin}" textAlign="Center" width="30%" editable="false">
 										<layoutData>
 											<form:ColumnElementData cellsSmall="4" cellsLarge="2"/>
 										</layoutData>
 									</Input>
-									<Input value="{modelAnagraficaPf>/Descrestamministr}" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Input value="{modelAnagraficaPf>/Descrestamministr}" width="90%" editable="false"/>
 									<!--Capitoli e PG con relative switch e label  -->
 									<!-- <Toolbar visible="false"/> -->
 									<Label text="{i18n>pg}" required="true"/>
-									<Input value="{modelAnagraficaPf>/Codicepg}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false">
+									<Input value="{modelAnagraficaPf>/Codicepg}" textAlign="Center" width="30%" editable="false" showValueHelp="false">
 										<layoutData>
 											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
 										</layoutData>
 									</Input>
 									<Label text="{i18n>Capitolo}" required="true"/>
-									<Input id="idCodCap" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" value="{modelAnagraficaPf>/Codicecapitolo}" textAlign="Center" width="30%" showValueHelp="false"
+									<Input id="idCodCap" editable="false" value="{modelAnagraficaPf>/Codicecapitolo}" textAlign="Center" width="30%" showValueHelp="false"
 										valueHelpOnly="false">
 										<layoutData>
 											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
 										</layoutData>
 									</Input>
 									<Label text="{i18n>CdR}" required="true"/>
-									<Input editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" value="{modelAnagraficaPf>/Codicecdr}" textAlign="Center" width="30%" showValueHelp="false" valueHelpOnly="false">
+									<Input editable="false" value="{modelAnagraficaPf>/Codicecdr}" textAlign="Center" width="30%" showValueHelp="false" valueHelpOnly="false">
 										<layoutData>
 											<form:ColumnElementData cellsSmall="4" cellsLarge="2"/>
 										</layoutData>
 									</Input>
-									<Input showValueHelp="false" value="{modelAnagraficaPf>/Descrestcdr}" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
-									<Label text="{i18n>Ragioneria}" required="false"/>
-									<Input editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" value="{modelAnagraficaPf>/Codiceragioneria}" textAlign="Center" width="30%" showValueHelp="falsefalse"
+									<Input showValueHelp="false" value="{modelAnagraficaPf>/Descrestcdr}" width="90%" editable="false"/>
+									<Label text="{i18n>Ragioneria}" required="true"/>
+									<Input editable="false" value="{modelAnagraficaPf>/Codiceragioneria}" textAlign="Center" width="30%" showValueHelp="falsefalse"
 										valueHelpOnly="false">
 										<layoutData>
 											<form:ColumnElementData cellsSmall="4" cellsLarge="2"/>
 										</layoutData>
 									</Input>
-									<Input value="{modelAnagraficaPf>/Descrestragioneria}" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Input value="{modelAnagraficaPf>/Descrestragioneria}" width="90%" editable="false"/>
 								</form:content>
 							</form:SimpleForm>
 							<form:SimpleForm editable="true" layout="ColumnLayout" labelSpanXL="1" labelSpanL="1" labelSpanM="1" labelSpanS="12" adjustLabelSpan="false"
@@ -126,81 +126,81 @@
 								<form:content>
 									<core:Title text=""/>
 									<Label text="{i18n>Missione}" required="true"/>
-									<Input showValueHelp="false" value="{modelAnagraficaPf>/Codicemissione}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}">
+									<Input showValueHelp="false" value="{modelAnagraficaPf>/Codicemissione}" textAlign="Center" width="30%" editable="false">
 										<layoutData>
 											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
 										</layoutData>
 									</Input>
-									<Input value="{= ${modelAnagraficaPf>/Descrestesami}.toUpperCase()}" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false"/>
+									<Input value="{= ${modelAnagraficaPf>/Descrestesami}.toUpperCase()}" width="90%" editable="false" showValueHelp="false"/>
 									<Label text="{i18n>Programma}" required="true"/>
-									<Input showValueHelp="false" value="{modelAnagraficaPf>/Codiceprogramma}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}">
+									<Input showValueHelp="false" value="{modelAnagraficaPf>/Codiceprogramma}" textAlign="Center" width="30%" editable="false">
 										<layoutData>
 											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
 										</layoutData>
 									</Input>
-									<Input value="{= ${modelAnagraficaPf>/Descrestesapr}.toUpperCase()}" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false"/>
+									<Input value="{= ${modelAnagraficaPf>/Descrestesapr}.toUpperCase()}" width="90%" editable="false" showValueHelp="false"/>
 									<Label text="{i18n>Azione}" required="true"/>
-									<Input showValueHelp="false" value="{modelAnagraficaPf>/Codiceazione}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}">
+									<Input showValueHelp="false" value="{modelAnagraficaPf>/Codiceazione}" textAlign="Center" width="30%" editable="false">
 										<layoutData>
 											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
 										</layoutData>
 									</Input>
-									<Input value="{= ${modelAnagraficaPf>/Descrestesaaz}.toUpperCase() }" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false"/>
+									<Input value="{= ${modelAnagraficaPf>/Descrestesaaz}.toUpperCase() }" width="90%" editable="false" showValueHelp="false"/>
 								</form:content>
 							</form:SimpleForm>
 							<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" emptySpanL="9" labelSpanS="12" layout="ColumnLayout" columnsM="1"
 								columnsL="1" columnsXL="1">
 								<form:content>
-									<Label text="{i18n>Udv}" labelFor="idInputUdv"/>
-									<Input id="idInputUdv" showValueHelp="true" value=" " textAlign="Center" width="100%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" valueHelpRequest="onHVFormPosFin"
+									<Label required="true" text="{i18n>Udv}" labelFor="idInputUdv"/>
+									<Input id="idInputUdv" showValueHelp="true" value=" " textAlign="Center" width="100%" editable="false" valueHelpRequest="onHVFormPosFin"
 										valueHelpOnly="true"/>
-									<Input id="idInputDescUdv" width="100%" value=" " editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false" class=""></Input>
+									<Input id="idInputDescUdv" width="100%" value=" " editable="false" showValueHelp="false" class=""></Input>
 								</form:content>
 							</form:SimpleForm>
 							<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" labelSpanS="12" layout="ColumnLayout" columnsM="1" columnsL="1" columnsXL="1">
 								<form:content>
 									<Label text="{i18n>Titolo}" required="true"/>
-									<Input value="{modelAnagraficaPf>/Codicetitolo}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false" valueHelpOnly="false">
+									<Input value="{modelAnagraficaPf>/Codicetitolo}" textAlign="Center" width="30%" editable="false" showValueHelp="false" valueHelpOnly="false">
 										<layoutData>
 											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
 										</layoutData>
 									</Input>
-									<Input value="{modelAnagraficaPf>/Descrtitolo}" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Input value="{modelAnagraficaPf>/Descrtitolo}" width="90%" editable="false"/>
 									<Label text="{i18n>Categoria}" required="true"/>
-									<Input value="{modelAnagraficaPf>/Codicecategoria}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false"
+									<Input value="{modelAnagraficaPf>/Codicecategoria}" textAlign="Center" width="30%" editable="false" showValueHelp="false"
 										valueHelpOnly="false">
 										<layoutData>
 											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
 										</layoutData>
 									</Input>
-									<Input value="{modelAnagraficaPf>/Descrcategoria}" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Input value="{modelAnagraficaPf>/Descrcategoria}" width="90%" editable="false"/>
 									<Label text="{i18n>CE2}" required="true"/>
-									<Input value="{modelAnagraficaPf>/Codiceclaeco2}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false"
+									<Input value="{modelAnagraficaPf>/Codiceclaeco2}" textAlign="Center" width="30%" editable="false" showValueHelp="false"
 										valueHelpOnly="false">
 										<layoutData>
 											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
 										</layoutData>
 									</Input>
-									<Input value="{modelAnagraficaPf>/Descrclaeco2}" width="90%" showValueHelp="false" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Input value="{modelAnagraficaPf>/Descrclaeco2}" width="90%" showValueHelp="false" editable="false"/>
 									<Label text="{i18n>CE3}" required="true"/>
-									<Input value="{modelAnagraficaPf>/Codiceclaeco3}" textAlign="Center" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="falsefalse"
+									<Input value="{modelAnagraficaPf>/Codiceclaeco3}" textAlign="Center" width="30%" editable="false" showValueHelp="falsefalse"
 										valueHelpOnly="false">
 										<layoutData>
 											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
 										</layoutData>
 									</Input>
-									<Input value="{modelAnagraficaPf>/Descrclaeco3}" width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Input value="{modelAnagraficaPf>/Descrclaeco3}" width="90%" editable="false"/>
 									</form:content>
 							</form:SimpleForm>
 										<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" labelSpanS="12" layout="ColumnLayout" columnsM="1" columnsL="1" columnsXL="1">
 								<form:content>
-									<Label text="{i18n>Mac}"/>
-									<Input value="{modelAnagraficaPf>/Numemacspe}" width="30%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" showValueHelp="false" valueHelpOnly="false">
+									<Label required="true" text="{i18n>Mac}"/>
+									<Input value="{modelAnagraficaPf>/Numemacspe}" width="30%" editable="false" showValueHelp="false" valueHelpOnly="false">
 										<layoutData>
 											<form:ColumnElementData cellsSmall="3" cellsLarge="2"/>
 										</layoutData>
 									</Input>
-									<Input width="90%" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" tooltip=" " value="{modelAnagraficaPf>/Descrestesamacroagg}"/>
+									<Input width="90%" editable="false" tooltip=" " value="{modelAnagraficaPf>/Descrestesamacroagg}"/>
 								</form:content>
 							</form:SimpleForm>
 							<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" labelSpanS="12" layout="ColumnLayout" columnsM="1"
@@ -208,63 +208,67 @@
 								<form:content>
 									<core:Title text=""/>
 									<Label text="{i18n>TipoSpesa}"/>
-									<Select width="35%" selectedKey="{modelAnagraficaPf>/Desctipocap}" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}">
-										<core:Item key="{modelAnagraficaPf>/Desctipocap}" text="{modelAnagraficaPf>/Desctipocap}"/>
+									<Select width="35%" selectedKey="{modelAnagraficaPf>/Desctipocap}" items="{ path: '/ZCA_AF_TIPOSPCAPSet', sorter: { path: 'Codicetipospcapspe' }}"
+										enabled="false">
+										<core:Item key="{modelAnagraficaPf>/Desctipocap}" text="{modelAnagraficaPf>/Desctipocap}"/><!-- Codicetipospcapspe lt capire -->
 									</Select>
 									<Label text="{i18n>TipoFondo}"/>
-									<Select width="35%" selectedKey="{modelAnagraficaPf>/Descrestesafon}" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}">
+									<Select width="35%" selectedKey="{modelAnagraficaPf>/Descrestesafon}" enabled="false">
 										<core:Item key="" text=""/>
 									</Select>
 									<Label text="{i18n>PerMemoria}"/>
-									<!-- <CheckBox selected="{= ${modelAnagraficaPf>/Flagmemcor01}.toUpperCase() === 'X' ? true : false}" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/> -->
+									<CheckBox selected="{= ${modelAnagraficaPf>/Flagmemcor01}.toUpperCase() === 'X' ? true : false}" editable="false"/>
 								</form:content>
 							</form:SimpleForm>
 							<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" labelSpanS="12" layout="ColumnLayout" columnsM="1" columnsL="1" columnsXL="1">
 								<form:content>
 									<core:Title id="titleDenCaap" text="{i18n>DenominazioneCapitolo}" class="sapUiNoPadding"/>
-									<Label text="{i18n>CodStandard}" labelFor="test"/>
-									<Input width="10%" required="true" id="idCodStdCap" value="{modelAnagraficaPf>/Coddenomstdcap}" showValueHelp="false"
-										editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Label text="{i18n>CodStandard}" required="false" labelFor="test"/>
+									<Input width="10%"  id="idCodStdCap" value="{modelAnagraficaPf>/Coddenomstdcap}" showValueHelp="false"
+										editable="false"/>
 									<Label text="{i18n>DenInt}" labelFor="test"/>
 									<!-- DA VERIFICARE CONDIZIONE EDITABLE
 									<TextArea id="idDenIntCap" required="true" rows="5" maxLength="4000" showExceededText="true" width="85%"
 										value="{= ${modelAnagraficaPf>/Descrizionecapitolo}}" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" editable="{= (${modelAnagraficaPf>Coddenomstdcap} == '000' ? true : false )}"/>-->
 									<TextArea id="idDenIntCap" required="true" rows="5" maxLength="4000" showExceededText="true" width="85%"
-										value="{= ${modelAnagraficaPf>/Descrizionecapitolo}}" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+										value="{= ${modelAnagraficaPf>/Descrizionecapitolo}}" enabled="{= ${modelAnagraficaPf>/Coddenomstdcap} === '000' ? true : false }"/>
 									<Label text="{i18n>DenRid}" labelFor="test"/>
 									<!--<TextArea rows="5" maxLength="4000" showExceededText="true" width="85%" required="true" id="idDenRidCap" value="{modelAnagraficaPf>/Descrbrevecap}"
 										visible="true" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" editable="{= (${modelAnagraficaPf>Coddenomstdcap} == '000' ? true : false )}"/>-->
 									<TextArea rows="5" maxLength="4000" showExceededText="true" width="85%" required="true" id="idDenRidCap" value="{modelAnagraficaPf>/Descrbrevecap}"
-										visible="true" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+										visible="true" enabled="{= ${modelAnagraficaPf>/Coddenomstdcap} === '000' ? true : false }"/>
 								</form:content>
 							</form:SimpleForm>
 							<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" labelSpanS="12" layout="ColumnLayout" columnsM="1" columnsL="1" columnsXL="1">
 								<form:content>
 									<core:Title text="{i18n>DenominazionePG}"/>
 									<Label text="{i18n>CodStandard}" labelFor="test"/>
-									<Input width="10%" required="true" id="idCodStdPG" value="{modelAnagraficaPf>/Coddenomstdpg}" showValueHelp="false"
-										editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+									<Input width="10%" id="idCodStdPG" value="{modelAnagraficaPf>/Coddenomstdpg}" showValueHelp="false"
+										editable="false"/>
 									<Label text="{i18n>DenInt}" labelFor="test"/>
 									<!--<TextArea rows="5" maxLength="4000" showExceededText="true" required="true" id="idDenIntPG" value="{modelAnagraficaPf>/Descrizionepg}"
 										width="85%" visible="true" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" editable="{= (${modelAnagraficaPf>Coddenomstdcap} == '000' ? true : false )}"/>-->
 									<TextArea rows="5" maxLength="4000" showExceededText="true" required="true" id="idDenIntPG" value="{modelAnagraficaPf>/Descrizionepg}"
-										width="85%" visible="true" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+										width="85%" visible="true" enabled="{= ${modelAnagraficaPf>/Coddenomstdpg} === '000' ? true : false }"/>
 									<Label text="{i18n>DenRid}" labelFor="test"/>
 									<!--<TextArea rows="5" maxLength="4000" showExceededText="true" width="85%" required="true" id="idDenRidPG" value="{modelAnagraficaPf>/Descrbrevepg}"
 										visible="true" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" editable="{= (${modelAnagraficaPf>Coddenomstdcap} == '000' ? true : false )}"/>-->
 									<TextArea rows="5" maxLength="4000" showExceededText="true" width="85%" required="true" id="idDenRidPG" value="{modelAnagraficaPf>/Descrbrevepg}"
-										visible="true" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+										visible="true" enabled="{= ${modelAnagraficaPf>/Coddenomstdpg} === '000' ? true : false }"/>
 								</form:content>
 							</form:SimpleForm>
 							<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" labelSpanS="12" layout="ColumnLayout" columnsM="1" columnsL="1" columnsXL="1">
 								<form:content>
 									<core:Title text="{i18n>AltriValori}"/>
 									<Label text="{i18n>TipoSpesaPG}" required="false" labelFor="test"/>
-									<Select width="35%" selectedKey="{modelAnagraficaPf>/Desctipopg}" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}">
+									<!-- <Select width="35%" selectedKey="{modelAnagraficaPf>/Desctipopg}" editable="true" >
 										<core:Item key="{modelAnagraficaPf>/Desctipopg}" text="{modelAnagraficaPf>/Desctipopg}"/>
+									</Select> -->
+									<Select width="35%" selectedKey="{modelAnagraficaPf>/Desctipopg}" editable="true" items="{ path: '/ZCA_AF_TIPOSPPGSet', sorter: { path: 'Codicetiposppspe' }}" >
+										<core:Item key="{Codicetiposppspe}" text="{Desctipopg}"/>
 									</Select>
 									<Label text="{i18n>ObMinisteri}"/>
-									<!-- <CheckBox selected="{modelAnagraficaPf>/Flagobmin01spe}" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"/> -->
+									<CheckBox selected="{modelAnagraficaPf>/Flagobmin01spe}" editable="false"/>
 								</form:content>
 							</form:SimpleForm>
 						</Panel>
@@ -331,14 +335,14 @@
 								adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2"
 								singleContainerFullSize="false" visible="{modelvisibleAnag>/visible}">
 								<form:content>
-									<!-- <Label id="idLabelFo" text="{i18n>FODescr}" design="Bold"/>
-									<Checkbox id="checkboxFO"
+									<Label id="idLabelFo" text="{i18n>FODescr}" design="Bold"/>
+									<CheckBox id="checkboxFO"
 										selected="{= ${modelAnagraficaPf>Codifofpspe} === '' ? false : ${modelAnagraficaPf>Codifofpspe}.toUpperCase() === 'FO' ? true : false }" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"
 										select="onSelectionFO"/>
 									<Label id="idLabelFP" text="{i18n>FPDescr}" design="Bold"/>
-									<Checkbox id="checkboxFP"
+									<CheckBox id="checkboxFP"
 										selected="{= ${modelAnagraficaPf>Codifofpspe} === '' ? false : ${modelAnagraficaPf>Codifofpspe}.toUpperCase() === 'FP' ? true : false }" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"
-										select="onSelectionFP"/> -->
+										select="onSelectionFP"/>
 								</form:content>
 							</form:SimpleForm>
 						</Panel>

@@ -1,0 +1,39 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns:uxap="sap.uxap"
+	xmlns:l="sap.ui.layout">
+	<Dialog   title="{i18n>COFOG}" contentWidth="50%" contentHeight="auto">
+		<content>
+			<Table id="tableCafog" items="{modelCofog>/}" mode="MultiSelect">
+				<columns>
+					<Column >
+						<Text text="{i18n>COFOG1}" class="boldCss"/>
+					</Column>
+					<Column>
+						<Text text="{i18n>COFOG2}" class="boldCss"/>
+					</Column>
+					<Column>
+						<Text text="{i18n>COFOG3}" class="boldCss"/>
+					</Column>
+					<Column>
+						<Text text="{i18n>DescrCofog}" vAlign="Center" class="boldCss"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem vAlign="Middle">
+						<cells>
+							<Text text="{modelCofog>CodCofogL1}"/>
+							<Text text="{modelCofog>CodCofogL2}"/>
+							<Text text="{modelCofog>CodCofogL3}"/>
+							<Text text="{modelCofog>Descrizione}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+		<beginButton>
+			<Button text="{i18n>conferma}" press="onAddCofog" type="Emphasized"></Button>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>chiudi}" press="onClose" type="Emphasized"></Button>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

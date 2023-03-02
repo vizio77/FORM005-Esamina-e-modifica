@@ -2003,7 +2003,152 @@ sap.ui.define([
 			var path = oEvent.getSource().getBindingContext("modelAnagraficaCofog").getPath();
 			this.getView().getModel("modelAnagraficaCofog").setProperty( path +"/Perccofog", newValue);
 			//oInput.setValue(newValue);
-		}
+		},
+		/* onShowCofog: async function() {
+            var aRes = await this.readFromDb("4", "/ZET_GET_COFOGSet", [], [], "");
+            this._oDialog = sap.ui.xmlfragment(
+                "zsap.com.r3.cobi.s4.esamoModSpese.view.fragments.TabCofog",
+                this);
+            this._oDialog.setModel(new JSONModel(aRes), "modelCofog");
+            this.getView().addDependent(this._oDialog);
+            this._oDialog.open();
+        },
+        onAddCofog: function() {
+            var oTable = sap.ui.getCore().byId("tableCafog");
+            var aDataSelected = oTable.getSelectedContextPaths();
+            var aModelCofog = this._oDialog.getModel("modelCofog").getData();
+            var aModelCofogTable = this.getView().getModel("modelAnagraficaCofog").getData();
+            var sFipex = this.getView().getModel("modelTestata").getData().Fipex.replaceAll(".", "");
+            for (var i = 0; i < aDataSelected.length; i++) {
+                var index = aDataSelected[i].split("/")[1];
+                var o = {
+                    "Codcofogl1": aModelCofog[index].CodCofogL1,
+                    "Codcofogl2": aModelCofog[index].CodCofogL2,
+                    "Codcofogl3": aModelCofog[index].CodCofogL3,
+                    "Descrcofog": aModelCofog[index].Descrizione,
+                    "Fikrs": aModelCofog[index].Fikrs,
+                    "Fipex": sFipex,
+                    "Anno": aModelCofog[index].Anno,
+                    "Fase": aModelCofog[index].Fase,
+                    "Reale": aModelCofog[index].Reale,
+                    "Versione": aModelCofog[index].Versione,
+                    "Eos": "S",
+                    "CodConcatenato": aModelCofog[index].CodConcatenato,
+                    "Livello": aModelCofog[index].Livello, //FORSE QUESTO NON SERVE
+                    "Perccofog": "0",
+                    "status": "new",
+                };
+                aModelCofogTable.push(o);
+            }
+            this.getView().getModel("modelAnagraficaCofog").refresh();
+            this.onClose();
+        },
+        onClose: function() {
+            this._oDialog.close();
+            this._oDialog.destroy();
+            this._oDialog = undefined;
+        },
+        onDeleteCofog: async function(oEvent) {
+            var aData = this.getView().getModel("modelAnagraficaCofog").getData();
+            if (aData.length === 1) {
+                MessageBox.warning(this.getResourceBundle().getText("WCOFOG"));
+            } else {
+                var oItemSelected = oEvent.getSource().getBindingContext("modelAnagraficaCofog").sPath;
+                var iIndex = oItemSelected.split("/")[1];
+                try {
+                    var oToDelete = aData.splice(iIndex, 1);
+                    this.getView().setModel(new JSONModel(oToDelete), "modelCogofDelete");
+                    this.getView().getModel("modelAnagraficaCofog").refresh()
+                } catch (e) {}
+            }
+        },
+        _formOBJ: function(oObj) {
+            var sFipex = this.getView().getModel("modelTestata").getData().Fipex.replaceAll(".", "");
+            var newOBJ = {
+                "Fikrs": oObj.Fikrs,
+                "Anno": oObj.Anno,
+                "Fase": oObj.Fase,
+                "Reale": oObj.Reale,
+                "Versione": oObj.Versione,
+                "Fipex": sFipex,
+                "Eos": oObj.Eos,
+                "Codcofogl1": oObj.Codcofogl1,
+                "Codcofogl2": oObj.Codcofogl2,
+                "Codcofogl3": oObj.Codcofogl3,
+                "Codconcatenato": oObj.CodConcatenato,
+                "Perccofog": oObj.Perccofog,
+                "Descrcofog": oObj.Descrcofog
+            };
+            if (!newOBJ.Codconcatenato) {
+                newOBJ.Codconcatenato = oObj.Codconcatenato
+            }
+            return newOBJ;
+        },
+        onSave: async function() {
+            var iSum = 0;
+            var aData = this.getView().getModel("modelAnagraficaCofog").getData();
+            var aDataAnag = this.getView().getModel("modelAnagraficaPf").getData();
+            if (aData.length === 1 && aData.Perccofog === "0") {
+                MessageBox.warning(this.getResourceBundle().getText("WCOFOG0PERC"));
+                return;
+            } else {
+                for (var i = 0; i < aData.length; i++) {
+                    iSum = iSum + parseInt(aData[i].Perccofog);
+                    if (iSum > 100) {
+                        MessageBox.warning(this.getResourceBundle().getText("WCOFOGMORED"));
+                        return;
+                    }
+                }
+                if (iSum === 100) {
+                    if (this.getView().getModel("modelCogofDelete")) {
+                        var sModelCofog = this.getView().getModel("modelCogofDelete").getData();
+                        for (var j = 0; j < sModelCofog.length; j++) {
+                            var sEntity = "/CofogSet(Fikrs='" + aDataAnag.Fikrs + "',Anno='" + aDataAnag.Anno + "',Fase='" + aDataAnag.Fase + "',Reale='" +
+                                aDataAnag.Reale + "',Versione='" + aDataAnag.Versione + "',Fipex='" + sModelCofog[j].Fipex.replaceAll(".", "") +
+                                "',Eos='S',Codcofogl1='" + sModelCofog[j].Codcofogl1 + "',Codcofogl2='" + sModelCofog[j].Codcofogl2 + "',Codcofogl3='" +
+                                sModelCofog[j].Codcofogl3 +
+                                "')";
+                            try {
+                                await this.deleteRecord("4", sEntity);
+                            } catch (e) {
+                                MessageBox.warning(this.getResourceBundle().getText("NOSAVE"));
+                                return;
+                            }
+                        }
+                    }
+                    for (var i = 0; i < aData.length; i++) {
+                        var oObject = this._formOBJ(aData[i]);
+                        if (aData[i].status && aData[i].status === "new") {
+                            try {
+                                await this.insertRecord("4", "/CofogSet", oObject);
+                                aData[i].status = "";
+                            } catch (e) {
+                                MessageBox.warning(this.getResourceBundle().getText("NOSAVE"));
+                                return;
+                            }
+                        } else {
+                            var sEntity = "/CofogSet(Fikrs='" + aDataAnag.Fikrs + "',Anno='" + aDataAnag.Anno + "',Fase='" + aDataAnag.Fase + "',Reale='" +
+                                aDataAnag.Reale + "',Versione='" + aDataAnag.Versione + "',Fipex='" + oObject.Fipex + "',Eos='S',Codcofogl1='" + oObject.Codcofogl1 +
+                                "',Codcofogl2='" + oObject.Codcofogl2 + "',Codcofogl3='" + oObject.Codcofogl3 +
+                                "')";
+                            try {
+                                await this.modifyRecord("4", sEntity, oObject);
+                            } catch (e) {
+                                MessageBox.warning(this.getResourceBundle().getText("NOSAVE"));
+                                return;
+                            }
+                        }
+                    }
+                } else {
+                    MessageBox.warning(this.getResourceBundle().getText("WCOFOGMORED"));
+                    return;
+                }
+                MessageBox.success(this.getResourceBundle().getText("SAVE"));
+                if (this.getView().getModel("modelCogofDelete")) {
+                    this.getView().getModel("modelCogofDelete").setData({});
+                }
+            }
+        } */
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

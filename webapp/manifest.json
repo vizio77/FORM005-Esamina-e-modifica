@@ -167,7 +167,7 @@
                 {
                     "pattern": "",
                     "name": "appHome",
-                    "target": "Home"
+                    "target": "PosizioneFinanziaria"
                 },
                 {
                     "pattern": "PosizioneFinanziaria",
