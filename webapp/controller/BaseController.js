@@ -17,6 +17,59 @@ sap.ui.define([
 		getRouter: function() {
 			return sap.ui.core.UIComponent.getRouterFor(this);
 		},
+		//lt codice cross
+		readFromDb: function(sDbSource, sEntitySet, aFilters, aSorters, sExpand) {
+			var aReturn = this._getDbOperationReturn();
+			var oModel = this._getDbModel(sDbSource);
+			var sUrlParamtersExpand = sExpand === "" ? {} : {
+				"$expand": sExpand
+			};
+
+			return new Promise(function(resolve, reject) {
+				oModel.read(sEntitySet, {
+					filters: aFilters,
+					sorters: aSorters,
+					urlParameters: sUrlParamtersExpand,
+					success: function(oData) {
+						aReturn.returnStatus = true;
+						if (oData.results === undefined) {
+							aReturn.data = oData;
+						} else {
+							aReturn.data = oData.results;
+						}
+
+						resolve(aReturn.data);
+						// return resolve(aReturn.data);
+					},
+					error: function(e) {
+						aReturn.returnStatus = false;
+						reject(e);
+						// return reject(e);
+					}
+				});
+			});
+		},
+
+		_getDbOperationReturn: function() {
+			return {
+				returnStatus: false,
+				data: []
+			};
+		},
+
+		_getDbModel: function(sDbSource) {
+
+			switch (sDbSource) {
+				case "1":
+					return this.getOwnerComponent().getModel("modelGestTipologicheSRV");
+				case "2":
+					return this.getOwnerComponent().getModel("AmministrazioneOdata");
+				case "3":
+					return this.getOwnerComponent().getModel("modelSapReadTree");
+				case "4":
+					return this.getOwnerComponent().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");
+			}
+		},
 
 		onPressInformations: function(event, view) {
 			var oButton = event.getSource();

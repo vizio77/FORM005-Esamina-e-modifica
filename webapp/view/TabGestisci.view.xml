@@ -72,7 +72,7 @@
 							<layout:VerticalLayout width="100%">
 								<layout:HorizontalLayout>
 									<ObjectStatus id="idSwitchLabelSnap" title="{i18n>attivoDescrPosFin}" class="sapUiTinyMarginTop textBold"/>
-									<Switch tooltip="{i18n>attivaDisattiva}" id="idSwitchSnapID" type="AcceptReject" state="{= ${modelAnagraficaPf>/Statstatus} === '3' ? false : true}" enabled="false"/>
+									<Switch tooltip="{i18n>attivaDisattiva}" id="idSwitchSnapID" type="AcceptReject" state="{= ${modelAnagraficaPf>/Statstatus} === '3' ? false : true}" enabled="true"/>
 								</layout:HorizontalLayout>
 								<VBox width="100%"></VBox>
 							</layout:VerticalLayout>
@@ -231,12 +231,12 @@
 									<TextArea id="idDenIntCap" required="true" rows="5" maxLength="4000" showExceededText="true" width="85%"
 										value="{= ${modelAnagraficaPf>/Descrizionecapitolo}}" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" editable="{= (${modelAnagraficaPf>Coddenomstdcap} == '000' ? true : false )}"/>-->
 									<TextArea id="idDenIntCap" required="true" rows="5" maxLength="4000" showExceededText="true" width="85%"
-										value="{= ${modelAnagraficaPf>/Descrizionecapitolo}}" enabled="{= ${modelAnagraficaPf>/Coddenomstdcap} === '000' ? true : false }"/>
+										value="{= ${modelAnagraficaPf>/Descrizionecapitolo}}" editable="{= ${modelAnagraficaPf>/Coddenomstdcap} === '000' ? true : false }"/>
 									<Label text="{i18n>DenRid}" labelFor="test"/>
 									<!--<TextArea rows="5" maxLength="4000" showExceededText="true" width="85%" required="true" id="idDenRidCap" value="{modelAnagraficaPf>/Descrbrevecap}"
 										visible="true" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" editable="{= (${modelAnagraficaPf>Coddenomstdcap} == '000' ? true : false )}"/>-->
 									<TextArea rows="5" maxLength="4000" showExceededText="true" width="85%" required="true" id="idDenRidCap" value="{modelAnagraficaPf>/Descrbrevecap}"
-										visible="true" enabled="{= ${modelAnagraficaPf>/Coddenomstdcap} === '000' ? true : false }"/>
+										visible="true" editable="{= ${modelAnagraficaPf>/Coddenomstdcap} === '000' ? true : false }"/>
 								</form:content>
 							</form:SimpleForm>
 							<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" labelSpanS="12" layout="ColumnLayout" columnsM="1" columnsL="1" columnsXL="1">
@@ -249,12 +249,12 @@
 									<!--<TextArea rows="5" maxLength="4000" showExceededText="true" required="true" id="idDenIntPG" value="{modelAnagraficaPf>/Descrizionepg}"
 										width="85%" visible="true" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" editable="{= (${modelAnagraficaPf>Coddenomstdcap} == '000' ? true : false )}"/>-->
 									<TextArea rows="5" maxLength="4000" showExceededText="true" required="true" id="idDenIntPG" value="{modelAnagraficaPf>/Descrizionepg}"
-										width="85%" visible="true" enabled="{= ${modelAnagraficaPf>/Coddenomstdpg} === '000' ? true : false }"/>
+										width="85%" visible="true" editable="{= ${modelAnagraficaPf>/Coddenomstdpg} === '000' ? true : false }"/>
 									<Label text="{i18n>DenRid}" labelFor="test"/>
 									<!--<TextArea rows="5" maxLength="4000" showExceededText="true" width="85%" required="true" id="idDenRidPG" value="{modelAnagraficaPf>/Descrbrevepg}"
 										visible="true" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" editable="{= (${modelAnagraficaPf>Coddenomstdcap} == '000' ? true : false )}"/>-->
 									<TextArea rows="5" maxLength="4000" showExceededText="true" width="85%" required="true" id="idDenRidPG" value="{modelAnagraficaPf>/Descrbrevepg}"
-										visible="true" enabled="{= ${modelAnagraficaPf>/Coddenomstdpg} === '000' ? true : false }"/>
+										visible="true" editable="{= ${modelAnagraficaPf>/Coddenomstdpg} === '000' ? true : false }"/>
 								</form:content>
 							</form:SimpleForm>
 							<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" labelSpanS="12" layout="ColumnLayout" columnsM="1" columnsL="1" columnsXL="1">
@@ -282,9 +282,11 @@
 							<Table id="TableCofogTab-Id" width="auto" items="{modelAnagraficaCofog>/}">
 								<headerToolbar>
 									<Toolbar >
+										<!-- <Button type="Emphasized" icon="sap-icon://add" text="test nuovi cofog" press="onShowCofog"
+											enabled="{= (${modelPG80>/pg80btnEnable}) &amp;&amp; (${modelInLavorazione>/value})}"/> -->
 										<ToolbarSpacer/>
-										<Button type="Emphasized" icon="sap-icon://add" text="{i18n>Aggiungi} {i18n>COFOG}" press="handleAddCOFOG"
-											enabled="{= (${modelPG80>/pg80btnEnable}) &amp;&amp; (${modelInLavorazione>/value})}"/>
+										<Button type="Emphasized" icon="sap-icon://add" text="{i18n>Aggiungi} {i18n>COFOG}" press="onShowCofog"
+											enabled="{= (${modelPG80>/pg80btnEnable}) &amp;&amp; (${modelInLavorazione>/value})}"/><!-- handleAddCOFOG -->
 									</Toolbar>
 								</headerToolbar>
 								<columns>

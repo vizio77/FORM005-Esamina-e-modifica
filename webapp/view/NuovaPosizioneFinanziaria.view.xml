@@ -328,8 +328,9 @@
 											<m:content>
 												<!-- <m:Title text="{i18n>Cofog}" level="H2"/> -->
 												<!--<CheckBox text="Seleziona/Deseleziona tutto" selected="false" select="onParentClicked" visible="false"/>-->
+												<m:Button type="Emphasized" text="nuova aggiunta" press="onShowCofog"/> 
 												<m:ToolbarSpacer/>
-												<m:Button type="Emphasized" id="idAggiungiRiga" text="{i18n>AggiungiRiga}" press="onPressAddRow"/>
+												<m:Button type="Emphasized" id="idAggiungiRiga" text="{i18n>AggiungiRiga}" press="onPressAddRow"/> <!-- onPressAddRow -->
 											</m:content>
 										</m:OverflowToolbar>
 									</m:headerToolbar>
@@ -527,7 +528,7 @@
 				<!--<m:Text id="AppVersion" class="sapUiTinyMarginBegin" />-->
 				<m:ToolbarSpacer/>
 				<m:Button id="idBtnSalva" type="Emphasized" text="{i18n>Salva}" press="onPressSalvaNPF" visible="true"/>
-				<m:Button type="Emphasized" text="{i18n>Indietro}" press="onNavBack"/>
+				<m:Button type="Emphasized" text="{i18n>Indietro}" press="tornaIndietro"/>
 				<m:Button type="Emphasized" text="{i18n>Home}" press="onPressNavToHome"/>
 			</m:OverflowToolbar>
 		</footer>

@@ -1,12 +1,13 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"./BaseController",
+	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/Fragment",
 	"sap/ui/core/syncStyleClass",
 	"sap/m/MessageBox",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator"
-], function(Controller, BaseController, Fragment, syncStyleClass, MessageBox, Filter, FilterOperator) {
+], function(Controller, BaseController, JSONModel, Fragment, syncStyleClass, MessageBox, Filter, FilterOperator) {
 	"use strict";
 
 	return BaseController.extend("zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.NuovaPosizioneFinanziaria", {
@@ -24,6 +25,20 @@ sap.ui.define([
 				// this.oRouter.getRoute("NuovaPosizioneFinanziaria").attachMatched(this._onRouteMatched, this);
 				this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 				this.aRowsCofog = [];
+			},
+			//lt torno indietro e prima di farlo resetto lo pseudo modello
+			tornaIndietro: function(oEvent){
+				//lt resetto il modello quando torno indietro
+				var oView = this.getView();
+				oView.byId("idMissioneNPF").setEditable(true);
+				oView.byId("idProgrammaNPF").setEditable(true);
+				oView.byId("idAzioneNPF").setEditable(true);
+
+				oView.byId("idTitoloNPF").setEditable(true);
+				oView.byId("idCategoriaNPF").setEditable(true);
+				oView.byId("idCE2NPF").setEditable(true);
+				oView.byId("idCE3NPF").setEditable(true);
+				this.onNavBack();
 			},
 
 			onPressAddRow: function(oEvent) {
@@ -3416,10 +3431,10 @@ sap.ui.define([
 			}
 
 		},
-		/* onShowCofog: async function() {
+		 onShowCofog: async function() {
             var aRes = await this.readFromDb("4", "/ZET_GET_COFOGSet", [], [], "");
             this._oDialog = sap.ui.xmlfragment(
-                "zsap.com.r3.cobi.s4.esamoModSpese.view.fragments.TabCofog",
+                "zsap.com.r3.cobi.s4.esamodModSpesePosFin.view.fragments.TabCofog",
                 this);
             this._oDialog.setModel(new JSONModel(aRes), "modelCofog");
             this.getView().addDependent(this._oDialog);
@@ -3430,7 +3445,11 @@ sap.ui.define([
             var aDataSelected = oTable.getSelectedContextPaths();
             var aModelCofog = this._oDialog.getModel("modelCofog").getData();
             var aModelCofogTable = this.getView().getModel("modelAnagraficaCofog").getData();
-            var sFipex = this.getView().getModel("modelTestata").getData().Fipex.replaceAll(".", "");
+			var sPosFin = this.getView().byId("idPopPosFin").getText();
+			
+			//modelTableCofogNPF
+
+           // var sFipex = this.getView().getModel("modelTestata").getData().Fipex.replaceAll(".", "");
             for (var i = 0; i < aDataSelected.length; i++) {
                 var index = aDataSelected[i].split("/")[1];
                 var o = {
@@ -3439,7 +3458,7 @@ sap.ui.define([
                     "Codcofogl3": aModelCofog[index].CodCofogL3,
                     "Descrcofog": aModelCofog[index].Descrizione,
                     "Fikrs": aModelCofog[index].Fikrs,
-                    "Fipex": sFipex,
+                    "Fipex": sPosFin, //sFipex
                     "Anno": aModelCofog[index].Anno,
                     "Fase": aModelCofog[index].Fase,
                     "Reale": aModelCofog[index].Reale,
@@ -3560,7 +3579,7 @@ sap.ui.define([
                     this.getView().getModel("modelCogofDelete").setData({});
                 }
             }
-        } */
+        } 
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
