@@ -71,7 +71,7 @@
 						<!--<Button id="idBtnCassa" type="Emphasized" text="{i18n>Cassa}" press="onPressNavToCassa"/>-->
 						<!--<Button id="idBtnDocumentale" icon="sap-icon://copy" type="Emphasized" tooltip="{i18n>Documentale}" press="onPressNavToDettaglio"/>-->
 						<Button id="idBtnAssocia" visible="true" type="Emphasized" text="{i18n>AssociaPropostaBtn}"  press="onPressAssocia"/>
-						<Button id="idBtnCreaProposta" type="Emphasized" text="{i18n>Crea} {i18n>Proposta}" press="onPressNavToCreaID"/>
+						<!-- <Button id="idBtnCreaProposta" type="Emphasized" text="{i18n>Crea} {i18n>Proposta}" press="onPressNavToCreaID"/> -->
 						<Button id="idNext" icon="sap-icon://navigation-right-arrow" type="Emphasized" press="onPressNextTreeTable" enabled="{modelIsAfterAvvio>/enabledButtonNext}"/>
 						<Text id="next-column" text="{modelIsAfterAvvio>/beginValueP1} - {modelIsAfterAvvio>/finalValue}" visible="{modelIsAfterAvvio>/enabledButtonNext}"/>
 					</OverflowToolbar>
