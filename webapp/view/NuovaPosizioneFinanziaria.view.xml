@@ -412,8 +412,7 @@
 														</m:items>
 													</m:ComboBox>
 												</f:FormElement>
-												<f:FormElement label="{i18n>ScegliNota}" visible="true">
-													<!--change="onChangeNota" selectionChange="onSelChangeNota"-->
+												<!-- <f:FormElement label="{i18n>ScegliNota}" visible="true">
 															<m:Input id="idInputScegliNoteIDProposta" class="sapUiTinyMarginEnd" enabled="true" 
 																placeholder="{i18n>ScegliNota} {i18n>Standard}" showSuggestion="true" showValueHelp="true" 
 																submit="onSubmitIdNota" valueHelpRequest="handleValueHelpScegliNota"/>
@@ -422,13 +421,22 @@
 												<f:FormElement label="Testo" visible="true">
 													<m:TextArea id="idNota"  placeholder="Crea {i18n>Nota}" maxLength="2000"
 														showExceededText="true" liveChange="onLiveWriteNota"/>
-												</f:FormElement>
+												</f:FormElement> -->
 											</f:formElements>
 										</f:FormContainer>
 									</f:formContainers>
 								</f:Form>
 						
-							<!-- <layout:VerticalLayout class="sapUiMediumMarginBeginEnd sapUiSmallMarginTop">
+							
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<!-- <ObjectPageSection titleUppercase="false" title="Ex proposta">
+				<subSections>
+					<ObjectPageSubSection >
+						<blocks>
+							<layout:VerticalLayout class="sapUiMediumMarginBeginEnd sapUiSmallMarginTop">
 								<layout:HorizontalLayout>
 									<m:Label text="{i18n>Proposta}:" class="sapUiTinyMarginEnd sapUiTinyMarginTop" design="Bold"/>
 									<m:Input id="idIDPropostaNPF" width="10em" editable="false" placeholder="Scegli {i18n>Proposta}"/>
@@ -459,16 +467,14 @@
 							<m:VBox class="sapUiMediumMarginBeginEnd">
 								<m:Label text="{i18n>NickName}:" class="sapUiTinyMarginEnd" design="Bold"/>
 								<m:Input id="idNickNameNPF" width="100%" editable="false"/>
-							</m:VBox> -->
+							</m:VBox>
+							
 						</blocks>
 					</ObjectPageSubSection>
 				</subSections>
-			</ObjectPageSection>
-			<!--<ObjectPageSection titleUppercase="false" title="{i18n>FOFP}">
-				<subSections>
-					<ObjectPageSubSection >
-						<blocks>
-							<m:VBox class="sapUiMediumMarginBeginEnd sapUiMediumMarginBottom" width="95%">
+			</ObjectPageSection> -->
+
+			<!--<m:VBox class="sapUiMediumMarginBeginEnd sapUiMediumMarginBottom" width="95%">
 								<m:Table id="idTableFOFPNPF" inset="false" sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" growing="true" growingThreshold="10"
 									visible="true" items="{modelTableCofogNPF>/}"> 
 									<m:headerToolbar>
@@ -505,11 +511,7 @@
 										</m:ColumnListItem>
 									</m:items>
 								</m:Table>
-							</m:VBox>
-						</blocks>
-					</ObjectPageSubSection>
-				</subSections>
-			</ObjectPageSection>-->
+							</m:VBox>-->
 			<!--<ObjectPageSection titleUppercase="false" title="{i18n>Nota}">
 				<subSections>
 					<ObjectPageSubSection>
