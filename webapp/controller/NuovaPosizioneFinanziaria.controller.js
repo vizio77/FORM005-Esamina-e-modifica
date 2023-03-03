@@ -291,7 +291,7 @@ sap.ui.define([
 										oView.getModel("modelNuovaPosFin").setProperty("/CE2", "");
 										oView.getModel("modelNuovaPosFin").setProperty("/CE3", "");
 
-										oView.getModel("modelTableCofogNPF").setData("");
+										oView.getModel("modelTableCofogNPF").setProperty("/", []);
 										oDialog.open(oButton);
 									}
 								}
@@ -366,7 +366,7 @@ sap.ui.define([
 										oView.getModel("modelNuovaPosFin").setProperty("/CE2", "");
 										oView.getModel("modelNuovaPosFin").setProperty("/CE3", "");
 
-										oView.getModel("modelTableCofogNPF").setData("");
+										oView.getModel("modelTableCofogNPF").setProperty("/", []);
 										oDialog.open(oButton);
 									}
 								}
@@ -456,7 +456,7 @@ sap.ui.define([
 										oView.getModel("modelNuovaPosFin").setProperty("/CE2", "");
 										oView.getModel("modelNuovaPosFin").setProperty("/CE3", "");
 
-										oView.getModel("modelTableCofogNPF").setData("");
+										oView.getModel("modelTableCofogNPF").setProperty("/", []);
 
 										//LOGICA GENERAZIONE CAP AUTOMATICA
 										oDataModel.callFunction("/GeneraCapitolo", { // function import name
@@ -3444,7 +3444,9 @@ sap.ui.define([
             var oTable = sap.ui.getCore().byId("tableCafog");
             var aDataSelected = oTable.getSelectedContextPaths();
             var aModelCofog = this._oDialog.getModel("modelCofog").getData();
-            var aModelCofogTable = this.getView().getModel("modelAnagraficaCofog").getData();
+            //var aModelCofogTable = this.getView().getModel("modelAnagraficaCofog").getData();
+            var aModelCofogModel = this.getView().getModel("modelTableCofogNPF");
+            var aModelCofogTable = this.getView().getModel("modelTableCofogNPF").getProperty("/");
 			var sPosFin = this.getView().byId("idPopPosFin").getText();
 			
 			//modelTableCofogNPF
@@ -3468,9 +3470,33 @@ sap.ui.define([
                     "Livello": aModelCofog[index].Livello, //FORSE QUESTO NON SERVE
                     "Perccofog": "0",
                     "status": "new",
+					"Icon": "sap-icon://delete",
+					"Visible": true
                 };
+
+				/* 
+				var oDati = {
+						Fikrs: "S001",
+						Anno: "",
+						Fase: "DLB",
+						Reale: "",
+						Versione: "P",
+						Fipex: sPosFin,
+						Eos: "S",
+
+						Codcofogl1: sValLiv1,
+						Codcofogl2: sValLiv2,
+						Codcofogl3: sValLiv3,
+						Descrcofog: sValDescr,
+						Codconcatenato: sValIdCofog,
+						Perccofog: "",
+						Icon: "sap-icon://delete",
+						Visible: true
+					}; */
                 aModelCofogTable.push(o);
             }
+			aModelCofogModel.setProperty("/",aModelCofogTable)
+            this.getView().getModel("modelAnagraficaCofog").refresh();
             this.getView().getModel("modelAnagraficaCofog").refresh();
             this.onClose();
         },

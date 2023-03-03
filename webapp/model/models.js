@@ -167,9 +167,7 @@ sap.ui.define([
 
 		getModelTableCofogNPF: function() {
 			//    var sRootPath = jQuery.sap.getModulePath("PropostaSpesaPropostaSpesa");
-			var oJSONLocal = {
-
-			};
+			var oJSONLocal = [];
 			var olocalModelTableCofogNPF = new JSONModel(oJSONLocal);
 			olocalModelTableCofogNPF.setDefaultBindingMode("TwoWay");
 			return olocalModelTableCofogNPF;

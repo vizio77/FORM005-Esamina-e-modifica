@@ -328,9 +328,9 @@
 											<m:content>
 												<!-- <m:Title text="{i18n>Cofog}" level="H2"/> -->
 												<!--<CheckBox text="Seleziona/Deseleziona tutto" selected="false" select="onParentClicked" visible="false"/>-->
-												<m:Button type="Emphasized" text="nuova aggiunta" press="onShowCofog"/> 
+												<!-- <m:Button type="Emphasized" text="nuova aggiunta" press="onShowCofog"/>  -->
 												<m:ToolbarSpacer/>
-												<m:Button type="Emphasized" id="idAggiungiRiga" text="{i18n>AggiungiRiga}" press="onPressAddRow"/> <!-- onPressAddRow -->
+												<m:Button type="Emphasized" id="idAggiungiRiga" text="{i18n>AggiungiRiga}" press="onShowCofog"/> <!-- onPressAddRow -->
 											</m:content>
 										</m:OverflowToolbar>
 									</m:headerToolbar>
