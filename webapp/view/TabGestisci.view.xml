@@ -152,9 +152,9 @@
 								columnsL="1" columnsXL="1">
 								<form:content>
 									<Label required="true" text="{i18n>Udv}" labelFor="idInputUdv"/>
-									<Input id="idInputUdv" showValueHelp="true" value=" " textAlign="Center" width="100%" editable="false" valueHelpRequest="onHVFormPosFin"
+									<Input id="idInputUdv" showValueHelp="true" value="{modelAnagraficaPf>/Codiceudvliv1spe}" textAlign="Center" width="90%" editable="false" valueHelpRequest="onHVFormPosFin"
 										valueHelpOnly="true"/>
-									<Input id="idInputDescUdv" width="100%" value=" " editable="false" showValueHelp="false" class=""></Input>
+									<Input id="idInputDescUdv" width="90%" value="{modelAnagraficaPf>/Codiceudvliv2spe}" editable="false" showValueHelp="false" class=""></Input>
 								</form:content>
 							</form:SimpleForm>
 							<form:SimpleForm editable="true" labelSpanL="1" labelSpanM="1" labelSpanS="12" layout="ColumnLayout" columnsM="1" columnsL="1" columnsXL="1">
@@ -337,12 +337,12 @@
 								adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2"
 								singleContainerFullSize="false" visible="{modelvisibleAnag>/visible}">
 								<form:content>
-									<Label id="idLabelFo" text="{i18n>FODescr}" design="Bold"/>
+									<Label id="idLabelFo" text="{i18n>FODescr}" />
 									<CheckBox id="checkboxFO"
 										selected="{= ${modelAnagraficaPf>Codifofpspe} === '' ? false : ${modelAnagraficaPf>Codifofpspe}.toUpperCase() === 'FO' ? true : false }" 
 										editable="{= ${modelAnagraficaFOP>/}.length === 1 ? true : false }"
 										select="onSelectionFO"/>
-									<Label id="idLabelFP" text="{i18n>FPDescr}" design="Bold"/>
+									<Label id="idLabelFP" text="{i18n>FPDescr}" />
 									<CheckBox id="checkboxFP"
 										selected="{= ${modelAnagraficaPf>Codifofpspe} === '' ? false : ${modelAnagraficaPf>Codifofpspe}.toUpperCase() === 'FP' ? true : false }" 
 										editable="{= ${modelAnagraficaFOP>/}.length === 1 ? true : false }"
@@ -391,14 +391,14 @@
 								</OverflowToolbar>
 							</headerToolbar>
 							<Table id="TableFOFPTabID" width="auto" items="{modelAnagraficaFOP>/}">
-								<headerToolbar>
+								<!-- <headerToolbar>
 									<Toolbar >
 										<ToolbarSpacer/>
 									</Toolbar>
-								</headerToolbar>
+								</headerToolbar> -->
 								<columns>
 									<Column width="15em">
-										<Text text=""/>
+										<Text text="{i18n>DescAutorizzazioni}"/>
 									</Column>
 								</columns>
 								<items>
