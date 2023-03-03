@@ -391,7 +391,7 @@
 										<f:FormContainer>
 											<f:formElements>
 												<f:FormElement label="{i18n>Proposta}">
-													<m:Input id="InputNoEdit" class="sapUiTinyMarginEnd" type="Number" placeholder="Scegli {i18n>Proposta}" value="" editable="false">
+													<m:Input id="idIDPropostaNPF" class="sapUiTinyMarginEnd" type="Number" placeholder="Scegli {i18n>Proposta}" value="" editable="false">
 														<m:layoutData>
 															<layout:GridData id="idGridInputID" span="XL4 L4 M4 S12"/>
 														</m:layoutData>
@@ -399,13 +399,13 @@
 													<m:Button id="openMenu" type="Emphasized" text="{i18n>Proposta}" press="handlePressOpenMenu"/>
 												</f:FormElement>
 												<f:FormElement label="{i18n>NickName}">
-													<m:Input id="idNickName" editable="{modelChangeControlsStatus>/Editable}" placeholder="Inserisci {i18n>NickName}"/>
+													<m:Input id="idNickNameNPF" editable="{modelChangeControlsStatus>/Editable}" placeholder="Inserisci {i18n>NickName}"/>
 												</f:FormElement>
 												<!--<f:FormElement label="{i18n>Tipologia}">
 												<Input id="idTipologia" editable="false"/>
 											</f:FormElement>-->
 												<f:FormElement label="{i18n>Iter}">
-													<m:ComboBox id="idIter" editable="{modelChangeControlsStatus>/Iter}" value="" placeholder="Inserisci {i18n>Iter}"
+													<m:ComboBox id="idIterNPF" editable="{modelChangeControlsStatus>/Iter}" value="" placeholder="Inserisci {i18n>Iter}"
 														items="{ path: 'ZSS4_COBI_PRSP_ESAMOD_SRV>/ZS_VALORI_ITERSet', sorter: { path: 'Ddtext' }, templateShareable:false }">
 														<m:items>
 															<core:Item key="{ZSS4_COBI_PRSP_ESAMOD_SRV>DomvalueL}" text="{ZSS4_COBI_PRSP_ESAMOD_SRV>Ddtext}"/>

@@ -339,12 +339,12 @@
 								<form:content>
 									<Label id="idLabelFo" text="{i18n>FODescr}" />
 									<CheckBox id="checkboxFO"
-										selected="{= ${modelAnagraficaPf>Codifofpspe} === '' ? false : ${modelAnagraficaPf>Codifofpspe}.toUpperCase() === 'FO' ? true : false }" 
+										selected="{= ${modelAnagraficaPf>/Codifofpspe} === '' ? false : ${modelAnagraficaPf>/Codifofpspe}.toUpperCase() === 'FO' ? true : false }" 
 										editable="{= ${modelAnagraficaFOP>/}.length === 1 ? true : false }"
 										select="onSelectionFO"/>
 									<Label id="idLabelFP" text="{i18n>FPDescr}" />
 									<CheckBox id="checkboxFP"
-										selected="{= ${modelAnagraficaPf>Codifofpspe} === '' ? false : ${modelAnagraficaPf>Codifofpspe}.toUpperCase() === 'FP' ? true : false }" 
+										selected="{= ${modelAnagraficaPf>/Codifofpspe} === '' ? false : ${modelAnagraficaPf>/Codifofpspe}.toUpperCase() === 'FP' ? true : false }" 
 										editable="{= ${modelAnagraficaFOP>/}.length === 1 ? true : false }"
 										select="onSelectionFP"/>
 								</form:content>

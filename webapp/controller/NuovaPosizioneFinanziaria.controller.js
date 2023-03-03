@@ -946,8 +946,8 @@ sap.ui.define([
 										oView.byId("idNickNameNPF").setValue("");
 										oView.byId("idNickNameNPF").setEditable(false);
 
-										oView.byId("idTipologiaNPF").setEditable(false);
-										oView.byId("idTipologiaNPF").setSelectedKey("");
+										// oView.byId("idTipologiaNPF").setEditable(false);
+										// oView.byId("idTipologiaNPF").setSelectedKey("");
 
 										oView.byId("idIterNPF").setSelectedKey("");
 										oView.byId("idIterNPF").setEditable(false);
@@ -969,9 +969,9 @@ sap.ui.define([
 
 							oView.byId("btnlockIDNPF").setText("Scegli");
 
-							oView.byId("idTipologiaNPF").setEditable(true);
-							oView.byId("idTipologiaNPF").setSelectedKey("");
-							oView.byId("idTipologiaNPF").setVisible(false);
+							// oView.byId("idTipologiaNPF").setEditable(true);
+							// oView.byId("idTipologiaNPF").setSelectedKey("");
+							// oView.byId("idTipologiaNPF").setVisible(false);
 
 							oItemTemplateIter = new sap.ui.core.Item({
 								text: "Proposta in lavorazione",
@@ -1006,8 +1006,8 @@ sap.ui.define([
 										oView.byId("idNickNameNPF").setValue("");
 										oView.byId("idNickNameNPF").setEditable(true);
 
-										oView.byId("idTipologiaNPF").setSelectedKey("");
-										oView.byId("idTipologiaNPF").setEditable(false);
+										// oView.byId("idTipologiaNPF").setSelectedKey("");
+										// oView.byId("idTipologiaNPF").setEditable(false);
 
 										oView.byId("idIterNPF").setSelectedKey("");
 										oView.byId("idIterNPF").setEditable(false);
@@ -1352,7 +1352,7 @@ sap.ui.define([
 				var sProposta = oView.byId("idIDPropostaNPF").getValue();
 				var sKeycodepr = this.Keycode;
 				var sTipo, sIter;
-				if(oView.byId("idIterNPF").getVisible()) {
+				/* if(oView.byId("idIterNPF").getVisible()) {
 					sTipo = oView.byId("idTipologiaNPF").getValue();
 					if(sTipo.toUpperCase() === "COMPENSATIVA") {
 						sTipo = "1";
@@ -1361,7 +1361,7 @@ sap.ui.define([
 					}
 				} else {
 					sTipo = "";
-				}
+				} */
 				// var sIterDesc = oView.byId("idIterNPF").getValue();
 				if(oView.byId("idIterNPF").getVisible()) {
 					sIter = oView.byId("idIterNPF").getSelectedKey();
@@ -1379,6 +1379,9 @@ sap.ui.define([
 				var defaultVersione = dataPosFinToPropostaDefault.Versione;
 				var defaultPrctr = dataPosFinToPropostaDefault.Prctr;
 
+
+				//var sTipoTest = this.getOwnerComponent().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV").getData(sPath).Tipologiaprop;
+
 				var aDatiProp = [{
 					Fikrs: defaultFikrs,
 					Anno: defaultAnno,
@@ -1392,7 +1395,7 @@ sap.ui.define([
 					Reale:defaultReale,
 					Iter: sIter,
 					Nickname: sNickName,
-					Tipologiaprop: sTipo
+					//Tipologiaprop: sTipo
 				}];
 				
 				//CONTROLLO SOMMA PERCENTUALI COFOG = 100
@@ -3612,7 +3615,7 @@ sap.ui.define([
 		PROPOSTA
 		*/
 		handlePressOpenMenu: function(oEvent) {
-			if (this.getView().byId("InputNoEdit").getValue()) {
+			if (this.getView().byId("idIDPropostaNPF").getValue()) {
 				//alert("Cambiare Proposta? Se si la proposta attualmente bloccato viene sbloccata.");
 			}
 			var oButton = oEvent.getSource();
@@ -3662,7 +3665,7 @@ sap.ui.define([
 			var oButton = oEvent.getSource();
 			var oView = this.getView();
 			var oDataModel = this.getView().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");
-			var sIdProposta = this.getView().byId("InputNoEdit").getValue();
+			var sIdProposta = this.getView().byId("idIDPropostaNPF").getValue();
 			var that = this;
 			//CREA IL DIALOG UNA SOLA VOLTA
 			if (!this._optionIdProposta) {
@@ -3726,10 +3729,10 @@ sap.ui.define([
 								if (oAction === MessageBox.Action.YES) {
 									//INSERIRE LOGICA DI SBLOCCO PROPOSTA GIA' PRENOTATO
 									//____________
-									that.getView().byId("InputNoEdit").setValue("");
-									that.getView().byId("idNickName").setValue("");
-									that.getView().byId("idNota").setValue("");
-									that.getView().byId("idIter").setSelectedItem(null);
+									that.getView().byId("idIDPropostaNPF").setValue("");
+									that.getView().byId("idNickNameNPF").setValue("");
+									//that.getView().byId("idNota").setValue("");
+									that.getView().byId("idIterNPF").setSelectedItem(null);
 									//that.getView().byId("idTablePosFinGestisciID").unbindAggregation("items");
 									that.getView().byId("btnlockId").setText("Scegli");
 
@@ -3783,11 +3786,11 @@ sap.ui.define([
 								if (oAction === MessageBox.Action.YES) {
 									//INSERIRE LOGICA DI SBLOCCO PROPOSTA GIA' PRENOTATO
 									//____________
-									that.getView().byId("InputNoEdit").setValue("");
-									that.getView().byId("idNickName").setValue("");
-									that.getView().byId("idNota").setValue("");
-									that.getView().byId("idIter").setSelectedItem(null);
-									that.getView().byId("idTablePosFinGestisciID").unbindAggregation("items");
+									that.getView().byId("idIDPropostaNPF").setValue("");
+									that.getView().byId("idNickNameNPF").setValue("");
+									//that.getView().byId("idNota").setValue("");
+									that.getView().byId("idIterNPF").setSelectedItem(null);
+									//that.getView().byId("idTablePosFinGestisciID").unbindAggregation("items");
 
 									var oModel = models.getModelDefaultGeneraIdProposta();
 									var oData = oModel.getData();
@@ -3828,7 +3831,7 @@ sap.ui.define([
 			var that = this;
 
 			if (sBtnText === "Ok") {
-				this.getView().byId("InputNoEdit").setValue(sIdPropostaInserito);
+				this.getView().byId("idIDPropostaNPF").setValue(sIdPropostaInserito);
 				this.getView().byId("idFragment_GestisciID_InputIdProposta").close();
 				this.getView().byId("IdProposta").setValue("");
 
@@ -3848,12 +3851,12 @@ sap.ui.define([
 
 							//Gestione Input
 							var oNickname = oModelGestisciProposta.Nickname;
-							this.getView().byId("idNickName").setValue(oNickname);
+							this.getView().byId("idNickNameNPF").setValue(oNickname);
 							this.getView().getModel("modelChangeControlsStatus").setProperty("/Visible", true);
-							this.getView().byId("idNickName").setEditable(true);
+							this.getView().byId("idNickNameNPF").setEditable(true);
 							var oIter = oModelGestisciProposta.Iter;
-							this.getView().byId("idIter").setValue(oIter);
-							this.getView().byId("idNota").setValue(oNota);
+							this.getView().byId("idIterNPF").setValue(oIter);
+							//this.getView().byId("idNota").setValue(oNota);
 
 							this.getView().getModel("modelChangeControlsStatus").setProperty("/Enable", true);
 
@@ -3937,7 +3940,7 @@ sap.ui.define([
 								}.bind(this),
 								error: function(oError) {
 									MessageBox.error(JSON.parse(oError.responseText).error.message.value);
-									this.getView().byId("InputNoEdit").setValue("");
+									this.getView().byId("idIDPropostaNPF").setValue("");
 									this.getView().byId("IdProposta").setValue("");
 									this.getView().getModel("modelChangeControlsStatus").setProperty("/Enable", false);
 									this.getView().getModel("modelChangeControlsStatus").setProperty("/Editable", false);
@@ -3947,7 +3950,7 @@ sap.ui.define([
 						}.bind(this), // callback function for success
 						error: function(oError) {
 								MessageBox.error(JSON.parse(oError.responseText).error.message.value);
-								this.getView().byId("InputNoEdit").setValue("");
+								this.getView().byId("idIDPropostaNPF").setValue("");
 								this.getView().byId("IdProposta").setValue("");
 								this.getView().getModel("modelChangeControlsStatus").setProperty("/Enable", false);
 								this.getView().getModel("modelChangeControlsStatus").setProperty("/Editable", false);
@@ -3966,12 +3969,12 @@ sap.ui.define([
 				this.getView().getModel("modelChangeControlsStatus").setProperty("/Editable", true);
 
 				this.getView().byId("IdProposta").setValue("");
-				this.getView().byId("InputNoEdit").setValue(sIdPropostaInserito);
+				this.getView().byId("idIDPropostaNPF").setValue(sIdPropostaInserito);
 
 				//GESTIONE ITER IN LAVORAZIONE (STATO DEFAULT) 
 				this.getView().getModel("modelChangeControlsStatus").setProperty("/Iter", false);
-				this.getView().byId("idIter").setValue("Proposta in lavorazione");
-				this.getView().byId("idIter").setSelectedKey("01");
+				this.getView().byId("idIterNPF").setValue("Proposta in lavorazione");
+				this.getView().byId("idIterNPF").setSelectedKey("01");
 
 				this.getView().byId("idFragment_GestisciID_InputIdProposta").close();
 
@@ -3990,24 +3993,24 @@ sap.ui.define([
 							// console.log(oResponse.statusText);
 							that._Id = oResponse.data.Idproposta;
 							that.Keycode = oResponse.data.Keycodepr;
-							that.getView().byId("InputNoEdit").setValue(that._Id); // generato automaticamente dal backend
+							that.getView().byId("idIDPropostaNPF").setValue(that._Id); // generato automaticamente dal backend
 							// that.getView().byId("IdProposta").setEditable(false);
 
 							that.getView().byId("IdProposta").setShowValueHelp(false);
 							//LOGICA DI BLOCCO ID DA INSERIRE
-							this.getView().byId("InputNoEdit").setValue(sIdPropostaInserito);
+							this.getView().byId("idIDPropostaNPF").setValue(sIdPropostaInserito);
 							this.getView().byId("IdProposta").setValue(sIdPropostaInserito);
 							this.getView().getModel("modelChangeControlsStatus").setProperty("/Enable", true);
 							this.getView().getModel("modelChangeControlsStatus").setProperty("/Editable", true);
 
 							//GESTIONE ITER IN LAVORAZIONE (STATO DEFAULT) 
 							this.getView().getModel("modelChangeControlsStatus").setProperty("/Iter", false);
-							this.getView().byId("idIter").setValue("Proposta in lavorazione");
-							this.getView().byId("idIter").setSelectedKey("01");
+							this.getView().byId("idIterNPF").setValue("Proposta in lavorazione");
+							this.getView().byId("idIterNPF").setSelectedKey("01");
 						}.bind(this), // callback function for success
 						error: function(oError) {
 								MessageBox.error(JSON.parse(oError.responseText).error.message.value);
-								this.getView().byId("InputNoEdit").setValue("");
+								this.getView().byId("idIDPropostaNPF").setValue("");
 								this.getView().byId("IdProposta").setValue("");
 								this.getView().getModel("modelChangeControlsStatus").setProperty("/Enable", false);
 								this.getView().getModel("modelChangeControlsStatus").setProperty("/Editable", false);
@@ -4026,7 +4029,7 @@ sap.ui.define([
 				oModelChangeControlsStatus.setProperty("/Editable", true);
 				// this.getView().byId("openMenu").setEnabled(true);
 
-				// this.getView().byId("InputNoEdit").setValue(sIdPropostaInserito);
+				// this.getView().byId("idIDPropostaNPF").setValue(sIdPropostaInserito);
 				// this.getView().byId("idFragment_GestisciID_InputIdProposta").close();
 				this.getView().byId("IdProposta").setValue("");
 			} else {
@@ -4039,7 +4042,7 @@ sap.ui.define([
 		},
 
 		close: function() {
-			var sIdProposta = this.getView().byId("InputNoEdit").getValue();
+			var sIdProposta = this.getView().byId("idIDPropostaNPF").getValue();
 			var oModelChangeControlsStatus = this.getView().getModel("modelChangeControlsStatus");
 			if (sIdProposta) {
 				oModelChangeControlsStatus.setProperty("/Enable", true);
@@ -4055,7 +4058,7 @@ sap.ui.define([
 			}
 			this.getView().byId("idFragment_GestisciID_InputIdProposta").close();
 			this.getView().byId("IdProposta").setValue("");
-			this.getView().byId("InputNoEdit").setValue("");
+			this.getView().byId("idIDPropostaNPF").setValue("");
 		},
 
 		//**************************BTN CREA NOTA********************************************
@@ -4063,8 +4066,8 @@ sap.ui.define([
 		handlePressResettaNota: function() {
 			this.getView().byId("idInputScegliNoteIDProposta").setValue(null);
 				this.getView().byId("idInputScegliNoteIDProposta").setEditable(true);
-			this.getView().byId("idNota").setEditable(true).setValue("");
-			this.getView().byId("idNota").setEnabled(true);
+			//this.getView().byId("idNota").setEditable(true).setValue("");
+			//this.getView().byId("idNota").setEnabled(true);
 
 		},
 		onLiveWriteNota: function(oEvent) {
