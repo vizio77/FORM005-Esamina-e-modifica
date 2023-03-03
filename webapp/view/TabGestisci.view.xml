@@ -339,11 +339,13 @@
 								<form:content>
 									<Label id="idLabelFo" text="{i18n>FODescr}" design="Bold"/>
 									<CheckBox id="checkboxFO"
-										selected="{= ${modelAnagraficaPf>Codifofpspe} === '' ? false : ${modelAnagraficaPf>Codifofpspe}.toUpperCase() === 'FO' ? true : false }" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"
+										selected="{= ${modelAnagraficaPf>Codifofpspe} === '' ? false : ${modelAnagraficaPf>Codifofpspe}.toUpperCase() === 'FO' ? true : false }" 
+										editable="{= ${modelAnagraficaFOP>/}.length === 1 ? true : false }"
 										select="onSelectionFO"/>
 									<Label id="idLabelFP" text="{i18n>FPDescr}" design="Bold"/>
 									<CheckBox id="checkboxFP"
-										selected="{= ${modelAnagraficaPf>Codifofpspe} === '' ? false : ${modelAnagraficaPf>Codifofpspe}.toUpperCase() === 'FP' ? true : false }" editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"
+										selected="{= ${modelAnagraficaPf>Codifofpspe} === '' ? false : ${modelAnagraficaPf>Codifofpspe}.toUpperCase() === 'FP' ? true : false }" 
+										editable="{= ${modelAnagraficaFOP>/}.length === 1 ? true : false }"
 										select="onSelectionFP"/>
 								</form:content>
 							</form:SimpleForm>
@@ -362,7 +364,7 @@
 							<Input id="switchTCRF" placeholder="{i18n>TcrF}" width="10em" liveChange="onlyInteger" maxLength="2"
 								editable="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}"
 								value="{modelAnagraficaPf>/Numetcrfspe}"/>
-									<Table id="TableFOFPTabID-underTCR" width="auto" items="{modelAnagraficaFOP>/}">
+							<!-- <Table id="TableFOFPTabID-underTCR" width="auto" items="{modelAnagraficaFOP>/}">
 								<headerToolbar>
 									<Toolbar >
 										<ToolbarSpacer/>
@@ -380,7 +382,7 @@
 										</cells>
 									</ColumnListItem>
 								</items>
-							</Table>
+							</Table> -->
 						</Panel>
 						<Panel expandable="true" visible="true" expanded="false">
 							<headerToolbar>
