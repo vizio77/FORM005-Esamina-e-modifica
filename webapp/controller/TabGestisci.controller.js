@@ -2028,6 +2028,8 @@ sap.ui.define([
             this._oDialog.open();
         },
         onAddCofog: function() {
+
+			
             var oTable = sap.ui.getCore().byId("tableCafog");
             var aDataSelected = oTable.getSelectedContextPaths();
             var aModelCofog = this._oDialog.getModel("modelCofog").getData();
@@ -2040,18 +2042,30 @@ sap.ui.define([
                     "Codcofogl2": aModelCofog[index].CodCofogL2,
                     "Codcofogl3": aModelCofog[index].CodCofogL3,
                     "Descrcofog": aModelCofog[index].Descrizione,
-                    "Fikrs": aModelCofog[index].Fikrs,
+                    /* "Fikrs": aModelCofog[index].Fikrs,
                     "Fipex": sFipex,
                     "Anno": aModelCofog[index].Anno,
                     "Fase": aModelCofog[index].Fase,
                     "Reale": aModelCofog[index].Reale,
                     "Versione": aModelCofog[index].Versione,
-                    "Eos": "S",
-                    "CodConcatenato": aModelCofog[index].CodConcatenato,
-                    "Livello": aModelCofog[index].Livello, //FORSE QUESTO NON SERVE
-                    "Perccofog": "0",
-                    "status": "new",
+                    "Eos": "S", */
+                    "Codconcatenato": aModelCofog[index].CodConcatenato,
+                    //"Livello": aModelCofog[index].Livello, //FORSE QUESTO NON SERVE
+                    //"Perccofog": "0",
+                    "Perccofog": "", //lt da capire se posso inserirlo a 0
+                    //"status": "new",
+					"Icon": "sap-icon://delete"
                 };
+
+				/* var oDati = {
+					Codcofogl1: sValLiv1,
+					Codcofogl2: sValLiv2,
+					Codcofogl3: sValLiv3,
+					Descrcofog: sValDescr,
+					Codconcatenato: sValIdCofog,
+					Perccofog: "",
+					Icon: "sap-icon://delete"
+				}; */
                 aModelCofogTable.push(o);
             }
             this.getView().getModel("modelAnagraficaCofog").refresh();
