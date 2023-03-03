@@ -6,8 +6,9 @@ sap.ui.define([
 	"sap/ui/core/syncStyleClass",
 	"sap/m/MessageBox",
 	"sap/ui/model/Filter",
+	"zsap/com/r3/cobi/s4/esamodModSpesePosFin/model/models",
 	"sap/ui/model/FilterOperator"
-], function(Controller, BaseController, JSONModel, Fragment, syncStyleClass, MessageBox, Filter, FilterOperator) {
+], function(Controller, BaseController, JSONModel, Fragment, syncStyleClass, MessageBox, Filter,models, FilterOperator) {
 	"use strict";
 
 	return BaseController.extend("zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.NuovaPosizioneFinanziaria", {
@@ -3605,7 +3606,551 @@ sap.ui.define([
                     this.getView().getModel("modelCogofDelete").setData({});
                 }
             }
-        } 
+        },
+
+		/* 
+		PROPOSTA
+		*/
+		handlePressOpenMenu: function(oEvent) {
+			if (this.getView().byId("InputNoEdit").getValue()) {
+				//alert("Cambiare Proposta? Se si la proposta attualmente bloccato viene sbloccata.");
+			}
+			var oButton = oEvent.getSource();
+			var oView = this.getView();
+			var that = this;
+			// create menu only once
+			if (!this._menu) {
+				this._menu = Fragment.load({
+					id: oView.getId(),
+					name: "zsap.com.r3.cobi.s4.esamodModSpesePosFin.view.fragments.GestisciID_idPropostaMenu",
+					controller: this
+				}).then(function(oDialog) {
+					oView.addDependent(oDialog);
+					syncStyleClass(oView.getController().getOwnerComponent().getContentDensityClass(), oView, oDialog);
+					return oDialog;
+				});
+			}
+			// ACTIONS REPEATED EVERY TIME
+			this._menu.then(function(oDialog) {
+				//oDialog.getBinding("items");
+				// Open ValueHelpDialog filtered by the input's value
+				var eDock = sap.ui.core.Popup.Dock;
+				oDialog.open(that._bKeyboard, oButton, eDock.BeginTop, eDock.BeginBottom, oButton);
+
+				//var sTitle = that.getView().byId("idPanelForm").getHeaderText();
+				var sTitle = "CREA PROPOSTA"; //lt inserisco la creazione perchè in creazione
+				var oItemMenuIdEsistente = oDialog.getAggregation("items")[0];
+				var oItemMenuIdNuovo = oDialog.getAggregation("items")[1];
+				if (sTitle.toUpperCase() === "CREA PROPOSTA") {
+					oItemMenuIdEsistente.setVisible(false);
+					oItemMenuIdNuovo.setVisible(true);
+				}
+				/* if (sTitle.toUpperCase() === "ASSOCIA PROPOSTA") {
+					oItemMenuIdEsistente.setVisible(true);
+					oItemMenuIdNuovo.setVisible(true);
+				}
+				if (sTitle.toUpperCase() === "GESTISCI PROPOSTA") {
+					oItemMenuIdEsistente.setVisible(true);
+					oItemMenuIdNuovo.setVisible(false);
+				} */
+				oDialog.open(oButton);
+			});
+		},
+
+		handleMenuItemPress: function(oEvent) {
+			var optionPressed = oEvent.getParameter("item").getText();
+			var oButton = oEvent.getSource();
+			var oView = this.getView();
+			var oDataModel = this.getView().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");
+			var sIdProposta = this.getView().byId("InputNoEdit").getValue();
+			var that = this;
+			//CREA IL DIALOG UNA SOLA VOLTA
+			if (!this._optionIdProposta) {
+				this._optionIdProposta = Fragment.load({
+					id: oView.getId(),
+					name: "zsap.com.r3.cobi.s4.esamodModSpesePosFin.view.fragments.GestisciID_inputIDProposta",
+					controller: this
+				}).then(function(oDialog) {
+					oView.addDependent(oDialog);
+					syncStyleClass(oView.getController().getOwnerComponent().getContentDensityClass(), oView, oDialog);
+					return oDialog;
+				});
+			}
+			//IN QUESTA PARTE VANNO TUTTE LE CONDIZIONI CHE DEVONO ESSERE RIPETUTE TUTTE LE VOLTE CHE SI APRE IL DIALOG
+			this._optionIdProposta.then(function(oDialog) {
+				//oDialog.getBinding("items");
+				// Open ValueHelpDialog filtered by the input's value
+
+				if (optionPressed.toUpperCase() === "SCEGLI PROPOSTA ESISTENTE") {
+					if (!sIdProposta) {
+						that.getView().byId("IdProposta").setValue("");
+						that.getView().byId("IdProposta").setShowValueHelp(true);
+						that.getView().byId("IdProposta").setEnabled(true);
+						that.getView().byId("btnlockId").setText("Ok");
+						oDialog.open(oButton);
+					} else {
+						MessageBox.warning(that.oResourceBundle.getText("MBCambioNumProposta"), {
+							icon: MessageBox.Icon.WARNING,
+							title: "Cambio Proposta",
+							actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+							emphasizedAction: MessageBox.Action.NO,
+							onClose: function(oAction) {
+								if (oAction === MessageBox.Action.YES) {
+									//INSERIRE LOGICA DI SBLOCCO PROPOSTA GIA' PRENOTATO
+									//____________
+									that.getView().byId("IdProposta").setValue("");
+									that.getView().byId("IdProposta").setShowValueHelp(true);
+									that.getView().byId("IdProposta").setEnabled(true);
+									that.getView().byId("btnlockId").setText("Ok");
+
+									oDialog.open(oButton);
+								}
+							}
+						});
+					}
+				}
+				if (optionPressed.toUpperCase() === "INSERISCI PROPOSTA MANUALMENTE") {
+					if (!sIdProposta) {
+						that.getView().byId("IdProposta").setEnabled(true);
+						that.getView().byId("IdProposta").setValue("");
+						that.getView().byId("IdProposta").setShowValueHelp(false);
+						that.getView().byId("btnlockId").setText("Scegli");
+						oDialog.open(oButton);
+					} else {
+						MessageBox.warning(that.oResourceBundle.getText("MBCambioNumProposta"), {
+							icon: MessageBox.Icon.WARNING,
+							title: "Cambio Proposta",
+							actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+							emphasizedAction: MessageBox.Action.NO,
+							onClose: function(oAction) {
+								if (oAction === MessageBox.Action.YES) {
+									//INSERIRE LOGICA DI SBLOCCO PROPOSTA GIA' PRENOTATO
+									//____________
+									that.getView().byId("InputNoEdit").setValue("");
+									that.getView().byId("idNickName").setValue("");
+									that.getView().byId("idNota").setValue("");
+									that.getView().byId("idIter").setSelectedItem(null);
+									//that.getView().byId("idTablePosFinGestisciID").unbindAggregation("items");
+									that.getView().byId("btnlockId").setText("Scegli");
+
+									oDialog.open(oButton);
+								}
+							}
+						});
+					}
+				}
+				if (optionPressed.toUpperCase() === "GENERA PROPOSTA AUTOMATICAMENTE") {
+					var oModel = models.getModelDefaultGeneraIdProposta();
+					var oData = oModel.getData();
+					// var listFilters = [];
+					// listFilters.push(new Filter("Fikrs", FilterOperator.EQ, oData.Fikrs));
+					// listFilters.push(new Filter("Anno", FilterOperator.EQ, oData.Anno));
+					// listFilters.push(new Filter("Fase", FilterOperator.EQ, oData.Fase));
+					// listFilters.push(new Filter("Reale", FilterOperator.EQ, oData.Reale));
+					// listFilters.push(new Filter("Versione", FilterOperator.EQ, oData.Versione));
+					// listFilters.push(new Filter("Prctr", FilterOperator.EQ, oData.Prctr));
+					var newPrctr = "'" + oData.Prctr + "'";
+					//LOGICA DI CONTROLLO CAMBIO ID GIA' INSERITO
+					if (!sIdProposta) {
+						//LOGICA PER GENERARE NUOVA ID AUTOMATICAMENTE
+						oDataModel.read("/GeneraIdProposta", { // function import name
+							method: "GET", // http method
+							urlParameters: {
+								"Prctr": newPrctr
+							},
+							success: function(oData, oResponse) {
+								that._Id = oResponse.data.Idproposta;
+								that.Keycode = oResponse.data.Keycodepr;
+								// console.log(that._Id);
+								that.getView().byId("IdProposta").setValue(that._Id); // generato automaticamente dal backend
+								that.getView().byId("IdProposta").setEnabled(false);
+								that.getView().byId("IdProposta").setShowValueHelp(false);
+								that.getView().byId("btnlockId").setText("Prenota");
+
+								oDialog.open(oButton);
+							}, // callback function for success
+							error: function(oError) {
+									MessageBox.error(oError.responseText);
+								} // callback function for error
+						});
+					} else {
+						MessageBox.warning(that.oResourceBundle.getText("MBCambioNumProposta"), {
+							icon: MessageBox.Icon.WARNING,
+							title: "Cambio Proposta",
+							actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+							emphasizedAction: MessageBox.Action.NO,
+							onClose: function(oAction) {
+								if (oAction === MessageBox.Action.YES) {
+									//INSERIRE LOGICA DI SBLOCCO PROPOSTA GIA' PRENOTATO
+									//____________
+									that.getView().byId("InputNoEdit").setValue("");
+									that.getView().byId("idNickName").setValue("");
+									that.getView().byId("idNota").setValue("");
+									that.getView().byId("idIter").setSelectedItem(null);
+									that.getView().byId("idTablePosFinGestisciID").unbindAggregation("items");
+
+									var oModel = models.getModelDefaultGeneraIdProposta();
+									var oData = oModel.getData();
+
+									var newPrctr = "'" + oData.Prctr + "'";
+									//LOGICA DI CONTROLLO CAMBIO ID GIA' INSERITO
+
+									oDataModel.callFunction("/GeneraIdProposta", { // function import name
+										method: "GET", // http method
+										urlParameters: {
+											"Prctr": newPrctr
+										},
+										success: function(oData, oResponse) {
+											that._Id = oResponse.data.Idproposta;
+											that.Keycode = oResponse.data.Keycodepr;
+											that.getView().byId("IdProposta").setValue(that._Id); // generato automaticamente dal backend
+											// that.getView().byId("IdProposta").setEditable(false);
+											that.getView().byId("IdProposta").setShowValueHelp(false);
+											that.getView().byId("btnlockId").setText("Prenota");
+											oDialog.open(oButton);
+										}, // callback function for success
+										error: function(oError) {
+												MessageBox.error(oError.responseText);
+											} // callback function for error
+									});
+								}
+							}
+						});
+					}
+				}
+			});
+		},
+
+		lockId: function(oEvt) {
+			var sBtnText = oEvt.getSource().getText();
+			var sIdPropostaInserito = this.getView().byId("IdProposta").getValue();
+			var oDataModel = this.getView().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");
+			var that = this;
+
+			if (sBtnText === "Ok") {
+				this.getView().byId("InputNoEdit").setValue(sIdPropostaInserito);
+				this.getView().byId("idFragment_GestisciID_InputIdProposta").close();
+				this.getView().byId("IdProposta").setValue("");
+
+				var oModelGestisciProposta = this.getView().getModel("modelPathGestisciPropostaView").getData("dataGestisciProposta").dataGestisciProposta;
+				if (!!oModelGestisciProposta) {
+					var oKeyCode = oModelGestisciProposta.Keycode;
+
+					//GET testo Nota
+					var aFilters = [new Filter("Idproposta", FilterOperator.EQ, oKeyCode)];
+					oDataModel.read("/PropostaSet", { // function import name
+						filters: aFilters, // function import parameters        
+						success: function(oData, oResponse) {
+							var oNota = "";
+							if (oData.results.length > 0) {
+								oNota = oData.results[0].Testonota;
+							}
+
+							//Gestione Input
+							var oNickname = oModelGestisciProposta.Nickname;
+							this.getView().byId("idNickName").setValue(oNickname);
+							this.getView().getModel("modelChangeControlsStatus").setProperty("/Visible", true);
+							this.getView().byId("idNickName").setEditable(true);
+							var oIter = oModelGestisciProposta.Iter;
+							this.getView().byId("idIter").setValue(oIter);
+							this.getView().byId("idNota").setValue(oNota);
+
+							this.getView().getModel("modelChangeControlsStatus").setProperty("/Enable", true);
+
+							aFilters = [];
+							aFilters.push(new Filter("Idproposta", FilterOperator.EQ, oKeyCode));
+
+							oDataModel.read("/PosFinPropostaSet", {
+								filters: aFilters,
+								success: function(oData, oResponse) {
+									var listResults = oData.results;
+									var aPosFin = [];
+									var oModelTablePageGestisciID = this.getView().getModel("modelTableGestisciID");
+									oModelTablePageGestisciID.setData([]);
+									oModelTablePageGestisciID.refresh();
+									for (var i = 0; i < listResults.length; i++) {
+										var sAnno = listResults[i].Anno;
+										var sFikrs = listResults[i].Fikrs;
+										var sFase = listResults[i].Fase;
+										var sReale = listResults[i].Reale;
+										var sVersione = listResults[i].Versione;
+										var sFipex = listResults[i].Fipex;
+										var sDatbis = listResults[i].Datbis;
+
+										if (sDatbis) {
+											sDatbis = this._convertStringTime(sDatbis);
+											sDatbis = sDatbis.replaceAll("-", "");
+										}
+
+										var oObj = {
+											Anno: sAnno,
+											Fikrs: sFikrs,
+											Fase: sFase,
+											Reale: sReale,
+											Versione: sVersione,
+											Fipex: sFipex,
+											Datbis: sDatbis,
+											Visible: true
+										};
+
+										aPosFin.push(oObj);
+										oModelTablePageGestisciID.setData(aPosFin);
+										oModelTablePageGestisciID.refresh();
+
+										//COSTRUISCO DINAMICAMENTE LA TABELLA DELLA VIEW
+										var oTablePage = this.getView().byId("idTablePosFinGestisciID");
+										var oTemplate = new sap.m.ColumnListItem({
+											vAlign: "Middle",
+											cells: [
+												new LinkPosizioneFinanziaria({
+													text: "{modelTableGestisciID>Fipex}",
+													// id:"idLinkPosfinRV",
+
+													fikrs: "{modelTableGestisciID>Fikrs}",
+													anno: "{modelTableGestisciID>Anno}",
+													fase: "{modelTableGestisciID>Fase}",
+													reale: "{modelTableGestisciID>Reale}",
+													versione: "{modelTableGestisciID>Versione}",
+													fipex: "{modelTableGestisciID>Fipex}",
+													datbis: "{modelTableGestisciID>Datbis}"
+												}),
+												new sap.m.Button({
+													type: "Transparent",
+													tooltip: "{i18n>Elimina}",
+													icon: "sap-icon://delete",
+													press: [this.onPressEliminaPFGestisciID, this],
+													visible: "{modelTableGestisciID>Visible}"
+												})
+											]
+										});
+										oTablePage.bindAggregation("items", "modelTableGestisciID>/", oTemplate);
+										this.getView().getModel("modelChangeControlsStatus").setProperty("/Visible", true);
+
+									}
+									var oModelGestisci = this.getView().getModel("modelPathGestisciPropostaView");
+									var oDataGestisci = oModelGestisci.getData();
+									var strNewArr = JSON.stringify(aPosFin);
+									var newArr = JSON.parse(strNewArr);
+									oDataGestisci.aPosFin = newArr;
+									oModelGestisci.setData(oDataGestisci);
+									oModelGestisci.refresh();
+								}.bind(this),
+								error: function(oError) {
+									MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+									this.getView().byId("InputNoEdit").setValue("");
+									this.getView().byId("IdProposta").setValue("");
+									this.getView().getModel("modelChangeControlsStatus").setProperty("/Enable", false);
+									this.getView().getModel("modelChangeControlsStatus").setProperty("/Editable", false);
+								}.bind(this)
+							});
+
+						}.bind(this), // callback function for success
+						error: function(oError) {
+								MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+								this.getView().byId("InputNoEdit").setValue("");
+								this.getView().byId("IdProposta").setValue("");
+								this.getView().getModel("modelChangeControlsStatus").setProperty("/Enable", false);
+								this.getView().getModel("modelChangeControlsStatus").setProperty("/Editable", false);
+							}.bind(this) // callback function for error
+					});
+
+					//this.getView().byId("idNota").setEditable(true);
+
+				}
+			}
+
+			if (sBtnText === "Prenota") {
+				//CASO SCELTA PROPOSTA AUTOMATICA
+				//LOGICA DI BLOCCO ID DA INSERIRE
+				this.getView().getModel("modelChangeControlsStatus").setProperty("/Enable", true);
+				this.getView().getModel("modelChangeControlsStatus").setProperty("/Editable", true);
+
+				this.getView().byId("IdProposta").setValue("");
+				this.getView().byId("InputNoEdit").setValue(sIdPropostaInserito);
+
+				//GESTIONE ITER IN LAVORAZIONE (STATO DEFAULT) 
+				this.getView().getModel("modelChangeControlsStatus").setProperty("/Iter", false);
+				this.getView().byId("idIter").setValue("Proposta in lavorazione");
+				this.getView().byId("idIter").setSelectedKey("01");
+
+				this.getView().byId("idFragment_GestisciID_InputIdProposta").close();
+
+			}
+
+			if (sBtnText === "Scegli") {
+				//CASO SCELTA PROPOSTA MANUALE
+				//LOGICA DI CONTROLLO ID SCELTO
+				if (sIdPropostaInserito) {
+					oDataModel.callFunction("/CreaIdPropostaManualmente", { // function import name
+						method: "GET", // http method
+						urlParameters: {
+							"Idproposta": sIdPropostaInserito
+						}, // function import parameters        
+						success: function(oData, oResponse) {
+							// console.log(oResponse.statusText);
+							that._Id = oResponse.data.Idproposta;
+							that.Keycode = oResponse.data.Keycodepr;
+							that.getView().byId("InputNoEdit").setValue(that._Id); // generato automaticamente dal backend
+							// that.getView().byId("IdProposta").setEditable(false);
+
+							that.getView().byId("IdProposta").setShowValueHelp(false);
+							//LOGICA DI BLOCCO ID DA INSERIRE
+							this.getView().byId("InputNoEdit").setValue(sIdPropostaInserito);
+							this.getView().byId("IdProposta").setValue(sIdPropostaInserito);
+							this.getView().getModel("modelChangeControlsStatus").setProperty("/Enable", true);
+							this.getView().getModel("modelChangeControlsStatus").setProperty("/Editable", true);
+
+							//GESTIONE ITER IN LAVORAZIONE (STATO DEFAULT) 
+							this.getView().getModel("modelChangeControlsStatus").setProperty("/Iter", false);
+							this.getView().byId("idIter").setValue("Proposta in lavorazione");
+							this.getView().byId("idIter").setSelectedKey("01");
+						}.bind(this), // callback function for success
+						error: function(oError) {
+								MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+								this.getView().byId("InputNoEdit").setValue("");
+								this.getView().byId("IdProposta").setValue("");
+								this.getView().getModel("modelChangeControlsStatus").setProperty("/Enable", false);
+								this.getView().getModel("modelChangeControlsStatus").setProperty("/Editable", false);
+							} // callback function for error
+					});
+
+					this.getView().byId("idFragment_GestisciID_InputIdProposta").close();
+				}
+
+			}
+			//GESTIRE LOGICA CAMBIO ID SE GIA' INSERITO --> prenderla da gestione capitolo anagrafica
+			/*var oModelChangeControlsStatus = this.getView().getModel("modelChangeControlsStatus");
+			if (sIdProposta) {
+				oModelChangeControlsStatus.setProperty("/Enable", true);
+				oModelChangeControlsStatus.setProperty("/Visible", true);
+				oModelChangeControlsStatus.setProperty("/Editable", true);
+				// this.getView().byId("openMenu").setEnabled(true);
+
+				// this.getView().byId("InputNoEdit").setValue(sIdPropostaInserito);
+				// this.getView().byId("idFragment_GestisciID_InputIdProposta").close();
+				this.getView().byId("IdProposta").setValue("");
+			} else {
+				oModelChangeControlsStatus.setProperty("/Enable", false);
+				oModelChangeControlsStatus.setProperty("/Visible", false);
+				oModelChangeControlsStatus.setProperty("/Editable", false);
+				// this.getView().byId("openMenu").setEnabled(true);
+			}*/
+
+		},
+
+		close: function() {
+			var sIdProposta = this.getView().byId("InputNoEdit").getValue();
+			var oModelChangeControlsStatus = this.getView().getModel("modelChangeControlsStatus");
+			if (sIdProposta) {
+				oModelChangeControlsStatus.setProperty("/Enable", true);
+				oModelChangeControlsStatus.setProperty("/Visible", true);
+				oModelChangeControlsStatus.setProperty("/Editable", true);
+				this.getView().byId("openMenu").setEnabled(true);
+
+			} else {
+				oModelChangeControlsStatus.setProperty("/Enable", false);
+				oModelChangeControlsStatus.setProperty("/Visible", false);
+				oModelChangeControlsStatus.setProperty("/Editable", false);
+				this.getView().byId("openMenu").setEnabled(true);
+			}
+			this.getView().byId("idFragment_GestisciID_InputIdProposta").close();
+			this.getView().byId("IdProposta").setValue("");
+			this.getView().byId("InputNoEdit").setValue("");
+		},
+
+		//**************************BTN CREA NOTA********************************************
+
+		handlePressResettaNota: function() {
+			this.getView().byId("idInputScegliNoteIDProposta").setValue(null);
+				this.getView().byId("idInputScegliNoteIDProposta").setEditable(true);
+			this.getView().byId("idNota").setEditable(true).setValue("");
+			this.getView().byId("idNota").setEnabled(true);
+
+		},
+		onLiveWriteNota: function(oEvent) {
+			var sText = oEvent.getParameter("newValue");
+			if (sText.length > 0) {
+				this.getView().byId("idInputScegliNoteIDProposta").setValue(null);
+				this.getView().byId("idInputScegliNoteIDProposta").setEditable(false);
+
+			}
+		},
+
+		//*************************VALUEHELPREQUEST SCEGLI NOTA******************************
+
+		handleValueHelpScegliNota: function(oEvent) {
+			var oView = this.oView,
+				myTemplate,
+				myPath,
+				searchField = [],
+				that = this,
+				aFilter = [];
+
+			var sAmmin = this.getView().getModel("modelGestisciProposta").getData().Prctr;
+			var sInputValue = oEvent.getSource().getValue();
+			aFilter.push(new Filter("Prctr", sap.ui.model.FilterOperator.EQ, sAmmin));
+			aFilter.push(new Filter("TestoNota", sap.ui.model.FilterOperator.Contains, sInputValue));
+			var oDataModel = this.getView().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");
+			//this.getView().setModel(new JSONModel(oDataModel), "oMatchCodeModelTable");
+			var sTitleDialog = "{i18nL>cercaNota}";
+			oDataModel.read("/ZES_ELENCO_NOTE", {
+				filters: aFilter,
+				success: function(response) {
+					var oListaOggetti = response.results;
+					this.getView().setModel(new JSONModel(oListaOggetti), "oMatchcodeModel");
+				}.bind(this),
+				error: function(errorResponse) {
+					MessageBox.error(errorResponse);
+
+				}
+			});
+
+			myPath = "oMatchcodeModel>/";
+			searchField.push("IdNota", "TestoNota");
+			myTemplate = new sap.m.StandardListItem({
+				title: "{oMatchcodeModel>IdNota}",
+				description: "{oMatchcodeModel>TestoNota}"
+			});
+
+			var oValueHelpDialog = new sap.m.SelectDialog({
+				title: sTitleDialog,
+				items: {
+					path: myPath,
+					template: myTemplate
+				},
+				contentHeight: "60%",
+				confirm: function(oConfirm) {
+					var sIdNota = oConfirm.getParameter("selectedItem").getTitle();
+					var sInputNota = that.getView().byId("idInputScegliNoteIDProposta");
+					sInputNota.setValue(sIdNota);
+					var sTestoNota = oConfirm.getParameter("selectedItem").getDescription();
+					var sTextArea = that.getView().byId("idNota");
+					sTextArea.setValue(sTestoNota);
+					that.getView().byId("idNota").setEnabled(false);
+				},
+				search: function(oEvent) {
+					var sString = oEvent.getParameter("value");
+					var aVal = "TestoNota";
+					var oFilter = new Filter(aVal, FilterOperator.Contains, sString);
+					oEvent.getSource().getBinding("items").filter(oFilter);
+				},
+				cancel: function(oCancel) {}
+
+			});
+
+			//gestione emphasized dei bottoni
+			var oButton = oValueHelpDialog.getAggregation("_dialog").getEndButton();
+			if (oButton) {
+				sap.ui.getCore().byId(oButton.sId).setType("Emphasized");
+			}
+			var oButton = oValueHelpDialog.getAggregation("_dialog").getBeginButton();
+			if (oButton) {
+				sap.ui.getCore().byId(oButton.sId).setType("Emphasized");
+			}
+			oView.addDependent(oValueHelpDialog);
+			// this._closeBusyDialog();
+			oValueHelpDialog.open();
+		},
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
