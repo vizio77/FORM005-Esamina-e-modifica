@@ -67,10 +67,10 @@ sap.ui.define([
 								  "idNickNameNPF",
 								  "idIterNPF",
 								]
-								var i = 0
+					//var i = 0
 				arrayFieldsVis.forEach(el => {
-					i = i+1;
-					console.log(i)
+					//i = i+1;
+					//console.log(i)
 					oView.byId(el).setValue("");
 					if(arrayNoEdit.indexOf(el) === -1){
 						oView.byId(el).setEditable(true);
@@ -1409,6 +1409,8 @@ sap.ui.define([
 				var sProposta = oView.byId("idIDPropostaNPF").getValue();
 				var sKeycodepr = this.Keycode;
 				var sTipo, sIter;
+				//lt commento perchè nella versione "nuova" la proposta non è compensativa o no... 
+				//non so se devo mettere di default qualcosa...
 				/* if(oView.byId("idIterNPF").getVisible()) {
 					sTipo = oView.byId("idTipologiaNPF").getValue();
 					if(sTipo.toUpperCase() === "COMPENSATIVA") {
@@ -3509,12 +3511,17 @@ sap.ui.define([
             var aModelCofogModel = this.getView().getModel("modelTableCofogNPF");
             var aModelCofogTable = this.getView().getModel("modelTableCofogNPF").getProperty("/");
 			var sPosFin = this.getView().byId("idPopPosFin").getText();
-			
 			//modelTableCofogNPF
 
            // var sFipex = this.getView().getModel("modelTestata").getData().Fipex.replaceAll(".", "");
             for (var i = 0; i < aDataSelected.length; i++) {
                 var index = aDataSelected[i].split("/")[1];
+				var el = aModelCofog[index]
+				var exist = aModelCofogTable.filter(data => data.Codcofogl1 === el.CodCofogL1 && data.Codcofogl2 === el.CodCofogL2 && data.Codcofogl3 === el.CodCofogL3)
+
+				if(exist.length > 0){
+					continue;
+				}
                 var o = {
                     "Codcofogl1": aModelCofog[index].CodCofogL1,
                     "Codcofogl2": aModelCofog[index].CodCofogL2,
@@ -3535,25 +3542,6 @@ sap.ui.define([
 					"Visible": true
                 };
 
-				/* 
-				var oDati = {
-						Fikrs: "S001",
-						Anno: "",
-						Fase: "DLB",
-						Reale: "",
-						Versione: "P",
-						Fipex: sPosFin,
-						Eos: "S",
-
-						Codcofogl1: sValLiv1,
-						Codcofogl2: sValLiv2,
-						Codcofogl3: sValLiv3,
-						Descrcofog: sValDescr,
-						Codconcatenato: sValIdCofog,
-						Perccofog: "",
-						Icon: "sap-icon://delete",
-						Visible: true
-					}; */
                 aModelCofogTable.push(o);
             }
 			aModelCofogModel.setProperty("/",aModelCofogTable)

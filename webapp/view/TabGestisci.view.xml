@@ -231,7 +231,7 @@
 									<TextArea id="idDenIntCap" required="true" rows="5" maxLength="4000" showExceededText="true" width="85%"
 										value="{= ${modelAnagraficaPf>/Descrizionecapitolo}}" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" editable="{= (${modelAnagraficaPf>Coddenomstdcap} == '000' ? true : false )}"/>-->
 									<TextArea id="idDenIntCap" required="true" rows="5" maxLength="4000" showExceededText="true" width="85%"
-										value="{= ${modelAnagraficaPf>/Descrizionecapitolo}}" editable="{= ${modelAnagraficaPf>/Coddenomstdcap} === '000' ? true : false }"/>
+										value="{modelAnagraficaPf>/Descrizionecapitolo}" editable="{= ${modelAnagraficaPf>/Coddenomstdcap} === '000' ? true : false }"/>
 									<Label text="{i18n>DenRid}" labelFor="test"/>
 									<!--<TextArea rows="5" maxLength="4000" showExceededText="true" width="85%" required="true" id="idDenRidCap" value="{modelAnagraficaPf>/Descrbrevecap}"
 										visible="true" enabled="{= (${modelPG80>/pg80Enable}) &amp;&amp; (${modelInLavorazione>/value})}" editable="{= (${modelAnagraficaPf>Coddenomstdcap} == '000' ? true : false )}"/>-->

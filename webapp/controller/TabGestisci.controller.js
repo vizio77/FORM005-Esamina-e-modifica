@@ -1673,6 +1673,20 @@ sap.ui.define([
 				MessageBox.warning(this.getResourceBundle().getText("MBUpdateErrorCofogVuotoTab"));
 				return;
 			} else {
+
+				//LOGICA CREATE POSFIN
+				oGlobalModel.update(sPathPF, oDatiAnagraficaPF, {
+					success: function(oResponse, oData) {
+						BusyIndicator.hide();
+						// that.getView().byId("btnInvioRevocaValidazione").setEnabled(true);
+						MessageBox.success(that.getView().getModel("i18n").getResourceBundle().getText("MBPFSalvataSuccessPagTab"));
+					},
+					error: function(oError) {
+						BusyIndicator.hide();
+						MessageBox.error(oError.responseText);
+					}
+				});
+
 				for (var p = 0; p < aDatiAnagraficaCOFOG.length; p++) {
 
 					if (aDatiAnagraficaCOFOG[p].Perccofog === "") {
@@ -1688,7 +1702,7 @@ sap.ui.define([
 					
 					
 
-					//LOGICA CREATE POSFIN
+					/* //LOGICA CREATE POSFIN
 					oGlobalModel.update(sPathPF, oDatiAnagraficaPF, {
 						success: function(oResponse, oData) {
 							BusyIndicator.hide();
@@ -1699,7 +1713,7 @@ sap.ui.define([
 							BusyIndicator.hide();
 							MessageBox.error(oError.responseText);
 						}
-					});
+					}); */
 
 					oGlobalModel.setUseBatch(false);
 					if (aDatiAnagraficaCOFOG[p].Fipex === "" || aDatiAnagraficaCOFOG[p].Fipex === undefined) {
