@@ -3009,6 +3009,8 @@ sap.ui.define([
 				];
 
 				var that = this;
+				//lt inserisco un busi per evitare che clicchino senza riportare i dati di missione progr azione del capitolo
+				that.getView().byId("idCapitoloNPFPoP").getParent().getParent().setBusy(true)
 
 				oModel.read("/PosFinSet", {
 					filters: aFilters,
@@ -3018,7 +3020,7 @@ sap.ui.define([
 					},
 					success: function(oData, oResponse) {
 						// console.log(oData);
-
+						that.getView().byId("idCapitoloNPFPoP").getParent().getParent().setBusy(false)
 						that.getView().getModel("modelPFCapEsistente").setData(oData.results[0]);
 						var oTableCofog = that.getView().getModel("modelTableCofogNPF");
 						var aDataCofog = [];
@@ -3029,6 +3031,7 @@ sap.ui.define([
 						oTableCofog.setData(aDataCofog);
 					},
 					error: function(oError) {
+						that.getView().byId("idCapitoloNPFPoP").getParent().getParent().setBusy(false)
 						MessageBox.error(oError.responseText);
 					}
 				});
