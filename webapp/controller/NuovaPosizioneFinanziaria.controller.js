@@ -25,20 +25,70 @@ sap.ui.define([
 				this.oNuovaPosFinModel = this.getOwnerComponent().getModel("modelNuovaPosFin");
 				// this.oRouter.getRoute("NuovaPosizioneFinanziaria").attachMatched(this._onRouteMatched, this);
 				this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
+				//lt Recupero l'evento del match per andare a resettare il modello ogno volta che si entra 
+				this.oRouter.getRoute("NuovaPosizioneFinanziaria").attachMatched(this._onRouteMatched, this);
 				this.aRowsCofog = [];
+			},
+			//lt match dell'oggetto e vado a resettare il modello
+			_onRouteMatched: function() {		
+				//lt resetto i campi per sicurezza
+				this.resetFields();
+			},
+			resetFields: function(oEvent){
+				var oView = this.getView();
+				var arrayNoEdit = [ "idPGNPF",
+									"idCapitoloNPF",
+									"idIDPropostaNPF",
+									"idNickNameNPF",
+									"idIterNPF"
+								];
+
+				var arrayFieldsVis = ["idMissioneNPF",
+								  "idProgrammaNPF",
+								  "idAzioneNPF",
+								  "idCapitoloNPF",
+								  "idPGNPF",
+								  //"idTidCategoriaNPFitoloNPF",
+								  "idTitoloNPF",
+								  "idCategoriaNPF",
+								  "idCE2NPF",
+								  "idCE3NPF",
+								  "idMissioneNPF",
+								  "idProgrammaNPF",
+								  "idAzioneNPF",
+								  "idMacroAggregatoNPF",
+								  "idTipoSpesaCapNPF",
+								  "idDenominazioneCapitoloIntNPF",
+								  "idDenominazioneCapitoloRidNPF",
+								  "idTipoSpesaPGNPF",
+								  "idDenominazionePGIntNPF",
+								  "idDenominazionePGRidNPF",
+								  "idIDPropostaNPF",
+								  "idNickNameNPF",
+								  "idIterNPF",
+								]
+								var i = 0
+				arrayFieldsVis.forEach(el => {
+					i = i+1;
+					console.log(i)
+					oView.byId(el).setValue("");
+					if(arrayNoEdit.indexOf(el) === -1){
+						oView.byId(el).setEditable(true);
+					}
+				});
+			
+				//cofog
+				oView.byId("colEliminaNPF").setVisible(true);
+				oView.byId("idAggiungiRiga").setEnabled(true);
+
+				oView.getModel("modelTableCofogNPF").setProperty("/", []);
+
 			},
 			//lt torno indietro e prima di farlo resetto lo pseudo modello
 			tornaIndietro: function(oEvent){
+				this.getOwnerComponent().setModel(models.getHeaderModelNuovaPosFin(), "modelNuovaPosFin");
 				//lt resetto il modello quando torno indietro
-				var oView = this.getView();
-				oView.byId("idMissioneNPF").setEditable(true);
-				oView.byId("idProgrammaNPF").setEditable(true);
-				oView.byId("idAzioneNPF").setEditable(true);
-
-				oView.byId("idTitoloNPF").setEditable(true);
-				oView.byId("idCategoriaNPF").setEditable(true);
-				oView.byId("idCE2NPF").setEditable(true);
-				oView.byId("idCE3NPF").setEditable(true);
+				this.resetFields();
 				this.onNavBack();
 			},
 
@@ -820,7 +870,14 @@ sap.ui.define([
 								that.getView().getModel("modelNuovaPosFin").setProperty("/PG", that._CodicePg);
 							}, // callback function for success
 							error: function(oError) {
-									MessageBox.error(oError.responseText);
+									//lt parso il messaggio e lo mando all'utente... 
+									if(JSON.parse(oError.responseText).error.code === 'SY/530'){
+										//mando un warning... non un errore....
+										MessageBox.warning(JSON.parse(oError.responseText).error.message.value)
+									}else{
+										MessageBox.error(oError.responseText);
+									}
+
 								} // callback function for error
 						});
 						//LOGICA DI BLOCCO PG DA INSERIRE
