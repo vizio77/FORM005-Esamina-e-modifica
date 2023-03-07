@@ -130,12 +130,18 @@ sap.ui.define([
 		getHeaderModelNuovaPosFin: function() {
 			//    var sRootPath = jQuery.sap.getModulePath("PropostaSpesaPropostaSpesa");
 			var oJSONLocal = {
-				AMM: "020",
-				DESCAMM: "MINISTERO DELL'ECONOMIA E DELLE FINANZE",
-				CDR: "0001",
-				DESCCDR: "GABINETTO E UFFICI DI DIRETTA COLLABORAZIONE ALL'OPERA DEL MINISTRO",
-				RAG: "0840",
-				DESCRAG: "UFFICIO CENTRALE DI BILANCIO DEL MINISTERO DELL'ECONOMIA E DELLE FINANZE",
+				// AMM: "020",
+				// DESCAMM: "MINISTERO DELL'ECONOMIA E DELLE FINANZE",
+				// CDR: "0001",
+				// DESCCDR: "GABINETTO E UFFICI DI DIRETTA COLLABORAZIONE ALL'OPERA DEL MINISTRO",
+				// RAG: "0840",
+				// DESCRAG: "UFFICIO CENTRALE DI BILANCIO DEL MINISTERO DELL'ECONOMIA E DELLE FINANZE",
+				AMM: "",
+				DESCAMM: "",
+				CDR: "",
+				DESCCDR: "",
+				RAG: "",
+				DESCRAG: "",
 				MISS: "",
 				DESCMISS: "",
 				PROG: "",
@@ -158,7 +164,8 @@ sap.ui.define([
 				DESCMACROAGG: "",
 				DENOMINAZCAP: "",
 				TIPOSPESAPG: "",
-				DENOMINAZPG: ""
+				DENOMINAZPG: "",
+				EDITPERCENT: true,
 			};
 			var olocalHeaderModelNuovaPosFin = new JSONModel(oJSONLocal);
 			olocalHeaderModelNuovaPosFin.setDefaultBindingMode("TwoWay");

@@ -43,7 +43,12 @@ sap.ui.define([
 									"idIterNPF"
 								];
 
-				var arrayFieldsVis = ["idMissioneNPF",
+				var arrayFieldsVis = [
+								 
+								//"idAmminNPF",
+								"idCdRNPF",
+								"idRagioneriaNPF",		
+								  "idMissioneNPF",
 								  "idProgrammaNPF",
 								  "idAzioneNPF",
 								  "idCapitoloNPF",
@@ -76,10 +81,17 @@ sap.ui.define([
 						oView.byId(el).setEditable(true);
 					}
 				});
-			
+				var oModelNuovaPosFin = this.getOwnerComponent().getModel("modelNuovaPosFin");
+				oModelNuovaPosFin.setProperty("/AMM", "020")
+				oModelNuovaPosFin.setProperty("/DESCAMM", "MINISTERO DELL'ECONOMIA E DELLE FINANZE")
+				
+				//oView.byId("idAmminNPF").setValue("A020");
+				//oView.byId("idCdRNPF").setValue("0001");
+				//oView.byId("idRagioneriaNPF").setValue("0840");
 				//cofog
 				oView.byId("colEliminaNPF").setVisible(true);
 				oView.byId("idAggiungiRiga").setEnabled(true);
+				oView.getModel("modelNuovaPosFin").setProperty("/EDITPERCENT", true);
 
 				oView.getModel("modelTableCofogNPF").setProperty("/", []);
 
@@ -571,6 +583,8 @@ sap.ui.define([
 
 					oView.byId("colEliminaNPF").setVisible(false);
 					oView.byId("idAggiungiRiga").setEnabled(false);
+					oView.getModel("modelNuovaPosFin").setProperty("/EDITPERCENT", false);
+
 
 					// modelCOFOGCapEsistente
 
@@ -622,6 +636,7 @@ sap.ui.define([
 
 					oView.byId("colEliminaNPF").setVisible(true);
 					oView.byId("idAggiungiRiga").setEnabled(true);
+					oView.getModel("modelNuovaPosFin").setProperty("/EDITPERCENT", true);
 
 					this.getView().byId("NPF_dialogCapitolo").close();
 				}
@@ -660,6 +675,7 @@ sap.ui.define([
 
 								oView.byId("colEliminaNPF").setVisible(true);
 								oView.byId("idAggiungiRiga").setEnabled(true);
+								oView.getModel("modelNuovaPosFin").setProperty("/EDITPERCENT", true);
 
 								that.getView().byId("NPF_dialogCapitolo").close();
 
@@ -1403,6 +1419,7 @@ sap.ui.define([
 						delete aDatiCofog[i].Visible;
 						// aCofog.push(aDatiCofog[i]);
 					}
+					aDatiCofog[i].Fipex = sPosFin;
 				}
 
 				//PROPOSTA
@@ -1469,7 +1486,8 @@ sap.ui.define([
 				
 				var that = this;
 
-				if (!sPg || !sMissione || !sProgramma  || !sAzione || 
+				//lt intanto in attesa di modifica inserisco anche i tre blocchi
+				if (!sAmministrazione || !sCdr || !sRagioneria || !sPg || !sMissione || !sProgramma  || !sAzione || 
 				!sCapitolo || !sTitolo || !sCategoria || !sCE2 || !sCE3 ||
 				!sMAC || !sDenominazioneCapitoloInt || !sDenominazioneCapitoloRid) {
 					sap.m.MessageBox.warning(this.oResourceBundle.getText("MBCampiObbligatoriNPF"));
@@ -1954,7 +1972,14 @@ sap.ui.define([
 
 		},
 
-		
+		createAddFilter: function(aOrFiltersCond){
+			return new Filter({
+				filters: [
+					aOrFiltersCond
+				],
+				and: true
+			});
+		},
 
 		onValueHelpRequest: function(oEvent, inputRef) {
 			var sInputValue, aOrFiltersCond, aFilters;
@@ -1967,83 +1992,7 @@ sap.ui.define([
 			var oModelGlobal = this.getView().getModel();
 			var arrayProperties = [];
 			sInputValue = oEvent.getSource().getValue();
-
-			//DA IMPLEMENTARE
-			/*if (inputRef === "AmmFA") {
-
-				if (!this.AmministrazioneHelpDialogFA) {
-					this.AmministrazioneHelpDialogFA = this.createValueHelpDialog(
-						"AmmFA",
-						oModelConi,
-						"modelConoVisibilita",
-						"{i18n>Amministrazione}",
-						"/ZCA_AF_AMMIN",
-						"Prctr",
-						"DescrEstesa");
-				}
-				aOrFiltersCond =
-					new Filter({
-						filters: [
-							// new Filter("Prctr", FilterOperator.Contains, sInputValue),
-							new Filter("DescrEstesa", FilterOperator.Contains, sInputValue)
-						],
-						and: false
-					});
-				this.AmministrazioneHelpDialogFA.getBinding("items").filter(aOrFiltersCond);
-				// Open ValueHelpDialog filtered by the input's value
-				this.AmministrazioneHelpDialogFA.open(sInputValue);
-			}*/
-
-			//DA IMPLEMENTARE
-			/*if (inputRef === "CentroRespFA") {
-				if (!this.CentroRespFA) {
-					this.CentroRespFA = this.createValueHelpDialog(
-						"CentroRespFA",
-						oModelConi,
-						"modelConoVisibilita",
-						"{i18n>CentroResp}",
-						"/ZCA_AF_CDR",
-						"CodiceCdr",
-						"DescrEstesa");
-
-				}
-				aOrFiltersCond =
-					new Filter({
-						filters: [
-							// new Filter("CodiceCdr", FilterOperator.Contains, sInputValue),
-							new Filter("DescrEstesa", FilterOperator.Contains, sInputValue)
-						],
-						and: false
-					});
-				this.CentroRespFA.getBinding("items").filter(aOrFiltersCond);
-				this.CentroRespFA.open(sInputValue);
-			}*/
-
-			//DA IMPLEMENTARE
-			/*if (inputRef === "RagioneriaFA") {
-				if (!this.RagioneriaFA) {
-					this.RagioneriaFA = this.createValueHelpDialog(
-						"RagioneriaFA",
-						oModelConi,
-						"modelConoVisibilita",
-						"{i18n>Ragioneria}",
-						"/ZCA_AF_RAGIONERIA",
-						"CodiceRagioneria",
-						"DescrEstesa");
-				}
-
-				aOrFiltersCond =
-					new Filter({
-						filters: [
-							// new Filter("CodiceRagioneria", FilterOperator.Contains, sInputValue),
-							new Filter("DescrEstesa", FilterOperator.Contains, sInputValue)
-						],
-						and: false
-					});
-				this.RagioneriaFA.getBinding("items").filter(aOrFiltersCond);
-				// Open ValueHelpDialog filtered by the input's value
-				this.RagioneriaFA.open(sInputValue);
-			}*/
+			
 			if (inputRef === "idAmminNPF") {
 				//
 				if (!this.AmmDialog) {
@@ -2071,6 +2020,7 @@ sap.ui.define([
 			}
 			if (inputRef === "idCdRNPF") {
 				//
+				sAmminVal = this.getView().byId("idAmminNPF").getValue();
 				if (!this.CdrDialog) {
 					this.CdrDialog = this.createValueHelpDialog(
 						"IdCdr",
@@ -2090,12 +2040,22 @@ sap.ui.define([
 						],
 						and: false
 					});
-				this.CdrDialog.getBinding("items").filter(aOrFiltersCond);
+				
+				aFilters = this.createAddFilter(aOrFiltersCond);
+				if (sAmminVal !== undefined && sAmminVal !== "") {
+					fAmm = new Filter("Prctr", FilterOperator.EQ, sAmminVal);
+					aFilters.aFilters.push(fAmm);
+				}
+				
+				this.CdrDialog.getBinding("items").filter(aFilters);
 				// Open ValueHelpDialog filtered by the input's value
 				this.CdrDialog.open(sInputValue);
 			}
 			if (inputRef === "idRagioneriaNPF") {
 				//
+				sAmminVal = this.getView().byId("idAmminNPF").getValue();
+				var sCdrVal = this.getView().byId("idCdRNPF").getValue();
+				
 				if (!this.RagioneriaDialog) {
 					this.RagioneriaDialog = this.createValueHelpDialog(
 						"IdRagioneria",
@@ -2115,7 +2075,13 @@ sap.ui.define([
 						],
 						and: false
 					});
-				this.RagioneriaDialog.getBinding("items").filter(aOrFiltersCond);
+				aFilters = this.createAddFilter(aOrFiltersCond);
+				if (sAmminVal !== undefined && sAmminVal !== "") {
+					fAmm = new Filter("Amministrazione", FilterOperator.EQ, sAmminVal);
+					aFilters.aFilters.push(fAmm);
+				}
+				
+				this.RagioneriaDialog.getBinding("items").filter(aFilters);
 				// Open ValueHelpDialog filtered by the input's value
 				this.RagioneriaDialog.open(sInputValue);
 			}
@@ -2136,8 +2102,9 @@ sap.ui.define([
 				aOrFiltersCond =
 					new Filter({
 						filters: [
-							// new Filter("CodiceRagioneria", FilterOperator.Contains, sInputValue),
-							new Filter("Nickname", FilterOperator.Contains, sInputValue)
+							//lt aggiungo iter 01 per prendere solo quelle in attesa di autorizzazione
+							new Filter("Iter", FilterOperator.EQ, "01"),
+							//new Filter("Nickname", FilterOperator.Contains, sInputValue)
 						],
 						and: false
 					});
@@ -2207,12 +2174,7 @@ sap.ui.define([
 						and: false
 					});
 				// non dovrebbe succedere ma evita il dump su BE nel caso fosse null
-				aFilters = new Filter({
-					filters: [
-						aOrFiltersCond
-					],
-					and: true
-				});
+				aFilters = this.createAddFilter(aOrFiltersCond);
 				if (sMissioneVal !== undefined && sMissioneVal !== "") {
 					fMiss = new Filter("Codicemissione", FilterOperator.EQ, sMissioneVal);
 					aFilters.aFilters.push(fMiss);
@@ -2266,12 +2228,7 @@ sap.ui.define([
 						and: false
 					});
 				// non dovrebbe succedere ma evita il dump su BE nel caso fosse null
-				aFilters = new Filter({
-					filters: [
-						aOrFiltersCond
-					],
-					and: true
-				});
+				aFilters = this.createAddFilter(aOrFiltersCond);
 				if (sAmminVal !== undefined && sAmminVal !== "") {
 					fAmm = new Filter("Prctr", FilterOperator.EQ, sAmminVal);
 					aFilters.aFilters.push(fAmm);
@@ -2291,6 +2248,11 @@ sap.ui.define([
 
 			if (inputRef === "idCapitoloNPFPoP") {
 				sAmminVal = this.getView().byId("idAmminNPF").getValue();
+
+				if(!sAmminVal || sAmminVal === "") {
+					MessageBox.warning(this.getResourceBundle().getText("selezionarePrimaAmm"))
+					return;
+				}
 
 				if (!this.idCapitoloNPFPoP) {
 					this.idCapitoloNPFPoP = this.createValueHelpDialog(
@@ -2313,12 +2275,7 @@ sap.ui.define([
 						and: false
 					});
 				// non dovrebbe succedere ma evita il dump su BE nel caso fosse null
-				aFilters = new Filter({
-					filters: [
-						aOrFiltersCond
-					],
-					and: true
-				});
+				aFilters = this.createAddFilter(aOrFiltersCond);
 				if (sAmminVal !== undefined && sAmminVal !== "") {
 					fAmm = new Filter("Prctr", FilterOperator.EQ, sAmminVal);
 					aFilters.aFilters.push(fAmm);
@@ -2392,12 +2349,7 @@ sap.ui.define([
 						and: false
 					});
 				// non dovrebbe succedere ma evita il dump su BE nel caso fosse null
-				aFilters = new Filter({
-					filters: [
-						aOrFiltersCond
-					],
-					and: true
-				});
+				aFilters = this.createAddFilter(aOrFiltersCond);
 				if (sTitoloVal !== undefined && sTitoloVal !== "") {
 					fTit = new Filter("Codicetitolo", FilterOperator.EQ, sTitoloVal);
 					aFilters.aFilters.push(fTit);
@@ -2449,12 +2401,7 @@ sap.ui.define([
 						and: false
 					});
 
-				aFilters = new Filter({
-					filters: [
-						aOrFiltersCond
-					],
-					and: true
-				});
+				aFilters = this.createAddFilter(aOrFiltersCond);
 				if (sTitoloVal !== undefined && sTitoloVal !== "") {
 					fTit = new Filter("Codicetitolo", FilterOperator.EQ, sTitoloVal);
 					aFilters.aFilters.push(fTit);
@@ -2535,12 +2482,7 @@ sap.ui.define([
 						and: false
 					});
 				// non dovrebbe succedere ma evita il dump su BE nel caso fosse null
-				aFilters = new Filter({
-					filters: [
-						aOrFiltersCond
-					],
-					and: true
-				});
+				aFilters = this.createAddFilter(aOrFiltersCond);
 				if (sTitoloVal !== undefined && sTitoloVal !== "") {
 					fTit = new Filter("Codicetitolo", FilterOperator.EQ, sTitoloVal);
 					aFilters.aFilters.push(fTit);
@@ -2701,47 +2643,7 @@ sap.ui.define([
 				inputRef = oEvent.getParameters().id;
 			}
 
-			//DA IMPLEMENTARE
-			/*if (inputRef === "AmmFA") {
-
-				aOrFiltersCond =
-					new Filter({
-						filters: [
-							//new Filter("Prctr", FilterOperator.Contains, sValue),
-							new Filter("DescrEstesa", FilterOperator.Contains, sValue)
-						],
-						and: false
-					});
-				oEvent.getSource().getBinding("items").filter(aOrFiltersCond);
-			}*/
-
-			//DA IMPLEMENTARE
-			/*if (inputRef === "CentroRespFA") {
-
-				aOrFiltersCond =
-					new Filter({
-						filters: [
-							//new Filter("Codicecdr", FilterOperator.Contains, sValue),
-							new Filter("DescrEstesa", FilterOperator.Contains, sValue)
-						],
-						and: false
-					});
-				oEvent.getSource().getBinding("items").filter(aOrFiltersCond);
-			}*/
-
-			//DA IMPLEMENTARE
-			/*if (inputRef === "RagioneriaFA") {
-
-				aOrFiltersCond =
-					new Filter({
-						filters: [
-							// new Filter("CodiceRagioneria", FilterOperator.Contains, sValue),
-							new Filter("DescrEstesa", FilterOperator.Contains, sValue)
-						],
-						and: false
-					});
-				oEvent.getSource().getBinding("items").filter(aOrFiltersCond);
-			}*/
+			
 
 			if (inputRef === "IdAmministrazione") {
 				//		
@@ -2771,9 +2673,9 @@ sap.ui.define([
 				oEvent.getSource().getBinding("items").filter(aOrFiltersCond);
 			}
 
-			if (inputRef === "idRagioneria") {
+			if (inputRef === "IdRagioneria") {
 				//		
-
+				var ammVal = this.byId("idAmminNPF").getValue();
 				aOrFiltersCond =
 					new Filter({
 						filters: [
@@ -2782,6 +2684,15 @@ sap.ui.define([
 						],
 						and: false
 					});
+				/* aFilters = new Filter({
+					filters: [
+						aOrFiltersCond
+					],
+					and: true
+				});
+				if (ammVal !== undefined && ammVal !== "") {
+					aFilters.aFilters.push(new Filter("Prctr", FilterOperator.EQ, ammVal));
+				} */
 				oEvent.getSource().getBinding("items").filter(aOrFiltersCond);
 			}
 
@@ -2795,6 +2706,7 @@ sap.ui.define([
 						],
 						and: false
 					});
+				
 				oEvent.getSource().getBinding("items").filter(aOrFiltersCond);
 			}
 
@@ -2809,12 +2721,7 @@ sap.ui.define([
 						],
 						and: false
 					});
-				aFilters = new Filter({
-					filters: [
-						aOrFiltersCond
-					],
-					and: true
-				});
+				aFilters = this.createAddFilter(aOrFiltersCond);
 				if (sMissioneVal !== undefined && sMissioneVal !== "") {
 					fMiss = new Filter("Codicemissione", FilterOperator.EQ, sMissioneVal);
 					aFilters.aFilters.push(fMiss);
@@ -2836,12 +2743,7 @@ sap.ui.define([
 						and: false
 					});
 
-				aFilters = new Filter({
-					filters: [
-						aOrFiltersCond
-					],
-					and: true
-				});
+				aFilters = this.createAddFilter(aOrFiltersCond);
 				if (sAmminVal !== undefined && sAmminVal !== "") {
 					fAmm = new Filter("Prctr", FilterOperator.EQ, sAmminVal);
 					aFilters.aFilters.push(fAmm);
@@ -2868,12 +2770,7 @@ sap.ui.define([
 						],
 						and: false
 					});
-				aFilters = new Filter({
-					filters: [
-						aOrFiltersCond
-					],
-					and: true
-				});
+				aFilters = this.createAddFilter(aOrFiltersCond);
 				if (sAmminVal !== undefined && sAmminVal !== "") {
 					fAmm = new Filter("Prctr", FilterOperator.EQ, sAmminVal);
 					aFilters.aFilters.push(fAmm);
@@ -2905,12 +2802,7 @@ sap.ui.define([
 						],
 						and: false
 					});
-				aFilters = new Filter({
-					filters: [
-						aOrFiltersCond
-					],
-					and: true
-				});
+				aFilters = this.createAddFilter(aOrFiltersCond);
 				if (sTitoloVal !== undefined && sTitoloVal !== "") {
 					fTit = new Filter("Codicetitolo", FilterOperator.EQ, sTitoloVal);
 					aFilters.aFilters.push(fTit);
@@ -2930,12 +2822,7 @@ sap.ui.define([
 						],
 						and: false
 					});
-				aFilters = new Filter({
-					filters: [
-						aOrFiltersCond
-					],
-					and: true
-				});
+				aFilters = this.createAddFilter(aOrFiltersCond);
 				if (sTitoloVal !== undefined && sTitoloVal !== "") {
 					fTit = new Filter("Codicetitolo", FilterOperator.EQ, sTitoloVal);
 					aFilters.aFilters.push(fTit);
@@ -2960,12 +2847,7 @@ sap.ui.define([
 						],
 						and: false
 					});
-				aFilters = new Filter({
-					filters: [
-						aOrFiltersCond
-					],
-					and: true
-				});
+				aFilters = this.createAddFilter(aOrFiltersCond);
 				if (sTitoloVal !== undefined && sTitoloVal !== "") {
 					fTit = new Filter("Codicetitolo", FilterOperator.EQ, sTitoloVal);
 					aFilters.aFilters.push(fTit);
@@ -3049,33 +2931,7 @@ sap.ui.define([
 				inputRef = oEvent.getParameters().id;
 			}
 
-			//DA IMPLEMENTARE
-			/*if (inputRef === "AmmFA") {
-				oSelectedItem = oEvent.getParameter("selectedItem");
-				// oEvent.getSource().getBinding("items").filter([]);
-				this.byId("AmmFA").setValue(oSelectedItem.getTitle());
-			}*/
-
-			//DA IMPLEMENTARE
-			/*if (inputRef === "CentroRespFA") {
-				oSelectedItem = oEvent.getParameter("selectedItem");
-				// oEvent.getSource().getBinding("items").filter([]);
-				this.byId("CentroRespFA").setValue(oSelectedItem.getTitle());
-			}*/
-
-			//DA IMPLEMENTARE
-			/*if (inputRef === "RagioneriaFA") {
-				oSelectedItem = oEvent.getParameter("selectedItem");
-				// oEvent.getSource().getBinding("items").filter([]);
-
-				if (!oSelectedItem) {
-					// this._enableInput("Missione", false);
-					return;
-				}
-				// this._enableInput("Missione", true);
-				this.byId("RagioneriaFA").setValue(oSelectedItem.getTitle());
-			}*/
-
+			
 			if (inputRef === "IdAmministrazione") {
 				// var oSelectedItem = oEvent.getParameter("selectedItem");
 				oEvent.getSource().getBinding("items").filter([]);
@@ -3100,6 +2956,10 @@ sap.ui.define([
 				var sData = oModelGlobal.getData(sPath);
 				this.byId("idCdRNPF").setValue(oSelectedItem.getTitle());
 
+				oModelNuovaPosFin.setProperty("/CDR", oSelectedItem.getTitle())
+				oModelNuovaPosFin.setProperty("/DESCCDR", sData.DescrEstesa)
+				
+
 			}
 
 			if (inputRef === "IdRagioneria") {
@@ -3112,6 +2972,9 @@ sap.ui.define([
 				//this.byId("IdProposta").setValue(oSelectedItem.getTitle());
 				var sData = oModelGlobal.getData(sPath);
 				this.byId("idRagioneriaNPF").setValue(oSelectedItem.getTitle());
+
+				oModelNuovaPosFin.setProperty("/RAG", oSelectedItem.getTitle())
+				oModelNuovaPosFin.setProperty("/DESCRAG", sData.DescrEstesa)
 
 			}
 
@@ -3983,7 +3846,7 @@ sap.ui.define([
 									that.getView().byId("idIDPropostaNPF").setValue("");
 									that.getView().byId("idNickNameNPF").setValue("");
 									//lt
-									that.getView().byId("idNota").setValue("");
+									//that.getView().byId("idNota").setValue("");
 									that.getView().byId("idIterNPF").setSelectedItem(null);
 									//that.getView().byId("idTablePosFinGestisciID").unbindAggregation("items");
 									that.getView().byId("btnlockId").setText("Scegli");
@@ -4041,7 +3904,7 @@ sap.ui.define([
 									that.getView().byId("idIDPropostaNPF").setValue("");
 									that.getView().byId("idNickNameNPF").setValue("");
 									//lt
-									that.getView().byId("idNota").setValue("");
+									//that.getView().byId("idNota").setValue("");
 									that.getView().byId("idIterNPF").setSelectedItem(null);
 									//that.getView().byId("idTablePosFinGestisciID").unbindAggregation("items");
 
@@ -4098,8 +3961,10 @@ sap.ui.define([
 						filters: aFilters, // function import parameters        
 						success: function(oData, oResponse) {
 							var oNota = "";
+							var response;
 							if (oData.results.length > 0) {
 								oNota = oData.results[0].Testonota;
+								response = oData.results[0]
 							}
 
 							//Gestione Input
@@ -4108,16 +3973,25 @@ sap.ui.define([
 							this.getView().getModel("modelChangeControlsStatus").setProperty("/Visible", true);
 							this.getView().byId("idNickNameNPF").setEditable(true);
 							var oIter = oModelGestisciProposta.Iter;
+
+							if(response){
+								//lt chiedere se va bene così
+								oIter = response.Desciter
+								this.Keycode = response.Keycodepr
+							}
+							
+							this.getView().byId("idIterNPF").setSelectedKey("01");
 							this.getView().byId("idIterNPF").setValue(oIter);
 							//lt
-							this.getView().byId("idNota").setValue(oNota);
+							//this.getView().byId("idNota").setValue(oNota);
 
 							this.getView().getModel("modelChangeControlsStatus").setProperty("/Enable", true);
-
+							
+							/*
 							aFilters = [];
 							aFilters.push(new Filter("Idproposta", FilterOperator.EQ, oKeyCode));
 
-							oDataModel.read("/PosFinPropostaSet", {
+							 oDataModel.read("/PosFinPropostaSet", {
 								filters: aFilters,
 								success: function(oData, oResponse) {
 									var listResults = oData.results;
@@ -4199,7 +4073,7 @@ sap.ui.define([
 									this.getView().getModel("modelChangeControlsStatus").setProperty("/Enable", false);
 									this.getView().getModel("modelChangeControlsStatus").setProperty("/Editable", false);
 								}.bind(this)
-							});
+							}); */
 
 						}.bind(this), // callback function for success
 						error: function(oError) {
@@ -4211,7 +4085,7 @@ sap.ui.define([
 							}.bind(this) // callback function for error
 					});
 
-					this.getView().byId("idNota").setEditable(true);
+					//this.getView().byId("idNota").setEditable(true);
 
 				}
 			}
@@ -4320,8 +4194,8 @@ sap.ui.define([
 		handlePressResettaNota: function() {
 			this.getView().byId("idInputScegliNoteIDProposta").setValue(null);
 				this.getView().byId("idInputScegliNoteIDProposta").setEditable(true);
-			this.getView().byId("idNota").setEditable(true).setValue("");
-			this.getView().byId("idNota").setEnabled(true);
+			//this.getView().byId("idNota").setEditable(true).setValue("");
+			//this.getView().byId("idNota").setEnabled(true);
 
 		},
 		onLiveWriteNota: function(oEvent) {

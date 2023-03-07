@@ -48,6 +48,8 @@ sap.ui.define([
 
 			var oTreeTable = this.getView().byId(sIdTreeTable);
 			var aFilters = [];
+
+			aFilters.push( new Filter("Iter", FilterOperator.EQ, "01"))
 			
 			// console.log(aFilters);
 			this._remove(aFilters, undefined);

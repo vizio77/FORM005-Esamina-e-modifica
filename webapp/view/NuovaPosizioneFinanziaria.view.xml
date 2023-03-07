@@ -92,20 +92,20 @@
 									<f:formContainers>
 										<f:FormContainer id="idFormContainer">
 											<f:formElements>
-												<f:FormElement label="{i18n>Amministrazione}">
+												<f:FormElement label="{i18n>Amministrazione}" >
 													<f:fields>
-														<m:Input id="idAmminNPF" editable="true" placeholder="Scegli {i18n>Amministrazione}" maxSuggestionWidth="60%" showSuggestion="true"
+														<!-- <m:Input id="idAmminNPF" required="true" editable="true" placeholder="Scegli {i18n>Amministrazione}" maxSuggestionWidth="60%" showSuggestion="true"
 															showValueHelp="true" valueHelpOnly="false" change="onChange($event, 'idAmminNPF')"
 															valueHelpRequest=".onValueHelpRequest($event, 'idAmminNPF')" suggest=".onSuggest($event, 'idAmminNPF')"
-															suggestionItemSelected=".onSuggestionItemSelected($event, 'idAmminNPF')"/>
-														<!-- <m:Input id="idAmminNPF" editable="false" placeholder="Scegli {i18n>Amministrazione}" maxSuggestionWidth="60%" showSuggestion="true"
-															value="A020"></m:Input> -->
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idAmminNPF')"/> -->
+														<m:Input id="idAmminNPF" editable="false" placeholder="Scegli {i18n>Amministrazione}" maxSuggestionWidth="60%" showSuggestion="true"
+															value="A020"></m:Input>
 													</f:fields>
 												</f:FormElement>
 												<f:FormElement label="{i18n>CdR}">
 													<f:fields>
-														<m:Input id="idCdRNPF" editable="true" placeholder="Scegli {i18n>CdR}" maxSuggestionWidth="60%" showSuggestion="true" showValueHelp="true"
-															valueHelpOnly="false" change="onChange($event, 'idCdRNPF')" valueHelpRequest=".onValueHelpRequest($event, 'idCdRNPF')"
+														<m:Input id="idCdRNPF" required="true" editable="true" placeholder="Scegli {i18n>CdR}" maxSuggestionWidth="60%" showSuggestion="true" showValueHelp="true"
+															valueHelpOnly="true" change="onChange($event, 'idCdRNPF')" valueHelpRequest=".onValueHelpRequest($event, 'idCdRNPF')"
 															suggest=".onSuggest($event, 'idCdRNPF')" 
 															suggestionItemSelected=".onSuggestionItemSelected($event, 'idCdRNPF')"/>
 														<!-- <m:Input id="idCdRNPF" editable="false" placeholder="Scegli {i18n>CdR}" value="0001"></m:Input> -->
@@ -113,8 +113,8 @@
 												</f:FormElement>
 												<f:FormElement label="{i18n>Ragioneria}">
 													<f:fields>
-														<m:Input id="idRagioneriaNPF" editable="true" placeholder="Scegli {i18n>Ragioneria}" maxSuggestionWidth="60%" showSuggestion="true"
-															showValueHelp="true" valueHelpOnly="false" change="onChange($event, 'idRagioneriaNPF')"
+														<m:Input id="idRagioneriaNPF" required="true" editable="true" placeholder="Scegli {i18n>Ragioneria}" maxSuggestionWidth="60%" showSuggestion="true"
+															showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idRagioneriaNPF')" 
 															valueHelpRequest=".onValueHelpRequest($event, 'idRagioneriaNPF')" suggest=".onSuggest($event, 'idRagioneriaNPF')"
 															suggestionItemSelected=".onSuggestionItemSelected($event, 'idRagioneriaNPF')"/>
 														<!-- <m:Input id="idRagioneriaNPF" editable="false" placeholder="Scegli {i18n>Ragioneria}" value="0840"></m:Input> -->
@@ -123,7 +123,7 @@
 												<f:FormElement label="{i18n>Missione}">
 													<f:fields>
 														<m:Input id="idMissioneNPF" required="true" editable="true" placeholder="Scegli {i18n>Missione}" maxSuggestionWidth="60%"
-															showSuggestion="true" showValueHelp="true" valueHelpOnly="false" change="onChange($event, 'idMissioneNPF')"
+															showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idMissioneNPF')"
 															valueHelpRequest=".onValueHelpRequest($event, 'idMissioneNPF')" suggest=".onSuggest($event, 'idMissioneNPF')"
 															suggestionItemSelected=".onSuggestionItemSelected($event, 'idMissioneNPF')"/>
 													</f:fields>
@@ -131,7 +131,7 @@
 												<f:FormElement label="{i18n>Programma}">
 													<f:fields>
 														<m:Input id="idProgrammaNPF" required="true" editable="true" placeholder="Scegli {i18n>Programma}" maxSuggestionWidth="60%"
-															showSuggestion="true" showValueHelp="true" valueHelpOnly="false" change="onChange($event, 'idProgrammaNPF')"
+															showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idProgrammaNPF')"
 															valueHelpRequest=".onValueHelpRequest($event, 'idProgrammaNPF')" suggest=".onSuggest($event, 'idProgrammaNPF')"
 															suggestionItemSelected=".onSuggestionItemSelected($event, 'idProgrammaNPF')"/>
 													</f:fields>
@@ -139,7 +139,7 @@
 												<f:FormElement label="{i18n>Azione}">
 													<f:fields>
 														<m:Input id="idAzioneNPF" required="true" editable="true" placeholder="Scegli {i18n>Azione}" maxSuggestionWidth="60%" showSuggestion="true"
-															showValueHelp="true" valueHelpOnly="false" change="onChange($event, 'idAzioneNPF')"
+															showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idAzioneNPF')"
 															valueHelpRequest=".onValueHelpRequest($event, 'idAzioneNPF')" suggest=".onSuggest($event, 'idAzioneNPF')"
 															suggestionItemSelected=".onSuggestionItemSelected($event, 'idAzioneNPF')"/>
 													</f:fields>
@@ -182,7 +182,7 @@
 												<f:FormElement label="{i18n>Titolo}">
 													<f:fields>
 														<m:Input id="idTitoloNPF" required="true" editable="true" placeholder="Scegli {i18n>Titolo}" maxSuggestionWidth="60%" showSuggestion="true"
-															showValueHelp="true" valueHelpOnly="false" change="onChange($event, 'idTitoloNPF')"
+															showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idTitoloNPF')"
 															valueHelpRequest=".onValueHelpRequest($event, 'idTitoloNPF')" suggest=".onSuggest($event, 'idTitoloNPF')"
 															suggestionItemSelected=".onSuggestionItemSelected($event, 'idTitoloNPF')"/>
 													</f:fields>
@@ -190,7 +190,7 @@
 												<f:FormElement label="{i18n>Categoria}">
 													<f:fields>
 														<m:Input id="idCategoriaNPF" required="true" editable="true" placeholder="Scegli {i18n>Categoria}" maxSuggestionWidth="60%"
-															showSuggestion="true" showValueHelp="true" valueHelpOnly="false" change="onChange($event, 'idCategoriaNPF')"
+															showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idCategoriaNPF')"
 															valueHelpRequest=".onValueHelpRequest($event, 'idCategoriaNPF')" suggest=".onSuggest($event, 'idCategoriaNPF')"
 															suggestionItemSelected=".onSuggestionItemSelected($event, 'idCategoriaNPF')"/>
 													</f:fields>
@@ -198,14 +198,14 @@
 												<f:FormElement label="{i18n>CE2}">
 													<f:fields>
 														<m:Input id="idCE2NPF" editable="true" required="true" placeholder="Scegli {i18n>CE2}" maxSuggestionWidth="60%" showSuggestion="true"
-															showValueHelp="true" valueHelpOnly="false" change="onChange($event, 'idCE2NPF')" valueHelpRequest=".onValueHelpRequest($event, 'idCE2NPF')"
+															showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idCE2NPF')" valueHelpRequest=".onValueHelpRequest($event, 'idCE2NPF')"
 															suggest=".onSuggest($event, 'idCE2NPF')" suggestionItemSelected=".onSuggestionItemSelected($event, 'idCE2NPF')"/>
 													</f:fields>
 												</f:FormElement>
 												<f:FormElement label="{i18n>CE3}">
 													<f:fields>
 														<m:Input id="idCE3NPF" editable="true" required="true" placeholder="Scegli {i18n>CE3}" maxSuggestionWidth="60%" showSuggestion="true"
-															showValueHelp="true" valueHelpOnly="false" change="onChange($event, 'idCE3NPF')" valueHelpRequest=".onValueHelpRequest($event, 'idCE3NPF')"
+															showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idCE3NPF')" valueHelpRequest=".onValueHelpRequest($event, 'idCE3NPF')"
 															suggest=".onSuggest($event, 'idCE3NPF')" suggestionItemSelected=".onSuggestionItemSelected($event, 'idCE3NPF')"/>
 													</f:fields>
 												</f:FormElement>
@@ -240,7 +240,7 @@
 												<f:FormElement label="{i18n>MacroAgg}">
 													<f:fields>
 														<m:Input id="idMacroAggregatoNPF" required="true" editable="true" placeholder="Scegli {i18n>MacroAgg}" maxSuggestionWidth="60%"
-															showSuggestion="true" showValueHelp="false" valueHelpOnly="false" change="onChange($event, 'idMacroAggregatoNPF')"
+															showSuggestion="true" showValueHelp="true" valueHelpOnly="false" change="onChange($event, 'idMacroAggregatoNPF')"
 															valueHelpRequest=".onValueHelpRequest($event, 'idMacroAggregatoNPF')" suggest=".onSuggest($event, 'idMacroAggregatoNPF')"
 															suggestionItemSelected=".onSuggestionItemSelected($event, 'idMacroAggregatoNPF')" suggestionItems=""/>
 															<!--<m:suggestionItems>
@@ -303,7 +303,7 @@
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
-			<ObjectPageSection titleUppercase="false" title="{i18n>Cofog}">
+			<ObjectPageSection titleUppercase="false" title="{i18n>Cofog}" >
 				<subSections>
 					<ObjectPageSubSection >
 						<blocks>
@@ -350,7 +350,7 @@
 												<m:Text text="{modelTableCofogNPF>Codcofogl2}" textAlign="Begin"/>
 												<m:Text text="{modelTableCofogNPF>Codcofogl3}" textAlign="Begin"/>
 												<m:Text text="{modelTableCofogNPF>Descrcofog}" textAlign="Begin"/>
-												<m:Input value="{modelTableCofogNPF>Perccofog}" required="true" type="Number" textAlign="End"/>
+												<m:Input editable="{modelNuovaPosFin>/EDITPERCENT}" value="{modelTableCofogNPF>Perccofog}" required="true" type="Number" textAlign="End"/>
 												<m:Button type="Transparent" tooltip="{i18n>Elimina}" icon="{modelTableCofogNPF>Icon}" press=".onPressDeleteRow"/>
 											</m:cells>
 										</m:ColumnListItem>
@@ -398,7 +398,7 @@
 														</m:items>
 													</m:ComboBox>
 												</f:FormElement>
-												<f:FormElement label="{i18n>ScegliNota}" visible="true">
+												<!-- <f:FormElement label="{i18n>ScegliNota}" visible="true">
 															<m:Input id="idInputScegliNoteIDProposta" class="sapUiTinyMarginEnd" enabled="true" 
 																placeholder="{i18n>ScegliNota} {i18n>Standard}" showSuggestion="true" showValueHelp="true" 
 																submit="onSubmitIdNota" valueHelpRequest="handleValueHelpScegliNota"/>
@@ -407,7 +407,7 @@
 												<f:FormElement label="Testo" visible="true">
 													<m:TextArea id="idNota"  placeholder="Crea {i18n>Nota}" maxLength="2000"
 														showExceededText="true" liveChange="onLiveWriteNota"/>
-												</f:FormElement>
+												</f:FormElement> -->
 											</f:formElements>
 										</f:FormContainer>
 									</f:formContainers>
