@@ -94,44 +94,30 @@
 											<f:formElements>
 												<f:FormElement label="{i18n>Amministrazione}">
 													<f:fields>
-														<!--<m:Input id="idAmminNPF" editable="true" placeholder="Scegli {i18n>Amministrazione}" maxSuggestionWidth="60%" showSuggestion="true"
+														<m:Input id="idAmminNPF" editable="true" placeholder="Scegli {i18n>Amministrazione}" maxSuggestionWidth="60%" showSuggestion="true"
 															showValueHelp="true" valueHelpOnly="false" change="onChange($event, 'idAmminNPF')"
 															valueHelpRequest=".onValueHelpRequest($event, 'idAmminNPF')" suggest=".onSuggest($event, 'idAmminNPF')"
-															suggestionItemSelected=".onSuggestionItemSelected($event, 'idAmminNPF')"
-															suggestionItems="{path: 'modelConoVisibilita>/ZES_AMMINISTRAZIONE_SET', sorter: { path: 'NumeAmmMess' }, templateShareable:false}">
-															<m:suggestionItems>
-																<core:ListItem text="{modelConoVisibilita>NumeAmmMess}" additionalText="{modelConoVisibilita>DescAmm}"/>
-															</m:suggestionItems>
-														</m:Input>-->
-														<m:Input id="idAmminNPF" editable="false" placeholder="Scegli {i18n>Amministrazione}" maxSuggestionWidth="60%" showSuggestion="true"
-															value="A020"></m:Input>
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idAmminNPF')"/>
+														<!-- <m:Input id="idAmminNPF" editable="false" placeholder="Scegli {i18n>Amministrazione}" maxSuggestionWidth="60%" showSuggestion="true"
+															value="A020"></m:Input> -->
 													</f:fields>
 												</f:FormElement>
 												<f:FormElement label="{i18n>CdR}">
 													<f:fields>
-														<!--<m:Input id="idCdRNPF" editable="true" placeholder="Scegli {i18n>CdR}" maxSuggestionWidth="60%" showSuggestion="true" showValueHelp="true"
+														<m:Input id="idCdRNPF" editable="true" placeholder="Scegli {i18n>CdR}" maxSuggestionWidth="60%" showSuggestion="true" showValueHelp="true"
 															valueHelpOnly="false" change="onChange($event, 'idCdRNPF')" valueHelpRequest=".onValueHelpRequest($event, 'idCdRNPF')"
-															suggest=".onSuggest($event, 'idCdRNPF')" suggestionItemSelected=".onSuggestionItemSelected($event, 'idCdRNPF')"
-															suggestionItems="{path: 'modelConoVisibilita>/ZES_CDR_SET', sorter: { path: 'NumeCdr' }, templateShareable:false}">
-															<m:suggestionItems>
-																<core:ListItem text="{modelConoVisibilita>NumeCdr}" additionalText="{modelConoVisibilita>DescCdr}"/>
-															</m:suggestionItems>
-														</m:Input>-->
-														<m:Input id="idCdRNPF" editable="false" placeholder="Scegli {i18n>CdR}" value="0001"></m:Input>
+															suggest=".onSuggest($event, 'idCdRNPF')" 
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idCdRNPF')"/>
+														<!-- <m:Input id="idCdRNPF" editable="false" placeholder="Scegli {i18n>CdR}" value="0001"></m:Input> -->
 													</f:fields>
 												</f:FormElement>
 												<f:FormElement label="{i18n>Ragioneria}">
 													<f:fields>
-														<!--<m:Input id="idRagioneriaNPF" editable="true" placeholder="Scegli {i18n>Ragioneria}" maxSuggestionWidth="60%" showSuggestion="true"
+														<m:Input id="idRagioneriaNPF" editable="true" placeholder="Scegli {i18n>Ragioneria}" maxSuggestionWidth="60%" showSuggestion="true"
 															showValueHelp="true" valueHelpOnly="false" change="onChange($event, 'idRagioneriaNPF')"
 															valueHelpRequest=".onValueHelpRequest($event, 'idRagioneriaNPF')" suggest=".onSuggest($event, 'idRagioneriaNPF')"
-															suggestionItemSelected=".onSuggestionItemSelected($event, 'idRagioneriaNPF')"
-															suggestionItems="{path: 'modelConoVisibilita>/ZES_RAGIONERIA_SET', sorter: { path: 'NumeRag' }, templateShareable:false}">
-															<m:suggestionItems>
-																<core:ListItem text="{modelConoVisibilita>NumeRag}" additionalText="{modelConoVisibilita>DescRag}"/>
-															</m:suggestionItems>
-														</m:Input>-->
-														<m:Input id="idRagioneriaNPF" editable="false" placeholder="Scegli {i18n>Ragioneria}" value="0840"></m:Input>
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idRagioneriaNPF')"/>
+														<!-- <m:Input id="idRagioneriaNPF" editable="false" placeholder="Scegli {i18n>Ragioneria}" value="0840"></m:Input> -->
 													</f:fields>
 												</f:FormElement>
 												<f:FormElement label="{i18n>Missione}">
@@ -412,7 +398,7 @@
 														</m:items>
 													</m:ComboBox>
 												</f:FormElement>
-												<!-- <f:FormElement label="{i18n>ScegliNota}" visible="true">
+												<f:FormElement label="{i18n>ScegliNota}" visible="true">
 															<m:Input id="idInputScegliNoteIDProposta" class="sapUiTinyMarginEnd" enabled="true" 
 																placeholder="{i18n>ScegliNota} {i18n>Standard}" showSuggestion="true" showValueHelp="true" 
 																submit="onSubmitIdNota" valueHelpRequest="handleValueHelpScegliNota"/>
@@ -421,7 +407,7 @@
 												<f:FormElement label="Testo" visible="true">
 													<m:TextArea id="idNota"  placeholder="Crea {i18n>Nota}" maxLength="2000"
 														showExceededText="true" liveChange="onLiveWriteNota"/>
-												</f:FormElement> -->
+												</f:FormElement>
 											</f:formElements>
 										</f:FormContainer>
 									</f:formContainers>
