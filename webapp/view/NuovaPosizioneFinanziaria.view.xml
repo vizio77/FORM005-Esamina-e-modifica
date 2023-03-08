@@ -79,7 +79,7 @@
 			</m:VBox>-->
 		</headerContent>
 		<sections>
-			<ObjectPageSection titleUppercase="false" title="{i18n>PosFin}">
+			<ObjectPageSection titleUppercase="false" id="pageSection" title="{i18n>PosFin}" >
 				<subSections>
 					<ObjectPageSubSection title="{i18n>PosFin}">
 						<blocks>
@@ -240,7 +240,7 @@
 												<f:FormElement label="{i18n>MacroAgg}">
 													<f:fields>
 														<m:Input id="idMacroAggregatoNPF" required="true" editable="true" placeholder="Scegli {i18n>MacroAgg}" maxSuggestionWidth="60%"
-															showSuggestion="true" showValueHelp="true" valueHelpOnly="false" change="onChange($event, 'idMacroAggregatoNPF')"
+															showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idMacroAggregatoNPF')"
 															valueHelpRequest=".onValueHelpRequest($event, 'idMacroAggregatoNPF')" suggest=".onSuggest($event, 'idMacroAggregatoNPF')"
 															suggestionItemSelected=".onSuggestionItemSelected($event, 'idMacroAggregatoNPF')" suggestionItems=""/>
 															<!--<m:suggestionItems>

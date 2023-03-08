@@ -30,7 +30,8 @@ sap.ui.define([
 				this.aRowsCofog = [];
 			},
 			//lt match dell'oggetto e vado a resettare il modello
-			_onRouteMatched: function() {		
+			_onRouteMatched: function() {	
+				this._gestTipologiche();	
 				//lt resetto i campi per sicurezza
 				this.resetFields();
 			},
@@ -330,6 +331,7 @@ sap.ui.define([
 										oView.byId("idCategoriaNPF").setValue("");
 										oView.byId("idCE2NPF").setValue("");
 										oView.byId("idCE3NPF").setValue("");
+										
 
 										// oView.byId("idTCRCNPF").setValue("");
 										// oView.byId("idTCRFNPF").setValue("");
@@ -398,18 +400,28 @@ sap.ui.define([
 										oView.byId("idMissioneNPF").setValue("");
 										oView.byId("idProgrammaNPF").setValue("");
 										oView.byId("idAzioneNPF").setValue("");
-
-										oView.byId("idPGNPF").setValue("");
-
+										oView.byId("idMacroAggregatoNPF").setValue("");
 										oView.byId("idTitoloNPF").setValue("");
 										oView.byId("idCategoriaNPF").setValue("");
+										oView.byId("idMissioneNPF").setEditable(true);
+										oView.byId("idProgrammaNPF").setEditable(true);
+										oView.byId("idAzioneNPF").setEditable(true);
+										oView.byId("idMacroAggregatoNPF").setEditable(true);
+										oView.byId("idTitoloNPF").setEditable(true);
+										oView.byId("idCategoriaNPF").setEditable(true);
+										oView.byId("idDenominazioneCapitoloIntNPF").setEditable(true);
+										oView.byId("idDenominazioneCapitoloRidNPF").setEditable(true);
+
+
+
+
+										oView.byId("idPGNPF").setValue("");
 										oView.byId("idCE2NPF").setValue("");
 										oView.byId("idCE3NPF").setValue("");
 
 										// oView.byId("idTCRCNPF").setValue("");
 										// oView.byId("idTCRFNPF").setValue("");
 
-										oView.byId("idMacroAggregatoNPF").setValue("");
 
 										oView.byId("idTipoSpesaCapNPF").setSelectedKey("");
 										oView.byId("idDenominazioneCapitoloIntNPF").setValue("");
@@ -681,7 +693,13 @@ sap.ui.define([
 
 							}, // callback function for success
 							error: function(oError) {
+								//lt parso il messaggio e lo mando all'utente... 
+								if(JSON.parse(oError.responseText).error.code === 'SY/530'){
+									//mando un warning... non un errore....
+									MessageBox.warning(JSON.parse(oError.responseText).error.message.value)
+								}else{
 									MessageBox.error(oError.responseText);
+								}
 								} // callback function for error
 						});
 					}
@@ -1419,7 +1437,10 @@ sap.ui.define([
 						delete aDatiCofog[i].Visible;
 						// aCofog.push(aDatiCofog[i]);
 					}
+					//lt passo la posizione finanziaria
 					aDatiCofog[i].Fipex = sPosFin;
+					//lt salvo in strunga il cod contatenato per evitare errori in creazione
+					aDatiCofog[i].Codconcatenato = aDatiCofog[i].Codconcatenato.toString();
 				}
 
 				//PROPOSTA
@@ -1993,6 +2014,32 @@ sap.ui.define([
 			var arrayProperties = [];
 			sInputValue = oEvent.getSource().getValue();
 			
+			//lt
+			if (inputRef === "idMacroAggregatoNPF") {
+				if (!this.MacroDialog) {
+					this.MacroDialog = this.createValueHelpDialog(
+						"IdMacroAggregato",
+						oModelGlobal,
+						"",
+						"{i18n>MacroAgg}",
+						"/ZCA_AF_MACROAGGRSet",
+						"NumeCodDett",
+						"DescrEstesa", this);
+				}
+
+				aOrFiltersCond =
+					new Filter({
+						filters: [
+							new Filter("NumeCodDett", FilterOperator.Contains, sInputValue),
+							//new Filter("Nickname", FilterOperator.Contains, sInputValue)
+						],
+						and: false
+					});
+				this.MacroDialog.getBinding("items").filter(aOrFiltersCond);
+				// Open ValueHelpDialog filtered by the input's value
+				this.MacroDialog.open(sInputValue);
+			}
+
 			if (inputRef === "idAmminNPF") {
 				//
 				if (!this.AmmDialog) {
@@ -2643,6 +2690,20 @@ sap.ui.define([
 				inputRef = oEvent.getParameters().id;
 			}
 
+
+			if (inputRef === "IdMacroAggregato") {
+				//		
+				aOrFiltersCond =
+					new Filter({
+						filters: [
+							new Filter("NumeCodDett", FilterOperator.Contains, sValue),
+							//new Filter("Nickname", FilterOperator.Contains, sInputValue)
+						],
+						and: false
+					});
+				oEvent.getSource().getBinding("items").filter(aOrFiltersCond);
+			}
+
 			
 
 			if (inputRef === "IdAmministrazione") {
@@ -2932,6 +2993,19 @@ sap.ui.define([
 			}
 
 			
+			if (inputRef === "IdMacroAggregato") {
+				// var oSelectedItem = oEvent.getParameter("selectedItem");
+				oEvent.getSource().getBinding("items").filter([]);
+				if (!oSelectedItem) {
+					return;
+				}
+				sPath = oSelectedItem.getBindingContext().getPath();
+				//this.byId("IdProposta").setValue(oSelectedItem.getTitle());
+				var sData = oModelGlobal.getData(sPath);
+				this.byId("idMacroAggregatoNPF").setValue(oSelectedItem.getTitle());
+
+			}
+
 			if (inputRef === "IdAmministrazione") {
 				// var oSelectedItem = oEvent.getParameter("selectedItem");
 				oEvent.getSource().getBinding("items").filter([]);
@@ -3603,7 +3677,7 @@ sap.ui.define([
                     "Reale": aModelCofog[index].Reale,
                     "Versione": aModelCofog[index].Versione,
                     "Eos": "S",
-                    "CodConcatenato": aModelCofog[index].CodConcatenato,
+                    "CodConcatenato": aModelCofog[index].CodConcatenato.toString(),//lt aggiungo la conversione in stringa
                     "Livello": aModelCofog[index].Livello, //FORSE QUESTO NON SERVE
                     "Perccofog": "0",
                     "status": "new",
@@ -3940,12 +4014,12 @@ sap.ui.define([
 			});
 		},
 
-		lockId: function(oEvt) {
+		lockId: async function(oEvt) {
 			var sBtnText = oEvt.getSource().getText();
 			var sIdPropostaInserito = this.getView().byId("IdProposta").getValue();
 			var oDataModel = this.getView().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");
 			var that = this;
-
+			var aDataTipo = that.getOwnerComponent().getModel("gestTipologicheModel").getData();
 			if (sBtnText === "Ok") {
 				this.getView().byId("idIDPropostaNPF").setValue(sIdPropostaInserito);
 				this.getView().byId("idFragment_GestisciID_InputIdProposta").close();
@@ -3956,7 +4030,17 @@ sap.ui.define([
 					var oKeyCode = oModelGestisciProposta.Keycode;
 
 					//GET testo Nota
-					var aFilters = [new Filter("Idproposta", FilterOperator.EQ, oKeyCode)];
+					var aFilters = [new Filter("Keycodepr", FilterOperator.EQ, oKeyCode)];
+                    aFilters.push(new Filter("Anno", FilterOperator.EQ, aDataTipo.ANNO));
+                    aFilters.push(new Filter("Fase", FilterOperator.EQ, aDataTipo.FASE));
+                    aFilters.push(new Filter("Reale", FilterOperator.EQ, aDataTipo.REALE_RIF));
+                    //aFilters.push(new Filter("Versione", FilterOperator.EQ, aDataTipo.Versione));
+                    //aFilters.push(new Filter("Fikrs", FilterOperator.EQ, aDataTipo.Fikrs));
+                    aFilters.push(new Filter("Eos", FilterOperator.EQ, "S"));
+
+
+					var aRes = await this.readFromDb("4", "/PropostaSet", aFilters, [], "");
+					// var aFilters = [new Filter("Idproposta", FilterOperator.EQ, oKeyCode)];
 					oDataModel.read("/PropostaSet", { // function import name
 						filters: aFilters, // function import parameters        
 						success: function(oData, oResponse) {
@@ -3986,94 +4070,6 @@ sap.ui.define([
 							//this.getView().byId("idNota").setValue(oNota);
 
 							this.getView().getModel("modelChangeControlsStatus").setProperty("/Enable", true);
-							
-							/*
-							aFilters = [];
-							aFilters.push(new Filter("Idproposta", FilterOperator.EQ, oKeyCode));
-
-							 oDataModel.read("/PosFinPropostaSet", {
-								filters: aFilters,
-								success: function(oData, oResponse) {
-									var listResults = oData.results;
-									var aPosFin = [];
-									var oModelTablePageGestisciID = this.getView().getModel("modelTableGestisciID");
-									oModelTablePageGestisciID.setData([]);
-									oModelTablePageGestisciID.refresh();
-									for (var i = 0; i < listResults.length; i++) {
-										var sAnno = listResults[i].Anno;
-										var sFikrs = listResults[i].Fikrs;
-										var sFase = listResults[i].Fase;
-										var sReale = listResults[i].Reale;
-										var sVersione = listResults[i].Versione;
-										var sFipex = listResults[i].Fipex;
-										var sDatbis = listResults[i].Datbis;
-
-										if (sDatbis) {
-											sDatbis = this._convertStringTime(sDatbis);
-											sDatbis = sDatbis.replaceAll("-", "");
-										}
-
-										var oObj = {
-											Anno: sAnno,
-											Fikrs: sFikrs,
-											Fase: sFase,
-											Reale: sReale,
-											Versione: sVersione,
-											Fipex: sFipex,
-											Datbis: sDatbis,
-											Visible: true
-										};
-
-										aPosFin.push(oObj);
-										oModelTablePageGestisciID.setData(aPosFin);
-										oModelTablePageGestisciID.refresh();
-
-										//COSTRUISCO DINAMICAMENTE LA TABELLA DELLA VIEW
-										var oTablePage = this.getView().byId("idTablePosFinGestisciID");
-										var oTemplate = new sap.m.ColumnListItem({
-											vAlign: "Middle",
-											cells: [
-												new LinkPosizioneFinanziaria({
-													text: "{modelTableGestisciID>Fipex}",
-													// id:"idLinkPosfinRV",
-
-													fikrs: "{modelTableGestisciID>Fikrs}",
-													anno: "{modelTableGestisciID>Anno}",
-													fase: "{modelTableGestisciID>Fase}",
-													reale: "{modelTableGestisciID>Reale}",
-													versione: "{modelTableGestisciID>Versione}",
-													fipex: "{modelTableGestisciID>Fipex}",
-													datbis: "{modelTableGestisciID>Datbis}"
-												}),
-												new sap.m.Button({
-													type: "Transparent",
-													tooltip: "{i18n>Elimina}",
-													icon: "sap-icon://delete",
-													press: [this.onPressEliminaPFGestisciID, this],
-													visible: "{modelTableGestisciID>Visible}"
-												})
-											]
-										});
-										oTablePage.bindAggregation("items", "modelTableGestisciID>/", oTemplate);
-										this.getView().getModel("modelChangeControlsStatus").setProperty("/Visible", true);
-
-									}
-									var oModelGestisci = this.getView().getModel("modelPathGestisciPropostaView");
-									var oDataGestisci = oModelGestisci.getData();
-									var strNewArr = JSON.stringify(aPosFin);
-									var newArr = JSON.parse(strNewArr);
-									oDataGestisci.aPosFin = newArr;
-									oModelGestisci.setData(oDataGestisci);
-									oModelGestisci.refresh();
-								}.bind(this),
-								error: function(oError) {
-									MessageBox.error(JSON.parse(oError.responseText).error.message.value);
-									this.getView().byId("idIDPropostaNPF").setValue("");
-									this.getView().byId("IdProposta").setValue("");
-									this.getView().getModel("modelChangeControlsStatus").setProperty("/Enable", false);
-									this.getView().getModel("modelChangeControlsStatus").setProperty("/Editable", false);
-								}.bind(this)
-							}); */
 
 						}.bind(this), // callback function for success
 						error: function(oError) {
@@ -4084,9 +4080,7 @@ sap.ui.define([
 								this.getView().getModel("modelChangeControlsStatus").setProperty("/Editable", false);
 							}.bind(this) // callback function for error
 					});
-
 					//this.getView().byId("idNota").setEditable(true);
-
 				}
 			}
 
