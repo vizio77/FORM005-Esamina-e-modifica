@@ -49,28 +49,31 @@
 			</ObjectPageDynamicHeaderTitle>
 		</headerTitle>
 		<headerContent>
-			<layout:VerticalLayout>
-				<layout:HorizontalLayout class="sapUiTinyMarginEnd">
-					<m:ObjectStatus id="idTextPosFinSubTitle" title="{i18n>PosFin}" class="sapUiTinyMarginTop textBold"/>
-					<!-- Text formula esatta per composizione dinamica della posfin / al momento scolpito per prototipo
-					text="S{modelNuovaPosFin>/AMM}{modelNuovaPosFin>/CAP}{modelNuovaPosFin>/PG}.{modelNuovaPosFin>/MISS}{modelNuovaPosFin>/PROG}{modelNuovaPosFin>/AZIO}.{modelNuovaPosFin>/CAT}{modelNuovaPosFin>/CE2}{modelNuovaPosFin>/CE3}"-->
-					<!--<m:Link id="idPopPosFin"
-						text="S020{modelNuovaPosFin>/CAP}{modelNuovaPosFin>/PG}.{modelNuovaPosFin>/MISS}{modelNuovaPosFin>/PROG}{modelNuovaPosFin>/AZIO}.{modelNuovaPosFin>/CAT}{modelNuovaPosFin>/CE2}{modelNuovaPosFin>/CE3}"
-						press="onPressShowPopOverHeaderNuovaPosFin" class="sapUiTinyMarginTop sapUiTinyMarginEnd"/>-->
-					<zcontrollink:LinkPosizioneFinanziaria id="idPopPosFin"
-						text="S{modelNuovaPosFin>/AMM}{modelNuovaPosFin>/CAP}{modelNuovaPosFin>/PG}.{modelNuovaPosFin>/MISS}{modelNuovaPosFin>/PROG}{modelNuovaPosFin>/AZIO}.{modelNuovaPosFin>/CAT}{modelNuovaPosFin>/CE2}{modelNuovaPosFin>/CE3}"
-						 class="sapUiTinyMarginTop sapUiMediumMarginEnd"/>
-				</layout:HorizontalLayout>
-			</layout:VerticalLayout>
-			<layout:VerticalLayout>
-				<layout:HorizontalLayout>
-					<m:ObjectStatus id="idTextPosStruttura" active="true" title="{i18n>StrutturaAmmCen}" class="sapUiTinyMarginTop textBold"/>
-					<!-- Text formula esatta per composizione dinamica della struttura amministrativa / al momento scolpito per prototipo
-					text="S{modelNuovaPosFin>/AMM}{modelNuovaPosFin>/CDR}{modelNuovaPosFin>/RAG}" -->
-					<m:Link id="idPopStrAmmCen" text="S{modelNuovaPosFin>/AMM}{modelNuovaPosFin>/CDR}{modelNuovaPosFin>/RAG}"
-						press="onPressShowPopOverHeaderNuovaPosFin" class="sapUiTinyMarginTop"/>
-				</layout:HorizontalLayout>
-			</layout:VerticalLayout>
+			<m:FlexBox alignItems="Start" justifyContent="SpaceBetween">
+				<m:items>
+					<layout:HorizontalLayout>
+							<layout:HorizontalLayout class="sapUiTinyMarginEnd">
+								<m:ObjectStatus id="idTextPosFinSubTitle" title="{i18n>PosFin}" class="sapUiTinyMarginTop textBold"/>
+								<!-- Text formula esatta per composizione dinamica della posfin / al momento scolpito per prototipo
+								text="S{modelNuovaPosFin>/AMM}{modelNuovaPosFin>/CAP}{modelNuovaPosFin>/PG}.{modelNuovaPosFin>/MISS}{modelNuovaPosFin>/PROG}{modelNuovaPosFin>/AZIO}.{modelNuovaPosFin>/CAT}{modelNuovaPosFin>/CE2}{modelNuovaPosFin>/CE3}"-->
+								<!--<m:Link id="idPopPosFin"
+									text="S020{modelNuovaPosFin>/CAP}{modelNuovaPosFin>/PG}.{modelNuovaPosFin>/MISS}{modelNuovaPosFin>/PROG}{modelNuovaPosFin>/AZIO}.{modelNuovaPosFin>/CAT}{modelNuovaPosFin>/CE2}{modelNuovaPosFin>/CE3}"
+									press="onPressShowPopOverHeaderNuovaPosFin" class="sapUiTinyMarginTop sapUiTinyMarginEnd"/>-->
+								<zcontrollink:LinkPosizioneFinanziaria id="idPopPosFin"
+									text="S{modelNuovaPosFin>/AMM}{modelNuovaPosFin>/CAP}{modelNuovaPosFin>/PG}.{modelNuovaPosFin>/MISS}{modelNuovaPosFin>/PROG}{modelNuovaPosFin>/AZIO}.{modelNuovaPosFin>/CAT}{modelNuovaPosFin>/CE2}{modelNuovaPosFin>/CE3}"
+									class="sapUiTinyMarginTop sapUiMediumMarginEnd"/>
+							</layout:HorizontalLayout>
+							<layout:HorizontalLayout>
+									<m:ObjectStatus id="idTextPosStruttura" active="true" title="{i18n>StrutturaAmmCen}" class="sapUiTinyMarginTop textBold"/>
+									<!-- Text formula esatta per composizione dinamica della struttura amministrativa / al momento scolpito per prototipo
+									text="S{modelNuovaPosFin>/AMM}{modelNuovaPosFin>/CDR}{modelNuovaPosFin>/RAG}" -->
+									<m:Link id="idPopStrAmmCen" text="S{modelNuovaPosFin>/AMM}{modelNuovaPosFin>/CDR}{modelNuovaPosFin>/RAG}"
+										press="onPressShowPopOverHeaderNuovaPosFin" class="sapUiTinyMarginTop"/>
+								</layout:HorizontalLayout>
+					</layout:HorizontalLayout>
+					<m:Button text="Resetta" press="resetFields" type="Emphasized"></m:Button>
+				</m:items>
+		</m:FlexBox>
 			<!--<m:VBox width="100%">
 				<layout:HorizontalLayout>
 					<m:ObjectStatus id="idSwitchLabel" title="{i18n>Attiva} / {i18n>Disattiva}" class="sapUiTinyMarginTop textBold"/>
@@ -79,7 +82,7 @@
 			</m:VBox>-->
 		</headerContent>
 		<sections>
-			<ObjectPageSection titleUppercase="false" id="pageSection" title="{i18n>PosFin}" >
+			<ObjectPageSection titleUppercase="false" title="{i18n>PosFin}">
 				<subSections>
 					<ObjectPageSubSection title="{i18n>PosFin}">
 						<blocks>

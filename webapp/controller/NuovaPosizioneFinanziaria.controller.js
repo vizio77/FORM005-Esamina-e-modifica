@@ -95,6 +95,19 @@ sap.ui.define([
 				oView.getModel("modelNuovaPosFin").setProperty("/EDITPERCENT", true);
 
 				oView.getModel("modelTableCofogNPF").setProperty("/", []);
+				oView.getModel("modelNuovaPosFin").setProperty("/MISS", "");
+				oView.getModel("modelNuovaPosFin").setProperty("/PROG", "");
+				oView.getModel("modelNuovaPosFin").setProperty("/AZIO", "");
+				oView.getModel("modelNuovaPosFin").setProperty("/TIT", "");
+				oView.getModel("modelNuovaPosFin").setProperty("/CAT", "");
+				oView.getModel("modelNuovaPosFin").setProperty("/CAP", "");
+				oView.getModel("modelNuovaPosFin").setProperty("/PG", "");
+				oView.getModel("modelNuovaPosFin").setProperty("/CE2", "");
+				oView.getModel("modelNuovaPosFin").setProperty("/CE3", "");
+				oView.getModel("modelNuovaPosFin").setProperty("/CDR", "");
+				oView.getModel("modelNuovaPosFin").setProperty("/DESCCDR", "");
+				oView.getModel("modelNuovaPosFin").setProperty("/RAG", "");
+				oView.getModel("modelNuovaPosFin").setProperty("/DESCRAG", "");
 
 			},
 			//lt torno indietro e prima di farlo resetto lo pseudo modello
