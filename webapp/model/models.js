@@ -166,6 +166,8 @@ sap.ui.define([
 				TIPOSPESAPG: "",
 				DENOMINAZPG: "",
 				EDITPERCENT: true,
+				Codicetipospcapspe : "", 
+				Codicetiposppspe : "", 
 			};
 			var olocalHeaderModelNuovaPosFin = new JSONModel(oJSONLocal);
 			olocalHeaderModelNuovaPosFin.setDefaultBindingMode("TwoWay");

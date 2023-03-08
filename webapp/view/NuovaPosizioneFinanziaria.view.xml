@@ -254,12 +254,12 @@
 												</f:FormElement>
 												<f:FormElement label="{i18n>TipoSpesaCapitolo}">
 													<f:fields>
-														<m:ComboBox id="idTipoSpesaCapNPF" enabled="true" change="onChange" placeholder="Scegli {i18n>TipoSpesaCapitolo}" showSecondaryValues="true"
+														<m:Select id="idTipoSpesaCapNPF" selectedKey="{modelNuovaPosFin>/Codicetipospcapspe}" enabled="true"  change="onChange"   showSecondaryValues="true"
 															items="{ path: '/ZCA_AF_TIPOSPCAPSet', sorter: { path: 'Codicetipospcapspe' }, templateShareable:false }">
 															<m:items>
-																<core:ListItem text="{Codicetipospcapspe}" additionalText="{Desctipocap}"/>
+																<core:ListItem key="{Codicetipospcapspe}" text="{Desctipocap}"/><!--  additionalText="{Desctipocap}" -->
 															</m:items>
-														</m:ComboBox>
+														</m:Select>
 													</f:fields>
 												</f:FormElement>
 												<f:FormElement label="{i18n>DenominazioneCapitolo} {i18n>integrale}">
@@ -274,12 +274,12 @@
 												</f:FormElement>
 												<f:FormElement label="{i18n>TipoSpesaPG}">
 													<f:fields>
-														<m:ComboBox id="idTipoSpesaPGNPF" enabled="true" change="onChange" placeholder="Scegli {i18n>TipoSpesaCapitolo}" showSecondaryValues="true"
+														<m:Select id="idTipoSpesaPGNPF" enabled="true"  selectedKey="{modelNuovaPosFin>/Codicetiposppspe}"   showSecondaryValues="true"
 															items="{ path: '/ZCA_AF_TIPOSPPGSet', sorter: { path: 'Codicetiposppspe' }, templateShareable:false }">
 															<m:items>
-																<core:ListItem text="{Codicetiposppspe}" additionalText="{Desctipopg}"/>
+																<core:ListItem key="{Codicetiposppspe}" text="{Desctipopg}"/>
 															</m:items>
-														</m:ComboBox>
+														</m:Select>
 													</f:fields>
 												</f:FormElement>
 												<f:FormElement label="{i18n>DenominazionePG} {i18n>integrale}">

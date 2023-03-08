@@ -453,6 +453,8 @@ sap.ui.define([
 										oView.getModel("modelNuovaPosFin").setProperty("/PG", "");
 										oView.getModel("modelNuovaPosFin").setProperty("/CE2", "");
 										oView.getModel("modelNuovaPosFin").setProperty("/CE3", "");
+										oView.getModel("modelNuovaPosFin").setProperty("/Codicetipospcapspe", "");
+										oView.getModel("modelNuovaPosFin").setProperty("/Codicetiposppspe", "");
 
 										oView.getModel("modelTableCofogNPF").setProperty("/", []);
 										oDialog.open(oButton);
@@ -629,7 +631,9 @@ sap.ui.define([
 					// oView.byId("idTCRFNPF").setValue(oLocalModel.getData("/PosFin").Numetcrfspe);
 
 					oView.byId("idMacroAggregatoNPF").setValue(oLocalModel.getData("/PosFin").Numemacspe);
-					oView.byId("idTipoSpesaCapNPF").setValue(oLocalModel.getData("/PosFin").Codicetipospcapspe);
+					//lt inserisco come valore... 
+					//oView.byId("idTipoSpesaCapNPF").setValue(oLocalModel.getData("/PosFin").Codicetipospcapspe);
+					oView.byId("idTipoSpesaCapNPF").setSelectedKey(oLocalModel.getData("/PosFin").Codicetipospcapspe);
 					oView.byId("idDenominazioneCapitoloIntNPF").setValue(oLocalModel.getData("/PosFin").Descrizionecapitolo);
 					oView.byId("idDenominazioneCapitoloRidNPF").setValue(oLocalModel.getData("/PosFin").Descrbrevecap);
 					oView.byId("NPF_dialogCapitolo").close();
