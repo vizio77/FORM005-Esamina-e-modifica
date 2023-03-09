@@ -4072,7 +4072,7 @@ sap.ui.define([
 							var oNickname = oModelGestisciProposta.Nickname;
 							this.getView().byId("idNickNameNPF").setValue(oNickname);
 							this.getView().getModel("modelChangeControlsStatus").setProperty("/Visible", true);
-							this.getView().byId("idNickNameNPF").setEditable(true);
+							this.getView().byId("idNickNameNPF").setEditable(false);
 							var oIter = oModelGestisciProposta.Iter;
 
 							if(response){
@@ -4153,7 +4153,7 @@ sap.ui.define([
 								this.getView().byId("IdProposta").setValue("");
 								this.getView().getModel("modelChangeControlsStatus").setProperty("/Enable", false);
 								this.getView().getModel("modelChangeControlsStatus").setProperty("/Editable", false);
-							} // callback function for error
+							}.bind(this) // callback function for error
 					});
 
 					this.getView().byId("idFragment_GestisciID_InputIdProposta").close();
