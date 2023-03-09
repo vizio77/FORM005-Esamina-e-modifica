@@ -72,7 +72,7 @@
 							<layout:VerticalLayout width="100%">
 								<layout:HorizontalLayout>
 									<ObjectStatus id="idSwitchLabelSnap" title="{i18n>attivoDescrPosFin}" class="sapUiTinyMarginTop textBold"/>
-									<Switch tooltip="{i18n>attivaDisattiva}" id="idSwitchSnapID" type="AcceptReject" state="{= ${modelAnagraficaPf>/Statstatus} === '3' ? false : true}" enabled="true"/>
+									<Switch change="attivaDisattiva" tooltip="{= ${modelAnagraficaPf>/Statstatus} === '1' ? ${i18n>attivaDisattivaOn} : ${i18n>attivaDisattivaOff}}" id="idSwitchSnapID" type="AcceptReject" state="{= ${modelAnagraficaPf>/Statstatus} === '1' ? true : false}" enabled="true"/>
 								</layout:HorizontalLayout>
 								<VBox width="100%"></VBox>
 							</layout:VerticalLayout>

@@ -659,6 +659,21 @@ sap.ui.define([
 			});
 		},
 
+		attivaDisattiva: function(oEvent){
+			var modelAnagraficaPf = this.getView().getModel("modelAnagraficaPf")
+
+			var status = modelAnagraficaPf.getProperty("/Statstatus")
+			
+			if(status === "1"){
+				status = "0"
+			}else{
+				status = "1"
+			}
+			
+			modelAnagraficaPf.setProperty("/Statstatus", status)
+
+		},
+
 		//LOGICA PER BLOCCARE MODIFICHE ANAGRAFICHE SE PG >=80
 		_bloccaModificheAnagrafiche: function() {
 			var oButtonSalvaModifiche = this.getView().byId("btnSalvaModificheAnagrafiche");

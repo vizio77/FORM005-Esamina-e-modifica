@@ -2922,11 +2922,36 @@ sap.ui.define([
 		},
 		onPressNextTreeTable: function(oEvent){
 			var filterMaxRows=	this.filterMaxRows;
-
-			this.filterMaxRows = filterMaxRows  + 200;
-			
+			this.filterMaxRows = filterMaxRows  + 200;			
 			this.onSearchTreeTable(false, 200);
 		},
+
+		/* 
+		lt nuova logica fornita da Erminio
+
+		onPressPrevTreeTable: function(oEvent) {
+            var filterMaxRows = this.filterMaxRows;
+            if (filterMaxRows > 200) {
+                this.filterMaxRows = parseInt(filterMaxRows) - 200                
+				this.onSearch(false, -200);
+            }
+        },
+        onPressNextTreeTable: function(oEvent) {
+            var filterMaxRows = this.filterMaxRows;
+            this.filterMaxRows = parseInt(filterMaxRows) + 200;
+            this.onSearch(false, 200);
+        }, 
+        createModeButtonTable: function() {
+            var oModel = new JSONModel({
+                enabledButtonPrev: false,
+                enabledButtonNext: false,
+                intialValue: -199,
+                beginValueM1: 0,
+                beginValueP1: 201,
+                finalValue: 400            });
+            this.getView().setModel(oModel, "modelIsAfterAvvio");
+        },
+		*/
 		
 		
 		onSearchTreeTable: function(isAvvioButton, pointer){
@@ -3023,11 +3048,7 @@ sap.ui.define([
 				if(previewModel.intialValue === -199){
 					previewModel.enabledButtonPrev = false;
 					previewModel.enabledButtonNext = true;
-				/*}else if(previewModel.finalValue>){
-					previewModel.enabledButtonPrev = true;
-					previewModel.enabledButtonNext = false;
-					previewModel.finalValue = lastElement;
-					*/
+				
 				}else{
 					previewModel.enabledButtonPrev = true;
 					previewModel.enabledButtonNext = true;
@@ -3055,7 +3076,70 @@ sap.ui.define([
 			for (var j = 0; j < oItems.length; j++) {
 				oItems[j].getAggregation("cells")[0].setSelected(false);
 			}
-		}
+		},
+
+		onSearchTreeTableNew: async function(isAvvioButton, pointer) {
+            //this._onSearchFbTreeT("treeTableID", "filterBar2", "modelTreeTable>/ZES_AVVIOIDSet");            
+			var oTreeTable = this.getView().byId("treeTableID");
+            var oFilterBar = this.getView().byId("idBar");
+            var aFilters = [];
+            aFilters = this.getFilter(aFilters);
+            aFilters = this.addCheckFilter(aFilters);
+            if (isAvvioButton) {
+                this.filterMaxRows = "200";
+            }
+            var oFilterRows = new sap.ui.model.Filter("Maxrows", sap.ui.model.FilterOperator.BT, "200", (parseInt(this.filterMaxRows) - 200).toString());
+            aFilters.push(oFilterRows);
+            BusyIndicator.show();
+            try {
+                // var aRes = await this.readFromDb("4", "/ZES_AVVIOIDSet", aFilters, [], "");                
+				// this.getView().setModel(new JSONModel(aRes),"modelTreeTableProposta");                
+				oTreeTable.bindRows({
+                    path: "modelTreeTableProposta>/ZES_AVVIOIDSet",
+                    parameters: {
+                        countMode: "Inline",
+                        collapseRecursive: false,
+                        operationMode: "Client",// necessario per ricostruire la gerarchia lato client                        
+						// se le annotazioni sono gestite su FE tramite treeAnnotationProperties                        
+						treeAnnotationProperties: {
+                            hierarchyLevelFor: "HierarchyLevel",
+                            hierarchyNodeFor: "Node",
+                            hierarchyParentNodeFor: "ParentNodeId",
+                            hierarchyDrillStateFor: "DrillState"                        },
+                        useServersideApplicationFilters: true,
+                    },
+                    filters: [aFilters],
+                    events: {
+                        dataReceived: function(oParameters) {
+                            BusyIndicator.hide();
+                        }.bind(this)
+                    }
+                });
+                var previewModel = this.getView().getModel("modelIsAfterAvvio").oData;
+                if (isAvvioButton) {
+                    previewModel.enabledButtonPrev = false;
+                    previewModel.enabledButtonNext = true;
+                    previewModel.intialValue = -199;
+                    previewModel.beginValueM1 = 0;
+                    previewModel.beginValueP1 = 201;
+                    previewModel.finalValue = 400;
+                } else {
+                    previewModel.intialValue = previewModel.intialValue + pointer;
+                    previewModel.beginValueM1 = previewModel.beginValueM1 + pointer;
+                    previewModel.beginValueP1 = previewModel.beginValueP1 + pointer;
+                    previewModel.finalValue = previewModel.finalValue + pointer;
+                    if (previewModel.intialValue === -199) {
+                        previewModel.enabledButtonPrev = false;
+                        previewModel.enabledButtonNext = true;
+                    } else {
+                        previewModel.enabledButtonPrev = true;
+                        previewModel.enabledButtonNext = true;
+                    }
+                }
+                this.getView().getModel("modelIsAfterAvvio").refresh();
+            } catch (e) {
+            }
+        }
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

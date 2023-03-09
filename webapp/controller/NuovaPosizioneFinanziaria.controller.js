@@ -350,6 +350,8 @@ sap.ui.define([
 										// oView.byId("idTCRFNPF").setValue("");
 
 										oView.byId("idMacroAggregatoNPF").setValue("");
+										//lt tipo spesa cap bloccato
+					
 
 										oView.byId("idTipoSpesaCapNPF").setSelectedKey("");
 										oView.byId("idDenominazioneCapitoloIntNPF").setValue("");
@@ -414,6 +416,8 @@ sap.ui.define([
 										oView.byId("idProgrammaNPF").setValue("");
 										oView.byId("idAzioneNPF").setValue("");
 										oView.byId("idMacroAggregatoNPF").setValue("");
+										//lt resetto il tiolo spesa
+										oView.byId("idTipoSpesaCapNPF").setSelectedKey("");
 										oView.byId("idTitoloNPF").setValue("");
 										oView.byId("idCategoriaNPF").setValue("");
 										oView.byId("idMissioneNPF").setEditable(true);
@@ -424,7 +428,7 @@ sap.ui.define([
 										oView.byId("idCategoriaNPF").setEditable(true);
 										oView.byId("idDenominazioneCapitoloIntNPF").setEditable(true);
 										oView.byId("idDenominazioneCapitoloRidNPF").setEditable(true);
-
+										oView.byId("idTipoSpesaCapNPF").setEditable(true);
 
 
 
@@ -437,6 +441,7 @@ sap.ui.define([
 
 
 										oView.byId("idTipoSpesaCapNPF").setSelectedKey("");
+										
 										oView.byId("idDenominazioneCapitoloIntNPF").setValue("");
 										oView.byId("idDenominazioneCapitoloRidNPF").setValue("");
 
@@ -607,6 +612,8 @@ sap.ui.define([
 					oView.byId("idMacroAggregatoNPF").setEditable(false);
 					oView.byId("idDenominazioneCapitoloIntNPF").setEditable(false);
 					oView.byId("idDenominazioneCapitoloRidNPF").setEditable(false);
+					//lt tipo spesa cap bloccato
+					oView.byId("idTipoSpesaCapNPF").setEditable(false);
 
 					oView.byId("colEliminaNPF").setVisible(false);
 					oView.byId("idAggiungiRiga").setEnabled(false);
@@ -630,7 +637,11 @@ sap.ui.define([
 					// oView.byId("idTCRCNPF").setValue(oLocalModel.getData("/PosFin").Numetcrcspe);
 					// oView.byId("idTCRFNPF").setValue(oLocalModel.getData("/PosFin").Numetcrfspe);
 
+					//lt metto posizione di spesa
+					oView.byId("idMacroAggregatoNPF").setSelectedKey(oLocalModel.getData("/PosFin").Codicetiposppspe);
+
 					oView.byId("idMacroAggregatoNPF").setValue(oLocalModel.getData("/PosFin").Numemacspe);
+
 					//lt inserisco come valore... 
 					//oView.byId("idTipoSpesaCapNPF").setValue(oLocalModel.getData("/PosFin").Codicetipospcapspe);
 					oView.byId("idTipoSpesaCapNPF").setSelectedKey(oLocalModel.getData("/PosFin").Codicetipospcapspe);
@@ -662,6 +673,8 @@ sap.ui.define([
 					oView.byId("idMacroAggregatoNPF").setEditable(true);
 					oView.byId("idDenominazioneCapitoloIntNPF").setEditable(true);
 					oView.byId("idDenominazioneCapitoloRidNPF").setEditable(true);
+
+					oView.byId("idTipoSpesaCapNPF").setEditable(true);
 
 					oView.byId("colEliminaNPF").setVisible(true);
 					oView.byId("idAggiungiRiga").setEnabled(true);
@@ -701,6 +714,8 @@ sap.ui.define([
 								oView.byId("idMacroAggregatoNPF").setEditable(true);
 								oView.byId("idDenominazioneCapitoloIntNPF").setEditable(true);
 								oView.byId("idDenominazioneCapitoloRidNPF").setEditable(true);
+
+								oView.byId("idTipoSpesaCapNPF").setEditable(true);
 
 								oView.byId("colEliminaNPF").setVisible(true);
 								oView.byId("idAggiungiRiga").setEnabled(true);
@@ -1441,7 +1456,7 @@ sap.ui.define([
 				var sDenominazionePGInt = oView.byId("idDenominazionePGIntNPF").getValue();
 				var sDenominazionePGRid = oView.byId("idDenominazionePGRidNPF").getValue();
 
-				 sAmministrazione = sAmministrazione.splice(0, 1);
+				var sAmmin = sAmministrazione.substring(1);
 				//var sAmmin = "020";
 
 				//COFOG
@@ -1452,12 +1467,15 @@ sap.ui.define([
 					if (aDatiCofog[i].Icon) {
 						delete aDatiCofog[i].Icon;
 						delete aDatiCofog[i].Visible;
+						delete aDatiCofog[i].status;
+						delete aDatiCofog[i].Livello;
+
 						// aCofog.push(aDatiCofog[i]);
 					}
 					//lt passo la posizione finanziaria
 					aDatiCofog[i].Fipex = sPosFin;
 					//lt salvo in strunga il cod contatenato per evitare errori in creazione
-					aDatiCofog[i].Codconcatenato = aDatiCofog[i].Codconcatenato.toString();
+					//aDatiCofog[i].Codconcatenato = aDatiCofog[i].Codconcatenato.toString();
 				}
 
 				//PROPOSTA
@@ -1525,7 +1543,10 @@ sap.ui.define([
 				var that = this;
 
 				//lt intanto in attesa di modifica inserisco anche i tre blocchi
-				if (!sAmministrazione || !sCdr || !sRagioneria || !sPg || !sMissione || !sProgramma  || !sAzione || 
+
+				//sDenominazionePGInt
+				//idDenominazionePGRidNPF
+				if (!idDenominazionePGRidNPF || !sDenominazionePGInt || !sAmministrazione || !sCdr || !sRagioneria || !sPg || !sMissione || !sProgramma  || !sAzione || 
 				!sCapitolo || !sTitolo || !sCategoria || !sCE2 || !sCE3 ||
 				!sMAC || !sDenominazioneCapitoloInt || !sDenominazioneCapitoloRid) {
 					sap.m.MessageBox.warning(this.oResourceBundle.getText("MBCampiObbligatoriNPF"));
@@ -1588,7 +1609,8 @@ sap.ui.define([
 				
 				oGlobalModel.create("/PosFinSet", oDati, {
 					success: function(oData, oResponse) {
-						var that = this;
+						debugger
+						
 						// console.log(oResponse);
 						//lt faccio comparire un messagebox e poi resetto il modello.
 						//sap.m.MessageBox.success(that.oResourceBundle.getText("MBCreateSuccessPF", [oData.Fipex]));
@@ -1601,7 +1623,7 @@ sap.ui.define([
 						});
 						//sap.m.MessageBox.success(that.oResourceBundle.getText("MBCreateSuccessPF"));
 
-					},
+					}.bind(this),
 					error: function(oError) {
 						sap.m.MessageBox.error(that.oResourceBundle.getText("MBCreateError"));
 					}
@@ -3723,13 +3745,14 @@ sap.ui.define([
                     "Reale": aModelCofog[index].Reale,
                     "Versione": aModelCofog[index].Versione,
                     "Eos": "S",
-                    "CodConcatenato": aModelCofog[index].CodConcatenato.toString(),//lt aggiungo la conversione in stringa
-                    "Livello": aModelCofog[index].Livello, //FORSE QUESTO NON SERVE
+                    "Codconcatenato": aModelCofog[index].CodConcatenato.toString(),//lt aggiungo la conversione in stringa
                     "Perccofog": "0",
                     "status": "new",
 					"Icon": "sap-icon://delete",
 					"Visible": true
                 };
+
+				
 
                 aModelCofogTable.push(o);
             }

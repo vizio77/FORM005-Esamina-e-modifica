@@ -297,12 +297,12 @@
 												</f:FormElement>
 												<f:FormElement label="{i18n>DenominazionePG} {i18n>integrale}">
 													<f:fields>
-														<m:Input id="idDenominazionePGIntNPF" editable="true"/>
+														<m:Input required="true" id="idDenominazionePGIntNPF" editable="true"/>
 													</f:fields>
 												</f:FormElement>
 												<f:FormElement label="{i18n>DenominazionePG} {i18n>ridotta}">
 													<f:fields>
-														<m:Input id="idDenominazionePGRidNPF" editable="true"/>
+														<m:Input required="true" id="idDenominazionePGRidNPF" editable="true"/>
 													</f:fields>
 												</f:FormElement>
 											</f:formElements>
