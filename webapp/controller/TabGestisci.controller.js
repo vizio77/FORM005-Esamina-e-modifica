@@ -254,8 +254,6 @@ sap.ui.define([
 						initialFocus: sap.m.MessageBox.Action.CLOSE,
 						styleClass: "sapUiSizeCompact"
 					});
-					MessageBox.error(oErrorMessage);
-					MessageBox.error(oErrorMessage);
 				}
 			});
 

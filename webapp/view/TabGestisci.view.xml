@@ -264,7 +264,7 @@
 									<!-- <Select width="35%" selectedKey="{modelAnagraficaPf>/Desctipopg}" editable="true" >
 										<core:Item key="{modelAnagraficaPf>/Desctipopg}" text="{modelAnagraficaPf>/Desctipopg}"/>
 									</Select> -->
-									<Select width="35%" selectedKey="{modelAnagraficaPf>/Desctipopg}" editable="true" items="{ path: '/ZCA_AF_TIPOSPPGSet', sorter: { path: 'Codicetiposppspe' }}" >
+									<Select width="35%" selectedKey="{modelAnagraficaPf>/Codicetiposppspe}" editable="true" items="{ path: '/ZCA_AF_TIPOSPPGSet', sorter: { path: 'Codicetiposppspe' }}" >
 										<core:Item key="{Codicetiposppspe}" text="{Desctipopg}"/>
 									</Select>
 									<Label text="{i18n>ObMinisteri}"/>

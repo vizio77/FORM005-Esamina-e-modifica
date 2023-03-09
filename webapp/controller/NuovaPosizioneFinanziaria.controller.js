@@ -1441,8 +1441,8 @@ sap.ui.define([
 				var sDenominazionePGInt = oView.byId("idDenominazionePGIntNPF").getValue();
 				var sDenominazionePGRid = oView.byId("idDenominazionePGRidNPF").getValue();
 
-				// sAmministrazione = sAmministrazione.splice(0, 1);
-				var sAmmin = "020";
+				 sAmministrazione = sAmministrazione.splice(0, 1);
+				//var sAmmin = "020";
 
 				//COFOG
 				var aDatiCofog = this.getView().getModel("modelTableCofogNPF").getData();
@@ -1588,8 +1588,18 @@ sap.ui.define([
 				
 				oGlobalModel.create("/PosFinSet", oDati, {
 					success: function(oData, oResponse) {
+						var that = this;
 						// console.log(oResponse);
-						sap.m.MessageBox.success(that.oResourceBundle.getText("MBCreateSuccessPF"));
+						//lt faccio comparire un messagebox e poi resetto il modello.
+						//sap.m.MessageBox.success(that.oResourceBundle.getText("MBCreateSuccessPF", [oData.Fipex]));
+						sap.m.MessageBox.success(that.oResourceBundle.getText("MBCreateSuccessPF", [oData.Fipex]), {
+							actions: [MessageBox.Action.CLOSE],
+							emphasizedAction: "Manage Products",
+							onClose: function (sAction) {
+								that.resetFields();
+							}
+						});
+						//sap.m.MessageBox.success(that.oResourceBundle.getText("MBCreateSuccessPF"));
 
 					},
 					error: function(oError) {
@@ -2019,6 +2029,16 @@ sap.ui.define([
 			});
 		},
 
+		openDialog: function(dialog, sInputValue){
+
+			dialog.then(function(oDialog){
+				//this._configDialog(oButton, oDialog);
+				oDialog.getBinding("items").filter([])
+				oDialog.open();
+			}.bind(this));
+			
+		},
+
 		onValueHelpRequest: function(oEvent, inputRef) {
 			var sInputValue, aOrFiltersCond, aFilters;
 			var sAmminVal, sMissioneVal, sProgrammaVal;
@@ -2199,6 +2219,7 @@ sap.ui.define([
 					});
 				this.idMissioneNPF.getBinding("items").filter(aOrFiltersCond);
 				// Open ValueHelpDialog filtered by the input's value
+				this.idMissioneNPF.getBinding("items").filter([]);
 				this.idMissioneNPF.open(sInputValue);
 			}
 
@@ -3093,6 +3114,14 @@ sap.ui.define([
 				// oEvent.getSource().getBinding("items").filter([]);
 				this.byId("idMissioneNPF").setValue(oSelectedItem.getTitle());
 				oModelNuovaPosFin.setProperty("/MISS", oSelectedItem.getTitle());
+
+				this._resetInput("idProgrammaNPF");
+				oModelNuovaPosFin.setProperty("/PROG", "");
+
+				this._resetInput("idAzioneNPF");
+				oModelNuovaPosFin.setProperty("/AZIO", "");
+
+
 			}
 
 			if (inputRef === "idProgrammaNPF") {
