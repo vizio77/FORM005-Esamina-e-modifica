@@ -30,9 +30,10 @@ sap.ui.define([
 			this.oDataModel = this.getModel();
 
 			this.oRouter.getRoute("PosizioneFinanziaria").attachMatched(this._onRouteMatched, this);
+			this.oRouter.getRoute("appHome").attachMatched(this._onRouteMatched, this);
 			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 
-			var oModel = new JSONModel({
+			/* var oModel = new JSONModel({
 				enabledButtonPrev:false, 
 				enabledButtonNext:false,
 				intialValue:-199,
@@ -40,7 +41,9 @@ sap.ui.define([
 				beginValueP1:201,
 				finalValue:400
 			});
-			this.getView().setModel(oModel, "modelIsAfterAvvio");
+			this.getView().setModel(oModel, "modelIsAfterAvvio"); */
+			
+			this.createModeButtonTable();
 			this._aRowsChecked = [];
 		},
 
@@ -2940,7 +2943,7 @@ sap.ui.define([
             var filterMaxRows = this.filterMaxRows;
             this.filterMaxRows = parseInt(filterMaxRows) + 200;
             this.onSearch(false, 200);
-        }, 
+        }, */
         createModeButtonTable: function() {
             var oModel = new JSONModel({
                 enabledButtonPrev: false,
@@ -2951,8 +2954,7 @@ sap.ui.define([
                 finalValue: 400            });
             this.getView().setModel(oModel, "modelIsAfterAvvio");
         },
-		*/
-		
+			
 		
 		onSearchTreeTable: function(isAvvioButton, pointer){
 			var sIdTreeTable="treeTablePF";
