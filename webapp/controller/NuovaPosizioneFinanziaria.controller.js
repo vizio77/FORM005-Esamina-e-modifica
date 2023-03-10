@@ -1418,23 +1418,22 @@ sap.ui.define([
 					}
 				}
 			},
-
+			
 			onPressCloseScegliIDNPF: function() {
 				this.getView().byId("NPF_dialogScegliProposta").close();
 			},
-
+			
 			//***************************FINE METODI MENU A TENDINA*************************************
-
+			
 			//GESTIONE SALVATAGGIO DATI AL SALVA DI NPF
-
 			onPressSalvaNPF: function(e) {
-
 				var oView = this.getView();
-				var oGlobalModel = oView.getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");
-
+				var that = this;
+				var oGlobalModel = oView.getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");				
 				//POSIZIONE FINANZIARIA
 				var sPosFin = oView.byId("idPopPosFin").getText();
 				var sAmministrazione = oView.byId("idAmminNPF").getValue();
+				var sAmmin = sAmministrazione.substring(1);
 				var sCdr = oView.byId("idCdRNPF").getValue();
 				var sRagioneria = oView.byId("idRagioneriaNPF").getValue();
 				var sMissione = oView.byId("idMissioneNPF").getValue();
@@ -1446,8 +1445,6 @@ sap.ui.define([
 				var sCategoria = oView.byId("idCategoriaNPF").getValue();
 				var sCE2 = oView.byId("idCE2NPF").getValue();
 				var sCE3 = oView.byId("idCE3NPF").getValue();
-				// var sTCRC = oView.byId("idTCRCNPF").getValue();
-				// var sTCRF = oView.byId("idTCRFNPF").getValue();
 				var sMAC = oView.byId("idMacroAggregatoNPF").getValue();
 				var sTipoSpesaCap = oView.byId("idTipoSpesaCapNPF").getSelectedKey();
 				var sDenominazioneCapitoloInt = oView.byId("idDenominazioneCapitoloIntNPF").getValue();
@@ -1456,45 +1453,25 @@ sap.ui.define([
 				var sDenominazionePGInt = oView.byId("idDenominazionePGIntNPF").getValue();
 				var sDenominazionePGRid = oView.byId("idDenominazionePGRidNPF").getValue();
 
-				var sAmmin = sAmministrazione.substring(1);
-				//var sAmmin = "020";
 
 				//COFOG
 				var aDatiCofog = this.getView().getModel("modelTableCofogNPF").getData();
-				// var aCofog = [];
-				// console.log(aDatiCofog);
 				for (var i = 0; i < aDatiCofog.length; i++) {
 					if (aDatiCofog[i].Icon) {
 						delete aDatiCofog[i].Icon;
 						delete aDatiCofog[i].Visible;
 						delete aDatiCofog[i].status;
 						delete aDatiCofog[i].Livello;
-
-						// aCofog.push(aDatiCofog[i]);
 					}
 					//lt passo la posizione finanziaria
 					aDatiCofog[i].Fipex = sPosFin;
-					//lt salvo in strunga il cod contatenato per evitare errori in creazione
-					//aDatiCofog[i].Codconcatenato = aDatiCofog[i].Codconcatenato.toString();
 				}
 
 				//PROPOSTA
 				var sProposta = oView.byId("idIDPropostaNPF").getValue();
 				var sKeycodepr = this.Keycode;
 				var sTipo, sIter;
-				//lt commento perchè nella versione "nuova" la proposta non è compensativa o no... 
-				//non so se devo mettere di default qualcosa...
-				/* if(oView.byId("idIterNPF").getVisible()) {
-					sTipo = oView.byId("idTipologiaNPF").getValue();
-					if(sTipo.toUpperCase() === "COMPENSATIVA") {
-						sTipo = "1";
-					} else {
-						sTipo = "0";
-					}
-				} else {
-					sTipo = "";
-				} */
-				// var sIterDesc = oView.byId("idIterNPF").getValue();
+
 				if(oView.byId("idIterNPF").getVisible()) {
 					sIter = oView.byId("idIterNPF").getSelectedKey();
 				} else {
@@ -1511,9 +1488,6 @@ sap.ui.define([
 				var defaultVersione = dataPosFinToPropostaDefault.Versione;
 				var defaultPrctr = dataPosFinToPropostaDefault.Prctr;
 
-
-				//var sTipoTest = this.getOwnerComponent().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV").getData(sPath).Tipologiaprop;
-
 				var aDatiProp = [{
 					Fikrs: defaultFikrs,
 					Anno: defaultAnno,
@@ -1527,9 +1501,8 @@ sap.ui.define([
 					Reale:defaultReale,
 					Iter: sIter,
 					Nickname: sNickName,
-					//Tipologiaprop: sTipo
 				}];
-				
+							
 				//CONTROLLO SOMMA PERCENTUALI COFOG = 100
 				var aCofogPerc = [];
 				for (var b = 0; b < aDatiCofog.length; b++) {
@@ -1539,19 +1512,41 @@ sap.ui.define([
 				for(var a = 0; a < aCofogPerc.length; a++) {
 					sSommaPercCofog	+= +aCofogPerc[a]; 
 				}
-				
-				var that = this;
 
-				//lt intanto in attesa di modifica inserisco anche i tre blocchi
+				var oDati = {
+					Fikrs: "S001",
+					Anno: "",
+					Fase: "DLB",
+					Reale: "",
+					Versione: "P",
+					Fipex: sPosFin,
+					Eos: "S",
+					Prctr: sAmministrazione,
+					Codiceammin: sAmmin,
+					Codicecdr: sCdr,
+					Codiceragioneria: sRagioneria,
+					Codicemissione: sMissione,
+					Codiceprogramma: sProgramma,
+					Codiceazione: sAzione,
+					Codicecapitolo: sCapitolo,
+					Codicepg: sPg,
+					Codicetitolo: sTitolo,
+					Codicecategoria: sCategoria,
+					Codiceclaeco2: sCE2,
+					Codiceclaeco3: sCE3,
+					Numemacspe: sMAC,
+					Codicetipospcapspe: sTipoSpesaCap,
+					Descrizionecapitolo: sDenominazioneCapitoloInt,
+					Descrbrevecap: sDenominazioneCapitoloRid,
+					Codicetiposppspe: sTipoSpesaPG,
+					Descrizionepg: sDenominazionePGInt,
+					Descrbrevepg: sDenominazionePGRid,
+					PosFinToCofogNav: aDatiCofog,
+					PosFinToPropostaNav: aDatiProp
+				};
 
-				//sDenominazionePGInt
-				//idDenominazionePGRidNPF
-				if (!idDenominazionePGRidNPF || !sDenominazionePGInt || !sAmministrazione || !sCdr || !sRagioneria || !sPg || !sMissione || !sProgramma  || !sAzione || 
-				!sCapitolo || !sTitolo || !sCategoria || !sCE2 || !sCE3 ||
-				!sMAC || !sDenominazioneCapitoloInt || !sDenominazioneCapitoloRid) {
-					sap.m.MessageBox.warning(this.oResourceBundle.getText("MBCampiObbligatoriNPF"));
-					return;
-				}
+				if(!this.checkFieldsRequired(oDati, sSommaPercCofog ,aDatiCofog)) return;
+
 				if (sSommaPercCofog !== 100) {
 						sap.m.MessageBox.warning(that.getView().getModel("i18n").getResourceBundle().getText("MBCofogPercSomma"));
 						return;
@@ -1559,61 +1554,18 @@ sap.ui.define([
 				if (aDatiCofog.length === 0 || aDatiCofog.length === undefined) {
 					sap.m.MessageBox.warning(this.oResourceBundle.getText("MBCofogObbligatorioPF"));
 					return;
-				} else {
+				} 
 
-					for (var p = 0; p < aDatiCofog.length; p++) {
-						if (aDatiCofog[p].Perccofog === "") {
-							sap.m.MessageBox.warning(this.oResourceBundle.getText("MBCofogPercObbligatorioPF"));
-							return;
-						}
-					} //else {
-						var oDati = {
-							Fikrs: "S001",
-							Anno: "",
-							Fase: "DLB",
-							Reale: "",
-							Versione: "P",
-							Fipex: sPosFin,
-							Eos: "S",
-
-							Prctr: sAmministrazione,
-							Codiceammin: sAmmin,
-							Codicecdr: sCdr,
-							Codiceragioneria: sRagioneria,
-							Codicemissione: sMissione,
-							Codiceprogramma: sProgramma,
-							Codiceazione: sAzione,
-							Codicecapitolo: sCapitolo,
-							Codicepg: sPg,
-							Codicetitolo: sTitolo,
-							Codicecategoria: sCategoria,
-							Codiceclaeco2: sCE2,
-							Codiceclaeco3: sCE3,
-							// Numetcrcspe: sTCRC,
-							// Numetcrfspe: sTCRF,
-							Numemacspe: sMAC,
-							Codicetipospcapspe: sTipoSpesaCap,
-							Descrizionecapitolo: sDenominazioneCapitoloInt,
-							Descrbrevecap: sDenominazioneCapitoloRid,
-							Codicetiposppspe: sTipoSpesaPG,
-							Descrizionepg: sDenominazionePGInt,
-							Descrbrevepg: sDenominazionePGRid,
-
-							PosFinToCofogNav: aDatiCofog,
-							PosFinToPropostaNav: aDatiProp
-						};
-					
-				}
-				// } else {
-
+				for (var p = 0; p < aDatiCofog.length; p++) {
+					if (aDatiCofog[p].Perccofog === "") {
+						sap.m.MessageBox.warning(this.oResourceBundle.getText("MBCofogPercObbligatorioPF"));
+						return;
+					}
+				} 
 				
 				oGlobalModel.create("/PosFinSet", oDati, {
 					success: function(oData, oResponse) {
-						debugger
-						
-						// console.log(oResponse);
 						//lt faccio comparire un messagebox e poi resetto il modello.
-						//sap.m.MessageBox.success(that.oResourceBundle.getText("MBCreateSuccessPF", [oData.Fipex]));
 						sap.m.MessageBox.success(that.oResourceBundle.getText("MBCreateSuccessPF", [oData.Fipex]), {
 							actions: [MessageBox.Action.CLOSE],
 							emphasizedAction: "Manage Products",
@@ -1621,7 +1573,6 @@ sap.ui.define([
 								that.resetFields();
 							}
 						});
-						//sap.m.MessageBox.success(that.oResourceBundle.getText("MBCreateSuccessPF"));
 
 					}.bind(this),
 					error: function(oError) {
@@ -1630,6 +1581,46 @@ sap.ui.define([
 				});
 			
 		},
+
+			
+		checkFieldsRequired: function(oDati){
+			var ritorno = true;
+			const fieldsToCheck = [ 
+				{ field : "Prctr"  					,label : "Amministrazione"}, 
+				{ field : "Codicecdr"  				,label : "CdR"}, 
+				{ field : "Codiceragioneria"  		,label : "Ragioneria"},
+				{ field : "Codicemissione"  		,label : "Missione"}, 
+				{ field : "Codiceprogramma"  		,label : "Programma"}, 
+				{ field : "Codiceazione"  			,label : "Azione"},
+				{ field : "Codicecapitolo"  		,label : "Capitolo"},
+				{ field : "Codicepg"  				,label : "Pg"}, 
+				{ field : "Codicetitolo"  			,label : "Titolo"},
+				{ field : "Codicecategoria"  		,label : "Categoria"}, 
+				{ field : "Codiceclaeco2"  			,label : "C.E.2"},
+				{ field : "Codiceclaeco3"   		,label : "C.E.3"}, 
+				// CHIDEDERE A FEDERICA { field : "Numemacspe"  			,label : "Macroaggregato"},
+				{ field : "Descrizionecapitolo"  	,label : "Denominazione Capitolo integrale"},
+				{ field : "Descrbrevecap"  			,label : "Denominazione Capitolo ridotta"},
+				{ field : "Descrbrevepg"  			,label : "Denominazione PG ridotta"},
+				{ field : "Descrizionepg"  			,label : "Denominazione PG integrale"}, 
+			];
+
+			var message = ""
+			fieldsToCheck.forEach(el => {
+					if(!oDati[el.field]){
+						message = message + "\n" + el.label
+					}				
+			});
+
+			if(message !== ""){		
+				message = `${this.oResourceBundle.getText("MBListaCampiObb")} ${message}`
+				sap.m.MessageBox.warning(message);
+				ritorno = false
+			}
+
+			return ritorno;
+		},
+
 
 		//**********************************Metodi filtri*******************************************
 

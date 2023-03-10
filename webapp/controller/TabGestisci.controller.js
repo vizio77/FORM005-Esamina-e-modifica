@@ -662,15 +662,22 @@ sap.ui.define([
 		attivaDisattiva: function(oEvent){
 			var modelAnagraficaPf = this.getView().getModel("modelAnagraficaPf")
 
-			var status = modelAnagraficaPf.getProperty("/Statstatus")
+			/* var status = modelAnagraficaPf.getProperty("/Statstatus")
 			
 			if(status === "1"){
 				status = "0"
 			}else{
 				status = "1"
+			} */
+			var status = modelAnagraficaPf.getProperty("/Attivo")
+			
+			if(status === "X"){
+				status = ""
+			}else{
+				status = "X"
 			}
 			
-			modelAnagraficaPf.setProperty("/Statstatus", status)
+			modelAnagraficaPf.setProperty("/Attivo", status)
 
 		},
 

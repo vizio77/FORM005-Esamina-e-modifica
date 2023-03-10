@@ -3,11 +3,12 @@ sap.ui.define([
 	"sap/ui/core/routing/History",
 	"sap/m/SelectDialog",
 	"sap/m/TableSelectDialog",
+	"sap/ui/model/json/JSONModel",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	"sap/m/MessageBox",
 	"../util/formatter"
-], function(Controller, History, SelectDialog, TableSelectDialog, Filter, FilterOperator, MessageBox, formatter) {
+], function(Controller, History, SelectDialog, TableSelectDialog, JSONModel, Filter, FilterOperator, MessageBox, formatter) {
 	"use strict";
 
 	return Controller.extend("zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.BaseController", {
@@ -17,6 +18,27 @@ sap.ui.define([
 		getRouter: function() {
 			return sap.ui.core.UIComponent.getRouterFor(this);
 		},
+		/* __getAnnoFaseProcessoMacroFase: function () {
+            let modelTopologiche = this.getOwnerComponent().getModel("ZSS4_CO_GEST_TIPOLOGICHE_SRV")  
+            var that = this;
+            return new Promise((resolve, reject) => {
+              modelTopologiche.read("/ZES_CAL_FIN_SET",{
+                  filters: [new Filter("FASE", FilterOperator.EQ, "F")],
+                  success: (oData) => {
+                    
+                    that.getOwnerComponent().setModel(new JSONModel({
+                        ANNO : oData.results[0].ANNO,
+                        DDTEXT : oData.results[0].FASE === "F" ? "Formazione" : oData.results[0].DDTEXT,
+                        STAT_FASE : oData.results[0].STAT_FASE === "0" ? "Disegno di legge di bilancio" : "Note di variazione",
+                    }), "globalModel")
+                    resolve(true)
+                  },
+                  error: (err) => {
+                      reject(err)
+                  }
+              })
+            })
+          }, */
 		//lt codice cross
 		readFromDb: function(sDbSource, sEntitySet, aFilters, aSorters, sExpand) {
 			var aReturn = this._getDbOperationReturn();
