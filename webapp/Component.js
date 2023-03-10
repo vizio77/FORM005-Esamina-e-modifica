@@ -8,7 +8,10 @@ sap.ui.define([
 	return UIComponent.extend("zsap.com.r3.cobi.s4.esamodModSpesePosFin.Component", {
 
 		metadata: {
-			manifest: "json"
+			manifest: "json",
+			config: {
+				fullWidth: true
+			}
 		},
 
 		/**
