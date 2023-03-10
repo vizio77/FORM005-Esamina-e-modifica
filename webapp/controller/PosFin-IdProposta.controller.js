@@ -113,6 +113,8 @@ sap.ui.define([
 					var sDatbis = aSelected[i].Datbis;
 					var sFipex = aSelected[i].Fipex;
 					var sAut = aSelected[i].Autorizzazioni;
+					var sKey_code = aSelected[i].Key_Code;
+					var sFictr = aSelected[i].Fictr
 
 					var oData = {
 						"IdPosfin": sIdPosFin,
@@ -133,6 +135,8 @@ sap.ui.define([
 						"Keycodepr": sKeycodepr,
 						"Datbis": sDatbis,
 						"Fipex": sFipex,
+						"Key_Code": sKey_code,
+						"Fictr": sFictr,
 						PosFin: sFipex,
 						Aut: sAut,
 						Idproposta: sIdProposta
@@ -255,6 +259,8 @@ sap.ui.define([
 			if (aRows === undefined || aRows.length === 0) {
 				MessageBox.warning(this.getView().getModel("i18n").getResourceBundle().getText("MBTastoGestisciPagePosFinA"));
 			} else {
+
+				var oModelAut = sap.ui.getCore().setModel(new JSONModel(aRows), "modelPageAut");
 				this.oRouter.navTo("TabGestisci", {
 					Page: sPage
 				});

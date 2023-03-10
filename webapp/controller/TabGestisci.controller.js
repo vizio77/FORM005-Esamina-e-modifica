@@ -21,20 +21,131 @@ sap.ui.define([
 		 */
 		onInit: function() {
 			this.oRouter = this.getRouter();
-			this.oDataModel = this.getModel();
-
-			this._oResourceBundle = this.getResourceBundle();
-			this.aRowsCofog = [];
-			this.aRowsFOFP = [];
-			this.aCofogDeleted = [];
-
+			
 			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 			this.oRouter.getRoute("TabGestisci").attachMatched(this._onRouteMatched, this);
 
 			// this.oRouter.getRoute("TabGestisci").attachPatternMatched(this._onObjectMatched, this);
 		},
 
-		_AutRead: function() {
+		_onRouteMatched: async function(oEvent) {
+			this.oRouter = this.getRouter();
+			this.oDataModel = this.getModel();
+			this._oResourceBundle = this.getResourceBundle();
+			this.aRowsCofog = [];
+			this.aRowsFOFP = [];
+			this.aCofogDeleted = [];
+
+			this.sRouterParameter = oEvent.getParameters().arguments.Page;
+			//LOGICA PER GESTIONE MODIFICA/SOLO VISUALIZZAZIONE DEL TAB ANAGRAFICA
+			this.oModelPG80 = this.getView().getModel("modelPG80");
+			this._bloccaModificheAnagrafiche();
+			//LOGICA GESTIONE VARIAZIONE ANAGRAFICA SU PROPOSTA GIA' ESISTENTE
+			this._checkVariazioneAnagraficaProposta();
+			this._setTestata();
+			await this._gestTipologiche();
+			this.getView().byId("idIconTabBar").setSelectedKey("Anagrafica");
+			await this._getDatiAnagrafica();
+			await this._AutRead();
+			//this._getDatiStrAmm();
+			this.getView().byId("TextAnno").setText(new Date().getFullYear() + 1);
+
+			//lt salvo un modello generico della testata
+			var oDataModPodFin  = this.getOwnerComponent().getModel("modelPosizioneFinanziaria").getData() ;
+			var isEmptyOData  = Object.keys(oDataModPodFin).length == 0;
+			var sPosfin;
+			if(isEmptyOData){
+				sPosfin = this.getOwnerComponent().getModel("modelPageAut").getData()[0].IdPosfin;
+			}else{
+				sPosfin = oDataModPodFin[0].Fipex;
+			}
+			var oModelTestata = new JSONModel({Fipex: sPosfin});
+			//this.getView().setModel(oModelTestata, "modelTestata");
+			this.getView().getModel("modelPageAut").setProperty('/Fipex', sPosfin);
+
+			//LOGICA PER GESTIONE BTN INVIO/REVOCA VALIDAZIONE da rivedere
+			var sButtonInviaRevocaValidazione = this.getView().byId("btnInvioRevocaValidazione");
+
+			var sIterVal = this.getView().byId("idIterTabID").getText();
+			if (sIterVal.toUpperCase() === "INVIATO ALLA VALIDAZIONE") {
+				sButtonInviaRevocaValidazione.setText(this._oResourceBundle.getText("RevocaValid"));
+			} else {
+				
+				sButtonInviaRevocaValidazione.setText(this._oResourceBundle.getText("InvioValid"));
+			}
+
+			
+			var dataModelInLavorazione={value:true};
+			if(sIterVal.toUpperCase()!=="PROPOSTA IN LAVORAZIONE" && sIterVal.toUpperCase()!=="PROPOSTA IN LAVORAZIONE PRESSO UCB" ){
+				dataModelInLavorazione.value=false;
+			}else{
+				dataModelInLavorazione.value=true;
+			}
+			var oModel = new JSONModel(dataModelInLavorazione);
+			this.getView().setModel(oModel, "modelInLavorazione");
+			
+			
+			var oDataModPodFin = this.getOwnerComponent().getModel("modelPosizioneFinanziaria").getData();
+			var isEmptyOData  = Object.keys(oDataModPodFin).length == 0;
+			var sProposta;
+			if(!isEmptyOData){
+				var oModel = this.getView().getModel("modelPageAut");
+			}
+			 
+		},
+
+		_setTestata: function() {
+			this.getView().setModel(new JSONModel(sap.ui.getCore().getModel("modelPageAut").getData()[0]), "modelTestata");
+		},
+
+		_AutRead: async function() {
+			var that = this;
+
+			var aModelPosFin = this.getOwnerComponent().getModel("modelPosizioneFinanziaria").getData();
+
+			var isEmptyOData = Object.keys(aModelPosFin).length == 0;
+			var sPosfin;
+			if (isEmptyOData) {
+				sPosfin = this.getOwnerComponent().getModel("modelPageAut").getData()[0].IdPosfin;
+			} else {
+				sPosfin = aModelPosFin[0].Fipex;
+			}
+
+			var aFilters;
+			aFilters = [ // <-- Should be an array, not a Filter instance!
+				new Filter({ // required from "sap/ui/model/Filter"
+					path: "Fipex",
+					operator: FilterOperator.EQ, // required from "sap/ui/model/FilterOperator"
+					value1: sPosfin
+				})
+			];
+			try {
+				var aRes = await this.readFromDb("4", "/ZCOBI_PRSP_CODBLSet", aFilters, [], "");
+				if (aRes.length === 1) {
+					// this.getOwnerComponent().getModel("modelPageAut").getData().CodiFincode = aRes[0].Fincode;
+					this.getView().setModel(new JSONModel(aRes[0]), "modelPageAut");
+					this.getView().setModel(new JSONModel(aRes[0]), "modelPreAutInfoPopUp");
+
+				}
+				if (aRes.length > 1) {
+					this.getView().setModel(new JSONModel(aRes[0]), "modelPreAutInfoPopUp");
+					this.getView().setModel(new JSONModel(aRes[0]), "modelPageAut");
+
+				}
+			} catch (e) {
+				var sDettagli = that._setErrorMex(e);
+				var oErrorMessage = e.responseText;
+				MessageBox.error(oErrorMessage, {
+					details: sDettagli,
+					initialFocus: sap.m.MessageBox.Action.CLOSE,
+					styleClass: "sapUiSizeCompact"
+				});
+
+			}
+
+		},
+
+		/* _AutRead: function() {
 			var that = this;
 			this.oDataAut = this.getView().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");
 			this.getView().byId("idAutorizz").setEnabled(true);
@@ -84,7 +195,7 @@ sap.ui.define([
 					MessageBox.error(oErrorMessage.responseText);
 				}
 			});
-		},
+		}, */
 
 		_fillInfoPopUp: function() {
 			//var oInputAut = this.getView().byId("idAutorizz");
@@ -101,7 +212,95 @@ sap.ui.define([
 			window.frames[0].location = urlSac + (new Date());
 		},
 
-		_getSchedaSac: function() {
+		onPressIconTabBar: async function(oEvent) {
+			var sSelectedTab = oEvent.getParameters().selectedKey;
+
+			switch (sSelectedTab) {
+				case 'Cassa':
+					this.getView().byId('btnInfoCassaTabID').setVisible(true);
+					this.getView().byId('btnInfoCompetenzaTabID').setVisible(false);
+					await this._getSchedaSacCassa();
+					break;
+				case 'Workflow':
+					await this._TimelineCompiler();
+					break;
+				case 'Anagrafica':
+					//await this._getDatiAnagrafica();
+					//await this._AutRead();
+					break;
+				case 'Note':
+					await this._getNota();
+					break;
+				case 'Competenza':
+					this.getView().byId('btnInfoCassaTabID').setVisible(false);
+					this.getView().byId('btnInfoCompetenzaTabID').setVisible(true);
+					await this._dataAuto();
+					break;
+
+			}
+
+		},
+		_dataAuto: async function() {
+			try {
+				var aFilters = [];
+				var aData = this.getView().getModel("modelTestata").getData();
+				aFilters.push(new Filter("Fikrs", FilterOperator.EQ, aData.Fikrs));
+				// var oFilterEos = new Filter("Eos", FilterOperator.EQ, sEos);
+				aFilters.push(new Filter("Anno", FilterOperator.EQ, aData.AnnoFipex));
+				aFilters.push(new Filter("Reale", FilterOperator.EQ, aData.Reale));
+				aFilters.push(new Filter("Fase", FilterOperator.EQ, aData.Fase));
+				aFilters.push(new Filter("Versione", FilterOperator.EQ, aData.Versione));
+				aFilters.push(new Filter("Fipex", FilterOperator.EQ, aData.Fipex));
+				var aRes = await this.readFromDb("4", "/ZCOBI_PRSP_ASSAUTSet", aFilters, [], "");
+				this.getView().setModel(new JSONModel(aRes), "modelAnagraficaAuto");
+			} catch (e) {
+				MessageBox.error(e);
+			}
+		},
+		_getSchedaSacCassa: async function() {
+
+			var that = this;
+			this.urlSac = "";
+			var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+			var sPg = this.getView().getModel("modelAnagraficaPf").getData().Codicepg
+			var oLocalModel;
+			var sPosfin, sIdProp, sAut;
+			var oDati = {};
+
+			oLocalModel = this.getView().getModel("modelPageAut").getData();
+
+			sPosfin = oLocalModel.IdPosfin;
+			sIdProp = this.getView().getModel("modelTestata").getData().Key_Code;
+
+			oDati = {
+				"PosFin": oLocalModel.Fipex,
+				"IdProposta": sIdProp,
+				"Autorizzazione": "",
+				"SemanticObject": "ESAMINA_MOD",
+				"Schermata": "CASSA",
+				"Pg": sPg
+
+			};
+
+			if (oLocalModel) {
+				try {
+					var aRes = await this.insertRecord("4", "/SacUrlSet", oDati);
+					var oFrame = this.getView().byId("linkSacCassa");
+					this.urlSac = aRes.URL;
+					var oFrameContent = oFrame.$()[0];
+					oFrameContent.setAttribute("src", that.urlSac);
+					this._refresh();
+				} catch (e) {
+					MessageBox.error(oResourceBundle.getText("MBCreateErrorPageAut"));
+				}
+
+			} else {
+				MessageBox.warning(oResourceBundle.getText("MBTastoCassaPagePosFinId"));
+			}
+
+		},
+
+		/* _getSchedaSac: function() {
 
 			this.getView().byId("idBoxAut").setVisible(false);
 			var that = this;
@@ -145,7 +344,7 @@ sap.ui.define([
 				MessageBox.warning(this.getView().getModel("i18n").getResourceBundle().getText("MBTastoCassaPagePosFinId"));
 			}
 
-		},
+		}, */
 
 		_getSchedaCompetenza: function() {
 			this.getView().byId("idBoxAut").setVisible(true);
@@ -196,70 +395,52 @@ sap.ui.define([
 
 		},
 
-		_TimelineCompiler: function() {
-			// var sProposta = this.getView().byId("idPropostaTabID").getText;
-			var oGlobalModel = this.getView().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");
+		_TimelineCompiler: async function() {
+
 			var oLocalModel = this.getView().getModel("modelPageAut");
-			
-			var oDataModPodFin  = this.getOwnerComponent().getModel("modelPosizioneFinanziaria").getData() ;
-			var isEmptyOData  = Object.keys(oDataModPodFin).length == 0;
+
+			var oDataModPodFin = this.getOwnerComponent().getModel("modelPosizioneFinanziaria").getData();
+			var isEmptyOData = Object.keys(oDataModPodFin).length == 0;
 			var sProposta;
-			if(isEmptyOData){
+			if (isEmptyOData) {
 				sProposta = oLocalModel.getData()[0].IdProposta;
-			}else{
-				oDataModPodFin[0].IdProposta;
+			} else {
+				sProposta = oDataModPodFin[0].IdProposta;
 			}
-			
-			// var oModelWorkFlow = this.getView().getModel("modelTimeLineWorkFlow");
 
-			//VERSIONE DEFINITIVA
-			// var sEos = oLocalModel.getData()[0].Eos;
-			// var sAmm = oLocalModel.getData()[0].CodiceAmmin;
 			var sEos = "S";
-			var sAmm = "A020";
-			//var sProposta = oLocalModel.getData()[0].IdProposta;
-
-			//MI PRENDO I DATI DI WORKFLOW INERENTI LA PROPOSTA
+			var sAmm = this.getOwnerComponent().getModel("gestTipologicheModel").getData().Prctr;
 			var aFilters = [];
-
-			aFilters = [ // <-- Should be an array, not a Filter instance!
-				new Filter({ // required from "sap/ui/model/Filter"
+			aFilters = [
+				new Filter({
 					path: "IdProposta",
-					operator: FilterOperator.EQ, // required from "sap/ui/model/FilterOperator"
+					operator: FilterOperator.EQ,
 					value1: sProposta
 				}),
-				new Filter({ // required from "sap/ui/model/Filter"
+				new Filter({
 					path: "Eos",
-					operator: FilterOperator.EQ, // required from "sap/ui/model/FilterOperator"
+					operator: FilterOperator.EQ,
 					value1: sEos
 				}),
-				new Filter({ // required from "sap/ui/model/Filter"
+				new Filter({
 					path: "Amministrazione",
-					operator: FilterOperator.EQ, // required from "sap/ui/model/FilterOperator"
+					operator: FilterOperator.EQ,
 					value1: sAmm
 				})
 			];
-			var that = this;
 
-			oGlobalModel.read("/WorkFlowSet", {
-				filters: aFilters,
-				success: function(oData, oResponse) {
-					that.getView().getModel("modelTimeLineWorkFlow").setData(oData.results);
-				},
-				error: function(errorResponse) {
-					var sDettagli = that._setErrorMex(errorResponse);
-					var oErrorMessage = errorResponse.responseText;
-					MessageBox.error(oErrorMessage, {
-						details: sDettagli,
-						initialFocus: sap.m.MessageBox.Action.CLOSE,
-						styleClass: "sapUiSizeCompact"
-					});
-				}
-			});
+			try {
+				var aRes = await this.readFromDb("4", "/WorkFlowSet", aFilters, [], "");
+				this.getView().setModel(new JSONModel(aRes), "modelTimeLineWorkFlow")
+			} catch (errorResponse) {
+
+				MessageBox.error(this.getResourceBundle().getText("NessunDato"));
+
+			}
 
 		},
 
-		_getDatiAnagrafica: function() {
+		_getDatiAnagrafica: async function() {
 			var sFipex = this.getView().byId("idLinkPosfinTab").getText();
 			// var sIdProposta = this.getView().byId("idPropostaTabID").getText();
 			var sKeycodepr, sFikrs,sAnno, sFase, sReale,sVersione, sEos ;
@@ -311,7 +492,31 @@ sap.ui.define([
 
 			var oGlobalModel = this.getView().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");
 			var that = this;
-			oGlobalModel.read(sPathPF, {
+
+			try {
+			var aRes = await this.readFromDb("4", sPathPF, [], [], ["PosFinToCofogNav", "PosFinToFoFpNav"]);
+			that.getView().getModel("modelAnagraficaPf").setData(aRes);
+			that.getView().getModel("modelAnagraficaFOP").setData(aRes.PosFinToFoFpNav.results);
+			var oTableCofog = that.getView().getModel("modelAnagraficaCofog");
+					var aDataCofog = [];
+					var aCofog = aRes.PosFinToCofogNav.results;
+					for (var i = 0; i < aCofog.length; i++) {
+						aDataCofog.push(aCofog[i]);
+					}
+					oTableCofog.setData(aDataCofog);
+			} catch (e) {
+				MessageBox.error(e.responseText);
+			}
+
+			try {
+				var aRes = await this.readFromDb("4", "/PropostaSet(Keycodepr='" + sKeycodepr + "')", [], [], [, ]);
+				that.getView().getModel("modelAnagraficaID").setData(aRes)
+				} catch (e) {
+					MessageBox.error(e.responseText);
+				}
+
+
+			/* oGlobalModel.read(sPathPF, {
 				// filters: aFilters,
 				urlParameters: {
 					// "$top": 1,
@@ -333,11 +538,11 @@ sap.ui.define([
 				error: function(oError) {
 					MessageBox.error(oError.responseText);
 				}
-			});
+			}); */
 
 			// var aFoFp = [];
 
-			var sPathID = "/PropostaSet(Keycodepr='" + sKeycodepr + "')";
+			/* var sPathID = "/PropostaSet(Keycodepr='" + sKeycodepr + "')";
 			oGlobalModel.read(sPathID, {
 				success: function(oData, oResponse) {
 					that.getView().getModel("modelAnagraficaID").setData(oData);
@@ -345,10 +550,10 @@ sap.ui.define([
 				error: function(oError) {
 					MessageBox.error(oError.responseText);
 				}
-			});
+			}); */
 		},
 
-		_getDatiStrAmm: function() {
+		/* _getDatiStrAmm: function() {
 			var oGlobalModel = this.getView().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");
 			var oLocalModel = this.getView().getModel("modelStrAmm");
 
@@ -395,7 +600,7 @@ sap.ui.define([
 					MessageBox.error(oError.responseText);
 				}
 			});
-		},
+		}, */
 
 		onPressShowPopupStrAmm: function(e) {
 			var sBtn = e.getSource();
@@ -495,7 +700,7 @@ sap.ui.define([
 			this._getSchedaCompetenza();
 		},
 
-		_getNota: function() {
+		/* _getNota: function() {
 			var oLocalModel = this.getView().getModel("modelPageAut");
 			var sKeycode;
 			var oDataModPodFin  = this.getOwnerComponent().getModel("modelPosizioneFinanziaria").getData() ;
@@ -512,71 +717,33 @@ sap.ui.define([
 				model: "ZSS4_COBI_PRSP_ESAMOD_SRV"
 			});
 
-		},
+		}, */
 
+		_getNota: async function() {
+			var aData = this.getView().getModel("modelTestata").getData();
+			try {
+				var aRes = await this.readFromDb("4", "/PropostaSet(Keycodepr='" + aData.Key_Code + "')", [], [], "");
+				this.getView().setModel(new JSONModel(aRes), "modelNote")
+				if (aRes.Idnota !== "0000000000") {
+					this.getView().byId("idInputScegliNoteIDProposta").setValue(aRes.Idnota);
+					this.getView().byId("idNota").setEditable(false);
+				} else {
+					this.getView().byId("idInputScegliNoteIDProposta").setEditable(false);
+					this.getView().byId("idInputScegliNoteIDProposta").setValue("");
+
+				}
+				var aRes = await this.readFromDb("4", "/ZES_NOTE_IDSet", [], [], "");
+				this.getView().setModel(new JSONModel(aRes), "modelListaIdNote");
+
+			} catch (e) {
+
+			}
+
+		},
+		
 		/*onBeforeRendering: function(){},*/
 
-		_onRouteMatched: function(oEvent) {
-			this.sRouterParameter = oEvent.getParameters().arguments.Page;
-			//LOGICA PER PREVALORIZZARE AUT SE SINGOLA
-			this._AutRead();
-			//LOGICA COMPILAZIONE TAB WORKFLOW
-			this._TimelineCompiler();
-			//LOGICA COMPILAZIONE TAB ANAGRAFICA
-			this._getDatiAnagrafica();
-			//LOGICA CHE LEGA LA NOTA ALLA PROPOSTA
-			this._getNota();
-			//LOGICA COMPILAZIONE LINK STRUTTURA AMMINISTRATIVA 
-			this._getDatiStrAmm();
-
-
-			//lt salvo un modello generico della testata
-
-			var oDataModPodFin  = this.getOwnerComponent().getModel("modelPosizioneFinanziaria").getData() ;
-			var isEmptyOData  = Object.keys(oDataModPodFin).length == 0;
-			var sPosfin;
-			if(isEmptyOData){
-				sPosfin = this.getOwnerComponent().getModel("modelPageAut").getData()[0].IdPosfin;
-			}else{
-				sPosfin = oDataModPodFin[0].Fipex;
-			}
-			var oModelTestata = new JSONModel({Fipex: sPosfin});
-			this.getView().setModel(oModelTestata, "modelTestata");
-
-			//LOGICA PER GESTIONE BTN INVIO/REVOCA VALIDAZIONE da rivedere
-			var sButtonInviaRevocaValidazione = this.getView().byId("btnInvioRevocaValidazione");
-
-			var sIterVal = this.getView().byId("idIterTabID").getText();
-			if (sIterVal.toUpperCase() === "INVIATO ALLA VALIDAZIONE") {
-				sButtonInviaRevocaValidazione.setText(this._oResourceBundle.getText("RevocaValid"));
-			} else {
-				
-				sButtonInviaRevocaValidazione.setText(this._oResourceBundle.getText("InvioValid"));
-			}
-
-			//LOGICA PER GESTIONE MODIFICA/SOLO VISUALIZZAZIONE DEL TAB ANAGRAFICA
-			this.oModelPG80 = this.getView().getModel("modelPG80");
-			this._bloccaModificheAnagrafiche();
-			//LOGICA GESTIONE VARIAZIONE ANAGRAFICA SU PROPOSTA GIA' ESISTENTE
-			this._checkVariazioneAnagraficaProposta();
-			var dataModelInLavorazione={value:true};
-			if(sIterVal.toUpperCase()!=="PROPOSTA IN LAVORAZIONE" && sIterVal.toUpperCase()!=="PROPOSTA IN LAVORAZIONE PRESSO UCB" ){
-				dataModelInLavorazione.value=false;
-			}else{
-				dataModelInLavorazione.value=true;
-			}
-			var oModel = new JSONModel(dataModelInLavorazione);
-			this.getView().setModel(oModel, "modelInLavorazione");
-			
-			
-			var oDataModPodFin = this.getOwnerComponent().getModel("modelPosizioneFinanziaria").getData();
-			var isEmptyOData  = Object.keys(oDataModPodFin).length == 0;
-			var sProposta;
-			if(!isEmptyOData){
-				var oModel = this.getView().getModel("modelPageAut");
-			}
-			 
-		},
+		
 
 		// _onObjectMatched: function(oEvent) {},
 
@@ -662,10 +829,10 @@ sap.ui.define([
 		attivaDisattiva: function(oEvent){
 			var modelAnagraficaPf = this.getView().getModel("modelAnagraficaPf")
 
-			/* var status = modelAnagraficaPf.getProperty("/Statstatus")
+			var status = modelAnagraficaPf.getProperty("/Statstatus")
 			
-			if(status === "1"){
-				status = "0"
+			/* if(status === "1"){
+				status = "3"
 			}else{
 				status = "1"
 			} */
@@ -701,65 +868,7 @@ sap.ui.define([
 				this.oModelPG80.setProperty("/capCodStd", false);
 			}
 		},
-
-		//LOGICHE ALLA PRESSIONE DEI TAB
-		onPressIconTabBar: function(Evt) {
-			var sSelectedTab = Evt.getParameters().selectedKey;
-			var oFrame, oFrameContent;
-
-			var that = this;
-			if (sSelectedTab === "Tab1") {
-				//this._getSchedaCompetenza();
-				//this.getView().byId('btnNota').setVisible(true);
-				this.getView().byId('btnInfoCassaTabID').setVisible(false);
-				this.getView().byId('btnInfoCompetenzaTabID').setVisible(true);
-				this.getView().byId("idBoxAut").setVisible(true);
-				this.urlSac = "";
-				oFrame = that.getView().byId("linkSacCompetenza");
-				oFrameContent = oFrame.$()[0];
-				oFrameContent.setAttribute("src", that.urlSac);
-
-			}
-			if (sSelectedTab === "Tab2") {
-				//this.getView().byId('btnNota').setVisible(true);
-				this.getView().byId('btnInfoCassaTabID').setVisible(true);
-				this.getView().byId('btnInfoCompetenzaTabID').setVisible(false);
-				this._getSchedaSac();
-			}
-			if (sSelectedTab === "Tab3") {
-				// var that = this;
-				this.getView().byId('btnInfoCassaTabID').setVisible(false);
-				this.getView().byId('btnInfoCompetenzaTabID').setVisible(false);
-			}
-			if (sSelectedTab === "Tab4") {
-				this.getView().byId('btnInfoCassaTabID').setVisible(false);
-				this.getView().byId('btnInfoCompetenzaTabID').setVisible(false);
-			}
-			if (sSelectedTab === "Tab5") {
-				this.getView().byId('btnInfoCassaTabID').setVisible(false);
-				this.getView().byId('btnInfoCompetenzaTabID').setVisible(false);
-			}
-			if (sSelectedTab === "Tab6") {
-				this.getView().byId('btnInfoCassaTabID').setVisible(false);
-				this.getView().byId('btnInfoCompetenzaTabID').setVisible(false);
-			}
-			if (sSelectedTab === "Tab7") {
-				this.getView().byId('btnInfoCassaTabID').setVisible(false);
-				this.getView().byId('btnInfoCompetenzaTabID').setVisible(false);
-			}
-			if (sSelectedTab === "Tab8") {
-				this.getView().byId('btnInfoCassaTabID').setVisible(false);
-				this.getView().byId('btnInfoCompetenzaTabID').setVisible(false);
-			}
-			if (sSelectedTab === "Tab9") {
-				this.getView().byId('btnInfoCassaTabID').setVisible(false);
-				this.getView().byId('btnInfoCompetenzaTabID').setVisible(false);
-				if (this.getView().byId("idCreaNotaIDPF").getValue()) {
-					this.getView().byId("idBtnSalvaNota").setText("Modifica Nota");
-				}
-			}
-		},
-
+		
 		onPressAssociaAut: function(oEvent) {
 			var sBtn = oEvent.getSource();
 			var oView = this.getView();

@@ -1,7 +1,9 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:layout="sap.ui.layout"
 	xmlns:commons="sap.suite.ui.commons" xmlns:card="sap.f.cards" xmlns:form="sap.ui.layout.form"
 	xmlns:zcontrollink="zsap.com.r3.cobi.s4.custposfin.z_s4_zposfinlink.controls"
-	controllerName="zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.TabGestisci" xmlns:html="http://www.w3.org/1999/xhtml">
+	controllerName="zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.TabGestisci" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:TooltipAutorizzazioneBtn="zsap.com.r3.cobi.s4.z_s4_auth_tooltip" xmlns:TooltipAutorizzazione="zsap.com.r3.cobi.s4.z_s4_auth_tooltip"
+	xmlns:zcontrollinkSar="custlinksar.custlinksar.controls">
 	<f:DynamicPage id="idTab-ID" stickySubheaderProvider="iconTabBar" class="sapUiNoContentPadding" showFooter="true"
 		toggleHeaderOnTitleClick="true">
 		<f:header>
@@ -11,31 +13,36 @@
 						<FlexBox alignItems="Center" justifyContent="SpaceBetween">
 							<layout:VerticalLayout class="sapUiTinyMargin">
 								<VBox direction='Row' visible="true">
-									<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
-										<ObjectStatus id="idPropostaTabID" title="{i18n>Proposta}" active="true" press="onPressShowAttributiProposta"
-											text="{modelPageAut>/0/IdProposta}" class="sapUiTinyMarginEnd sapUiTinyMarginTop textBold"/>
+									<layout:VerticalLayout class="sapUiTinyMarginBeginEnd sapUiSmallMarginTop">
 										<layout:HorizontalLayout>
-											<ObjectStatus id="idTextPosFinTabID" active="true" title="{i18n>PosFin}" text="" class="textBold sapUiNoMarginBegin sapUiTinyMarginTop "
+											<ObjectStatus id="idTextPosFinTabID" active="true" title="{i18n>PosFin}" text="" class="textBold sapUiNoMarginBegin "
 												press="onObjectStatusPosFinPress"/>
-											<zcontrollink:LinkPosizioneFinanziaria id="idLinkPosfinTab" text="{= ${modelPageAut>/0/IdPosfin} ? ${modelPageAut>/0/IdPosfin} : ${modelPageAut>/0/Fipex} }" class="sapUiTinyMarginEnd sapUiTinyMarginTop"
-												anno="{modelPageAut>/0/AnnoFipex}" fikrs="{modelPageAut>/0/Fikrs}" fase="{modelPageAut>/0/Fase}" reale="{modelPageAut>/0/Reale}"
-												versione="{modelPageAut>/0/Versione}" fipex="{ path: 'modelPageAut>/0/Fipex', formatter: '.formatter.formatterPosFin'}"
-												datbis="{ path: 'modelPageAut>/0/Datbis', formatter: '.formatter.formatterDatbis'}"/>
+											<zcontrollink:LinkPosizioneFinanziaria id="idLinkPosfinTab" text="{modelTestata>/Fipex}" class=" " anno="{modelTestata>/AnnoFipex}"
+												fikrs="{modelTestata>/Fikrs}" fase="{modelTestata>/Fase}" reale="{modelTestata>/Reale}" versione="{modelTestata>/Versione}"
+												fipex="{modelTestata>/Fipex}" datbis="99991231"/>
 										</layout:HorizontalLayout>
-									</layout:VerticalLayout>
-									<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
-										<ObjectStatus id="idNickNameTabID" title="{i18n>NickName}" text="{modelPageAut>/0/Nickname}"
-											class="sapUiTinyMarginEnd sapUiTinyMarginTop textBold"/>
 										<layout:HorizontalLayout>
-											<ObjectStatus id="idTextPosStrutturaTabID" active="true" title="{i18n>StrAmm}" class="sapUiTinyMarginTop textBold"/>
-											<Link id="idPopStrAmmCenTabID" text="S{modelStrAmm>/Codiceammin}{modelStrAmm>/Codicecdr}{modelStrAmm>/Codiceragioneria}000"
-												press="onPressShowPopupStrAmm" class="sapUiTinyMarginEnd sapUiTinyMarginTop "/>
+											<ObjectStatus id="idTextPosStrutturaTabID" active="true" title="{i18n>StrAmm}" class=" textBold"/>
+											<zcontrollinkSar:LinkSar id="linkSarBilancio" anno="{modelTestata>/AnnoFipex}" eos="S" fikrs="{modelTestata>/Fikrs}"
+												fase="{modelTestata>/Fase}" reale="{modelTestata>/Reale}" versione="{modelTestata>/Versione}" bilancio="" fictr="{modelTestata>/Fictr}"
+												datbis='99991231' text="{modelTestata>/Fictr}"/>
 										</layout:HorizontalLayout>
 									</layout:VerticalLayout>
 									<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
-										<ObjectStatus id="idIterTabID" title="{i18n>Iter}" text="{modelPageAut>/0/Iter}" class="sapUiTinyMarginEnd sapUiTinyMarginTop textBold"/>
-										<ObjectStatus id="idTipologiaTabID" title="{i18n>Tipo}" text="{= ${modelPageAut>/0/Tipo} === '0' ? 'Non Compensativa' : 'Compensativa'}"
-											class="sapUiTinyMarginEnd sapUiTinyMarginTop textBold"/>
+										<ObjectStatus title="{i18n>Esercizio}" id="TextAnno" class="textBold"/>
+										<ObjectStatus id="idPropostaTabID" title="{i18n>Proposta}" active="false" press="onPressShowAttributiProposta"
+											text="{modelTestata>/IdProposta}" class=" textBold"/>
+										<ObjectStatus title="{i18n>AmmProp}" class="textBold"/>
+									</layout:VerticalLayout>
+									<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+										<ObjectStatus title="{i18n>Processo}" text="{i18n>processoDesc}" class="textBold"/>
+										<ObjectStatus id="idNickNameTabID" title="{i18n>NickName}" text="{modelTestata>/Nickname}" class=" textBold"/>
+										<ObjectStatus id="idTipologiaTabID" title="{i18n>Tipo}" text="{= ${modelTestata>/Tipo} === '0' ? 'Non Compensativa' : 'Compensativa'}"
+											class=" textBold"/>
+									</layout:VerticalLayout>
+									<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+										<ObjectStatus title="{i18n>MacroFase}" text="{i18n>macroFaseDesc}" class="textBold"/>
+										<ObjectStatus id="idIterTabID" title="{i18n>Iter}" text="{modelTestata>/Iter}" class=" textBold"/>
 									</layout:VerticalLayout>
 									<!-- CAMPO NOTE PROPOSTA
 									<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
@@ -62,7 +69,7 @@
 			<IconTabBar tabDensityMode="Compact" id="idIconTabBar" class="sapUiNoContentPadding showTextAll" expandable="false"
 				select="onPressIconTabBar">
 				<items>
-					<IconTabFilter key="Tab6" id="Tab6" icon="sap-icon://course-book" text="{i18n>Anagrafica}" enabled="true" class="sapUiTinyMarginEnd">
+					<IconTabFilter key="Anagrafica" id="Tab6" icon="sap-icon://course-book" text="{i18n>Anagrafica}" enabled="true" class="sapUiTinyMarginEnd">
 						<Panel id="idPanel" visible="true" class="sapUiSmallMargin">
 							<headerToolbar>
 								<OverflowToolbar>
@@ -412,27 +419,28 @@
 							</Table>
 						</Panel>
 					</IconTabFilter>
-					<IconTabFilter key="Tab1" id="Tab1" icon="sap-icon://process" text="{i18n>Competenza}" enabled="true" design="Vertical"
+					<IconTabFilter key="Competenza" id="Competenza" icon="sap-icon://process" text="{i18n>Competenza}" enabled="true" design="Vertical"
 						class="sapUiSmallMarginEnd">
 						<ScrollContainer horizontal="false" vertical="true" height="100%" width="100%">
 							<VBox>
-								<layout:VerticalLayout id="idBoxAut" class="sapUiTinyMarginTop" visible="false">
+								<layout:VerticalLayout id="idBoxAut" class="sapUiTinyMarginTop" visible="true">
 									<HBox class="sapUiMediumMarginBegin">
 										<Label design="Bold" text="Autorizzazione:" labelFor="idAutorizz" class="sapUiTinyMarginBeginEnd sapUiTinyMarginTop"/>
-										<Input id="idAutorizz" required="true" value="" width="20em" class="sapUiTinyMarginEnd" maxSuggestionWidth="60%"
-											placeholder="Inserisci {i18n>Autorizzazione}" showSuggestion="true" showValueHelp="true" change=".onChange($event, 'idAutorizz')"
-											valueHelpRequest=".onValueHelpRequest($event, 'idAutorizz')" suggest=".onSuggest($event, 'idAutorizz')"
-											suggestionItemSelected=".onSuggestionItemSelected($event, 'idAutorizz')"/>
-										<Button type="Emphasized" icon="sap-icon://hint" press=".onPressInfo" tooltip="{i18n>info}" class="sapUiTinyMarginBottom"/>
+										<!--<zcontrolAuth:InputAutorizzazioni id="AutorizzazioniMC" Eos="S"/>-->
+										<Select width="auto" id="idAutorizz" selectedKey="{modelTestata>/Fincode}" items="{modelAnagraficaAuto>/}" editable="true"
+											change="onGetRescrizione">
+											<core:Item key="{modelAnagraficaAuto>Fincode}" text="{modelAnagraficaAuto>Zzdescrestesa}"/>
+										</Select>
+										<TooltipAutorizzazioneBtn:TooltipAutorizzazioneBtn id="InputAutorizzazioniBtn" icon="sap-icon://hint" type="Emphasized"
+											class="sapUiTinyMarginBottom" Fincode="{modelTestata>/Fincode}" Fikrs="S001" placement="Bottom"/>
+										<!--<Button type="Emphasized" icon="sap-icon://hint" press=".onPressInfo" tooltip="{i18n>info}" class="sapUiTinyMarginBottom"/>-->
 										<OverflowToolbar style="Clear" width="44em" class="sapUiTinyMarginBegin">
-											<HBox id="idBoxReiscrizioni" visible="true">
-												<Button id="idBtnMostraReiscrizioni" type="Emphasized" text="{i18n>EconomieAut}" visible="false" class="sapUiTinyMarginBegin textBold"
-													press="onPressShowReiscrizioni"/>
-											</HBox>
+											<Button id="idBtnMostraReiscrizioni" type="Emphasized" text="{i18n>EconomieAut}" visible="false" class="sapUiTinyMarginBegin textBold"
+												press="onPressShowReiscrizioni"/>
 											<Button id="BtnAssociaAutTabID" type="Emphasized" text="{i18n>AssociaAutorizzazione}" class="sapUiTinyMarginBegin textBold"
-												press="onPressAssociaAut"/>
+												press="onPressAssociaAut" enabled="{= (${modelTestata>/CodIter} === '01' ? ${modelPG80>/pg80btnEnable} : false)  &amp;&amp; ${modelAnagraficaPf>/Codicepg} > '80' ? false : true }"/>
 											<ToolbarSpacer/>
-											<Button id="idBtnAvvio" type="Emphasized" text="{i18n>Avvio}" class="sapUiTinyMarginBegin textBold" press="onPressAvvio"/>
+											<Button id="idBtnAvvio" type="Emphasized" text="{i18n>Avvio}" class="sapUiTinyMarginBegin textBold" press="onPressAvvioComp"/>
 										</OverflowToolbar>
 									</HBox>
 								</layout:VerticalLayout>
@@ -440,7 +448,7 @@
 							</VBox>
 						</ScrollContainer>
 					</IconTabFilter>
-					<IconTabFilter key="Tab2" id="Tab2" icon="sap-icon://accounting-document-verification" text="{i18n>Cassa}" enabled="true"
+					<IconTabFilter key="Cassa" id="Tab2" icon="sap-icon://accounting-document-verification" text="{i18n>Cassa}" enabled="true"
 						class="sapUiTinyMarginEnd">
 						<ScrollContainer horizontal="false" vertical="true" height="100%" width="100%">
 							<VBox>
@@ -451,7 +459,7 @@
 							</VBox>
 						</ScrollContainer>
 					</IconTabFilter>
-					<IconTabFilter key="Tab8" id="Tab8" icon="sap-icon://history" text="{i18n>WorkFlow}" enabled="true" design="Vertical"
+					<IconTabFilter key="Workflow" id="Tab8" icon="sap-icon://history" text="{i18n>WorkFlow}" enabled="true" design="Vertical"
 						class="sapUiSmallMarginEnd">
 						<ScrollContainer horizontal="false" vertical="true" height="100%" width="100%">
 							<VBox>
@@ -473,7 +481,7 @@
 							</VBox>
 						</ScrollContainer>
 					</IconTabFilter>
-					<IconTabFilter key="Tab9" id="Tab9" icon="sap-icon://calendar" text="{i18n>Nota}" enabled="true" design="Vertical"
+					<IconTabFilter key="Note" id="Tab9" icon="sap-icon://calendar" text="{i18n>Nota}" enabled="true" design="Vertical"
 						class="sapUiSmallMarginEnd">
 						<ScrollContainer horizontal="false" vertical="true" height="100%" width="100%">
 							<VBox>
@@ -481,18 +489,17 @@
 									<Panel height="550px" headerText="{i18n>Nota} {i18n>Proposta}">
 										<VBox class="sapUiTinyMarginTop">
 											<Label text="{i18n>ScegliNota}"/>
-											<ComboBox id="idInputScegliNoteIDProposta" enabled="true" change="onChangeNota" selectionChange="onSelChangeNota"
-												placeholder="{i18n>ScegliNota} {i18n>Standard}"
-												items="{path: 'ZSS4_COBI_PRSP_ESAMOD_SRV>/ZES_NOTE_IDSet', sorter: { path: 'TestoNota' }, templateShareable:false}">
-												<items>
-													<core:Item key="{ZSS4_COBI_PRSP_ESAMOD_SRV>TestoNotaId}" text="{ZSS4_COBI_PRSP_ESAMOD_SRV>TestoNota}"/>
-												</items>
-											</ComboBox>
+											<Input id="idInputScegliNoteIDProposta" class="sapUiTinyMarginEnd" editable="{= ${modelTestata>/CodIter} === '01' ? true : false}"
+												placeholder="{i18n>ScegliNota} {i18n>Standard}" showSuggestion="true" showValueHelp="true" submit="onSubmitIdNota"
+												valueHelpRequest="handleValueHelp('Note')"/>
 											<Label text="Testo" class="sapUiTinyMarginTop"/>
-											<TextArea required="true" id="idCreaNotaIDPF" width="30em" value="{ZSS4_COBI_PRSP_ESAMOD_SRV>Testonota}" liveChange="onLiveChangeCreaNota"
-												maxLength="4000" showExceededText="true"/>
-											<Button id="idBtnSalvaNota" type="Emphasized" text="{i18n>Salva} {i18n>Nota}" press="onPressSalvaNotaTabGestisci"
-												enabled="{= ${modelInLavorazione>/value}}"/>
+											<TextArea id="idNota" height="15rem" showExceededText="true" width="30em" value="{modelNote>/Testonota}" liveChange="onLiveWriteNota"
+												maxLength="2000" editable="{= ${modelTestata>/CodIter} === '01' ? true : false}"/>
+											<layout:HorizontalLayout >
+												<Button id="idBtnSalvaNota" type="Emphasized" text="{i18n>Salva} {i18n>Nota}" press="onSaveNota"
+													enabled="{= ${modelTestata>/CodIter} === '01' ? true : false}"/>
+												<Button type="Emphasized" text="{i18n>Resetta}" visible="{= ${modelTestata>/CodIter} === '01' ? true : false}" press="onPressResettaNote"/>
+											</layout:HorizontalLayout>
 										</VBox>
 									</Panel>
 								</FlexBox>

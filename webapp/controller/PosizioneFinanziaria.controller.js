@@ -2916,7 +2916,7 @@ sap.ui.define([
 			oTreeTablePF.unbindRows();
 		},
 		
-		onPressPrevTreeTable: function(oEvent){
+		/* onPressPrevTreeTable: function(oEvent){
 			var filterMaxRows=	this.filterMaxRows;
 			if (filterMaxRows >200){
 				this.filterMaxRows = filterMaxRows -200
@@ -2927,23 +2927,23 @@ sap.ui.define([
 			var filterMaxRows=	this.filterMaxRows;
 			this.filterMaxRows = filterMaxRows  + 200;			
 			this.onSearchTreeTable(false, 200);
-		},
+		}, */
 
-		/* 
-		lt nuova logica fornita da Erminio
+		
+		//lt nuova logica fornita da Erminio
 
 		onPressPrevTreeTable: function(oEvent) {
             var filterMaxRows = this.filterMaxRows;
             if (filterMaxRows > 200) {
                 this.filterMaxRows = parseInt(filterMaxRows) - 200                
-				this.onSearch(false, -200);
+				this.onSearchTreeTable(false, -200);
             }
         },
         onPressNextTreeTable: function(oEvent) {
             var filterMaxRows = this.filterMaxRows;
             this.filterMaxRows = parseInt(filterMaxRows) + 200;
-            this.onSearch(false, 200);
-        }, */
+            this.onSearchTreeTable(false, 200);
+        },
         createModeButtonTable: function() {
             var oModel = new JSONModel({
                 enabledButtonPrev: false,
@@ -3010,7 +3010,8 @@ sap.ui.define([
 				this.filterMaxRows=200;
 			}
 		
-			var oFilterRows = new sap.ui.model.Filter("Maxrows", "EQ", this.filterMaxRows);
+			//var oFilterRows = new sap.ui.model.Filter("Maxrows", "EQ", this.filterMaxRows);
+			var oFilterRows = new sap.ui.model.Filter("Maxrows", sap.ui.model.FilterOperator.BT, "200", (parseInt(this.filterMaxRows) - 200).toString());
 
 			aFilters.push(oFilterRows);
 	
@@ -3056,21 +3057,9 @@ sap.ui.define([
 					previewModel.enabledButtonNext = true;
 				}
 			}
-			
-			
-			var oModelData = new JSONModel({
-				enabledButtonPrev:previewModel.enabledButtonPrev, 
-				enabledButtonNext:previewModel.enabledButtonNext,
-				intialValue:previewModel.intialValue,
-				beginValueM1:previewModel.beginValueM1,
-				beginValueP1:previewModel.beginValueP1,
-				finalValue:previewModel.finalValue
-				});
-			//var oModelAvvio=this.getView().getModel("modelIsAfterAvvio");
-			this.getView().setModel(oModelData,"modelIsAfterAvvio")
-			//oModelAvvio.setData(oModelData);
-			//oModelAvvio.refresh();
-			
+
+			this.getView().getModel("modelIsAfterAvvio").refresh();
+											
 			
 			
 			//Azzera la selezione delle righe

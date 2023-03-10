@@ -27,7 +27,7 @@
 						<ToolbarSpacer/>
 						<Button id="idBtnDettaglioPF-ID" icon="sap-icon://display" type="Emphasized" text="{i18n>Gestisci}" press="onPressNavToTabGestisci"/>
 						<Button id="idBtnAssociaProposta" type="Emphasized" text="{i18n>Associa} {i18n>Proposta}" press="onPressNavToAssociaID"/>
-						<Button id="idBtnDocumentale" icon="sap-icon://copy" type="Emphasized" tooltip="{i18n>Documentale}" press="onPressNavToDettaglio"/>
+						<Button id="idBtnDocumentale" icon="sap-icon://copy" type="Emphasized" tooltip="{i18n>FascicoloDocumentale}" press="onPressNavToDettaglio"/>
 						<Button id="idBtnExport" visible="true" type="Emphasized" text="{i18n>Export}" icon="sap-icon://excel-attachment" press="onPressExport"/>
 						<Button id="idNext" icon="sap-icon://navigation-right-arrow" type="Emphasized" press="onPressNextTreeTable" enabled="{modelIsAfterAvvio>/enabledButtonNext}"/>
 						<Text id="next-column" text="{modelIsAfterAvvio>/beginValueP1} - {modelIsAfterAvvio>/finalValue}" visible="{modelIsAfterAvvio>/enabledButtonNext}"/>

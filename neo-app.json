@@ -40,6 +40,16 @@
       "description": "S4HANA S2S RGS sviluppo"
     },
     {
+      "path": "/resources/zsap/com/r3/cobi/s4/z_s4_auth",
+      "target": {
+        "type": "destination",
+        "name": "S2S",
+        "entryPath": "/sap/bc/ui5_ui5/sap/z_s4_auth/resources/zsap/com/r3/cobi/s4/z_s4_auth",
+        "preferLocal": true
+      },
+      "description": "zsap/com/r3/cobi/s4/z_s4_auth Reuse Library"
+    },
+    {
       "path": "/resources/zsap/com/r3/cobi/s4/custposfin/z_s4_zposfin",
       "target": {
         "type": "destination",
@@ -58,6 +68,34 @@
         "preferLocal": true
       },
       "description": "zsap/com/r3/cobi/s4/custposfin/z_s4_zposfinlink Reuse Library"
+    },{
+      "path": "/resources/zsap/com/r3/cobi/s4/z_s4_auth_tooltip",
+      "target": {
+        "type": "destination",
+        "name": "S2S",
+        "entryPath": "/sap/bc/ui5_ui5/sap/z_s4_auth_link/resources/zsap/com/r3/cobi/s4/z_s4_auth_tooltip",
+        "preferLocal": true
+      },
+      "description": "zsap/com/r3/cobi/s4/z_s4_auth_tooltip Reuse Library"
+    },{
+      "path": "/resources/custlinksar/custlinksar",
+      "target": {
+        "type": "destination",
+        "name": "S2S",
+        "entryPath": "/sap/bc/ui5_ui5/sap/z_s4_linksar/src/custlinksar/custlinksar",
+        "preferLocal": true
+      },
+      "description": "custlinksar/custlinksar Reuse Library"
+    },
+    {
+      "path": "/resources/zsap/com/r3/cobi/s4/custposfin/z_s4_zposfin",
+      "target": {
+        "type": "destination",
+        "name": "S2S",
+        "entryPath": "/sap/bc/ui5_ui5/sap/z_s4_zposfina/src/custposfin/z_s4_zposfin",
+        "preferLocal": true
+      },
+      "description": "zsap/com/r3/cobi/s4/custposfin/z_s4_zposfin Reuse Library"
     }
   ],
   "sendWelcomeFileRedirect": true

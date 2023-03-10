@@ -195,8 +195,9 @@ sap.ui.define([
 				var oModelPosFin = this.getOwnerComponent().getModel("modelPosizioneFinanziaria");
 				var listPosFin = this._getSelPositions();
 				oModelPosFin.setData(listPosFin);
-				var oModelAut =  this.getOwnerComponent().getModel("modelPageAut");
-				oModelAut.setData(listPosFin);
+				/* var oModelAut =  this.getOwnerComponent().getModel("modelPageAut");
+				oModelAut.setData(listPosFin); */
+				var oModelAut = sap.ui.getCore().setModel(new JSONModel(listPosFin), "modelPageAut");
 				this.oRouter.navTo("TabGestisci", {
 					Page: sPage
 				});
