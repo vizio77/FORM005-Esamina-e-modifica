@@ -3009,9 +3009,12 @@ sap.ui.define([
 			if(isAvvioButton){
 				this.filterMaxRows=200;
 			}
+
+			var high = (parseInt(this.filterMaxRows) - 200).toString();
+			var low = this.filterMaxRows.toString()
 		
 			//var oFilterRows = new sap.ui.model.Filter("Maxrows", "EQ", this.filterMaxRows);
-			var oFilterRows = new sap.ui.model.Filter("Maxrows", sap.ui.model.FilterOperator.BT, "200", (parseInt(this.filterMaxRows) - 200).toString());
+			var oFilterRows = new sap.ui.model.Filter("Maxrows", sap.ui.model.FilterOperator.BT, low, high);
 
 			aFilters.push(oFilterRows);
 	
