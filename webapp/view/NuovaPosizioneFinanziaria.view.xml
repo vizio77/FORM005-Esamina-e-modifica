@@ -1,4 +1,4 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:m="sap.m" xmlns="sap.uxap" xmlns:f="sap.ui.layout.form"
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:m="sap.m" xmlns="sap.uxap" xmlns:f="sap.ui.layout.form" 
 	xmlns:layout="sap.ui.layout" controllerName="zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.NuovaPosizioneFinanziaria"
 	xmlns:zcontrollink="zsap.com.r3.cobi.s4.custposfin.z_s4_zposfinlink.controls" xmlns:html="http://www.w3.org/1999/xhtml">
 	<ObjectPageLayout id="NuovaPosizioneFinanziaria" enableLazyLoading="true" showFooter="true" toggleHeaderOnTitleClick="true">
@@ -74,113 +74,212 @@
 					<m:Button text="Resetta" press="resetFields" type="Emphasized"></m:Button>
 				</m:items>
 		</m:FlexBox>
-			<!--<m:VBox width="100%">
-				<layout:HorizontalLayout>
-					<m:ObjectStatus id="idSwitchLabel" title="{i18n>Attiva} / {i18n>Disattiva}" class="sapUiTinyMarginTop textBold"/>
-					<m:Switch id="idSwitch" type="AcceptReject" state="true"/>
-				</layout:HorizontalLayout>
-			</m:VBox>-->
 		</headerContent>
 		<sections>
 			<ObjectPageSection titleUppercase="false" title="{i18n>PosFin}">
 				<subSections>
 					<ObjectPageSubSection title="{i18n>PosFin}">
 						<blocks>
-							<layout:VerticalLayout >
-								<f:Form width="92%" class="sapUiSmallMarginBegin">
+							<f:SimpleForm id="SimpleFormDisplay480_Trial"
+												editable="false"
+												layout="ResponsiveGridLayout"
+												
+												labelSpanXL="12"
+												labelSpanL="12"
+												labelSpanM="12"
+												labelSpanS="12"
+												adjustLabelSpan="false"
+												emptySpanXL="0"
+												emptySpanL="0"
+												emptySpanM="0"
+												emptySpanS="0"
+												columnsXL="3"
+												columnsL="3"
+												columnsM="3"
+												singleContainerFullSize="false" >
+												<f:content>
+													<core:Title  />
+													<m:Label text="{i18n>Amministrazione}" required="true"/>
+														<m:Input id="idAmminNPF" required="true" editable="false" placeholder="Scegli {i18n>Amministrazione}" maxSuggestionWidth="60%" showSuggestion="true"
+															value="A020"></m:Input>
+													<m:Label text="{i18n>CdR}" />
+														<m:Input id="idCdRNPF" required="true" editable="true" placeholder="Scegli {i18n>CdR}" maxSuggestionWidth="60%" showSuggestion="true" showValueHelp="true"
+															valueHelpOnly="true" change="onChange($event, 'idCdRNPF')" valueHelpRequest=".onValueHelpRequest($event, 'idCdRNPF')"
+															suggest=".onSuggest($event, 'idCdRNPF')" 
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idCdRNPF')"/>
+													<m:Label text="{i18n>Ragioneria}" />
+														<m:Input id="idRagioneriaNPF" required="true" editable="true" placeholder="Scegli {i18n>Ragioneria}" maxSuggestionWidth="60%" showSuggestion="true"
+															showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idRagioneriaNPF')" 
+															valueHelpRequest=".onValueHelpRequest($event, 'idRagioneriaNPF')" suggest=".onSuggest($event, 'idRagioneriaNPF')"
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idRagioneriaNPF')"/>
+													<m:Label text="{i18n>Missione}" />
+														<m:Input id="idMissioneNPF" required="true" editable="true" placeholder="Scegli {i18n>Missione}" maxSuggestionWidth="60%"
+															showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idMissioneNPF')"
+															valueHelpRequest=".onValueHelpRequest($event, 'idMissioneNPF')" suggest=".onSuggest($event, 'idMissioneNPF')"
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idMissioneNPF')"/>
+													
+													<m:Label text="{i18n>Programma}" />
+													<m:Input id="idProgrammaNPF" required="true" editable="true" placeholder="Scegli {i18n>Programma}" maxSuggestionWidth="60%"
+															showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idProgrammaNPF')"
+															valueHelpRequest=".onValueHelpRequest($event, 'idProgrammaNPF')" suggest=".onSuggest($event, 'idProgrammaNPF')"
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idProgrammaNPF')"/>
+													<m:Label text="{i18n>Azione}" />
+														<m:Input id="idAzioneNPF" required="true" editable="true" placeholder="Scegli {i18n>Azione}" maxSuggestionWidth="60%" showSuggestion="true"
+															showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idAzioneNPF')"
+															valueHelpRequest=".onValueHelpRequest($event, 'idAzioneNPF')" suggest=".onSuggest($event, 'idAzioneNPF')"
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idAzioneNPF')"/>
+													<core:Title />
+													<m:Label text="{i18n>Capitolo}" required="true"/>
+													<m:Input id="idCapitoloNPF"  editable="false" placeholder="Scegli {i18n>Capitolo}" maxSuggestionWidth="60%"
+															showSuggestion="true" showValueHelp="false" valueHelpOnly="false" change="onChange($event, 'idCapitoloNPF')"
+															valueHelpRequest=".onValueHelpRequest($event, 'idCapitoloNPF')" suggest=".onSuggest($event, 'idCapitoloNPF')"
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idCapitoloNPF')"></m:Input>
+														<m:Button id="idBtnPrenotaCAP" text="{i18n>ScegliCap}" width="auto"  type="Emphasized"
+															press="onPressOpenMenuCapitolo">
+															<m:layoutData>
+																<layout:GridData span="XL4 L6 M5 S12" />
+															</m:layoutData>
+															
+														</m:Button>
+													<m:Label text="{i18n>PG}" required="true"/>
+														<m:Input id="idPGNPF" width="auto" editable="false"  class="sapUiTinyMarginEnd" placeholder="Scegli {i18n>PG}"
+															maxSuggestionWidth="60%" showSuggestion="false" showValueHelp="false" valueHelpOnly="false" change="onChange($event, 'idPGNPF')"
+															valueHelpRequest=".onValueHelpRequest($event, 'idPGNPF')" suggest=".onSuggest($event, 'idPGNPF')"
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idPGNPF')"></m:Input>
+														<m:Button id="idBtnPrenotaPG" text="{i18n>ScegliPG}" width="auto" type="Emphasized" press="onPressOpenMenuPG">
+															<m:layoutData>
+																<layout:GridData span="XL4 L6 M5 S12" />
+															</m:layoutData>
+														</m:Button>
+													<m:Label text="{i18n>Titolo}" required="true"/>
+														<m:Input id="idTitoloNPF" required="true" editable="true" placeholder="Scegli {i18n>Titolo}" maxSuggestionWidth="60%" showSuggestion="true"
+															showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idTitoloNPF')"
+															valueHelpRequest=".onValueHelpRequest($event, 'idTitoloNPF')" suggest=".onSuggest($event, 'idTitoloNPF')"
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idTitoloNPF')"/>
+													<m:Label text="{i18n>Categoria}" required="true"/>
+														<m:Input id="idCategoriaNPF" required="true" editable="true" placeholder="Scegli {i18n>Categoria}" maxSuggestionWidth="60%"
+															showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idCategoriaNPF')"
+															valueHelpRequest=".onValueHelpRequest($event, 'idCategoriaNPF')" suggest=".onSuggest($event, 'idCategoriaNPF')"
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idCategoriaNPF')"/>
+													<m:Label text="{i18n>CE2}" required="true"/>
+														<m:Input id="idCE2NPF" editable="true" required="true" placeholder="Scegli {i18n>CE2}" maxSuggestionWidth="60%" showSuggestion="true"
+															showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idCE2NPF')" valueHelpRequest=".onValueHelpRequest($event, 'idCE2NPF')"
+															suggest=".onSuggest($event, 'idCE2NPF')" suggestionItemSelected=".onSuggestionItemSelected($event, 'idCE2NPF')"/>
+													<m:Label text="{i18n>CE3}" required="true"/>
+														<m:Input id="idCE3NPF" editable="true" required="true" placeholder="Scegli {i18n>CE3}" maxSuggestionWidth="60%" showSuggestion="true"
+															showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idCE3NPF')" valueHelpRequest=".onValueHelpRequest($event, 'idCE3NPF')"
+															suggest=".onSuggest($event, 'idCE3NPF')" suggestionItemSelected=".onSuggestionItemSelected($event, 'idCE3NPF')"/>
+													<core:Title  />
+													<m:Label text="{i18n>MacroAgg}" required="true"/>
+														<m:Input id="idMacroAggregatoNPF" required="true" editable="true" placeholder="Scegli {i18n>MacroAgg}" maxSuggestionWidth="60%"
+															showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idMacroAggregatoNPF')"
+															valueHelpRequest=".onValueHelpRequest($event, 'idMacroAggregatoNPF')" suggest=".onSuggest($event, 'idMacroAggregatoNPF')"
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idMacroAggregatoNPF')" suggestionItems=""/>
+													<m:Label text="{i18n>TipoSpesaCapitolo}" />
+														<m:ComboBox id="idTipoSpesaCapNPF" enabled="true" selectedKey="{modelNuovaPosFin>/Codicetipospcapspe}" change="onChange" placeholder="Scegli {i18n>TipoSpesaCapitolo}" showSecondaryValues="true"
+															items="{ path: '/ZCA_AF_TIPOSPCAPSet', sorter: { path: 'Codicetipospcapspe' }, templateShareable:false }">
+															<m:items>
+																<core:ListItem key="{Codicetipospcapspe}" text="{Codicetipospcapspe}" additionalText="{Desctipocap}"/>
+															</m:items>
+														</m:ComboBox>
+													<m:Label text="{i18n>DenominazioneCapitolo} {i18n>integrale}" />
+														<m:Input id="idDenominazioneCapitoloIntNPF" required="true" editable="true"/>
+													<m:Label text="{i18n>DenominazioneCapitolo} {i18n>ridotta}" />
+														<m:Input id="idDenominazioneCapitoloRidNPF" required="true" editable="true"/>
+													<m:Label text="{i18n>TipoSpesaPG}" />
+														<m:ComboBox id="idTipoSpesaPGNPF" enabled="true" selectedKey="{modelNuovaPosFin>/Codicetiposppspe}" change="onChange" placeholder="Scegli {i18n>TipoSpesPG}" showSecondaryValues="true"
+															items="{ path: '/ZCA_AF_TIPOSPPGSet', sorter: { path: 'Codicetiposppspe' }, templateShareable:false }">
+															<m:items>
+																<core:ListItem key="{Codicetiposppspe}" text="{Codicetiposppspe}" additionalText="{Desctipopg}"/>
+															</m:items>
+														</m:ComboBox>
+													<m:Label text="{i18n>DenominazionePG} {i18n>integrale}" />
+														<m:Input required="true" id="idDenominazionePGIntNPF" editable="true"/>
+													<m:Label text="{i18n>DenominazionePG} {i18n>ridotta}" />
+														<m:Input required="true" id="idDenominazionePGRidNPF" editable="true"/>
+													
+												</f:content>
+											</f:SimpleForm>
+							<!-- <layout:Grid defaultSpan="XL4 L3 M6 S12"> -->
+							<!-- <layout:VerticalLayout > -->
+								<f:Form width="100%" class="sapUiSmallMarginBegin" visible="false">
 									<f:layout>
-										<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="true" emptySpanXL="4" emptySpanL="3"
-											emptySpanM="3" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"></f:ResponsiveGridLayout>
+										<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="true" emptySpanXL="4"
+											emptySpanL="3" emptySpanM="3" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="1" singleContainerFullSize="false"></f:ResponsiveGridLayout>
 									</f:layout>
 									<f:formContainers>
 										<f:FormContainer id="idFormContainer">
 											<f:formElements>
 												<f:FormElement label="{i18n>Amministrazione}" >
-													<f:fields>
-														<!-- <m:Input id="idAmminNPF" required="true" editable="true" placeholder="Scegli {i18n>Amministrazione}" maxSuggestionWidth="60%" showSuggestion="true"
-															showValueHelp="true" valueHelpOnly="false" change="onChange($event, 'idAmminNPF')"
-															valueHelpRequest=".onValueHelpRequest($event, 'idAmminNPF')" suggest=".onSuggest($event, 'idAmminNPF')"
-															suggestionItemSelected=".onSuggestionItemSelected($event, 'idAmminNPF')"/> -->
-														<m:Input id="idAmminNPF" editable="false" placeholder="Scegli {i18n>Amministrazione}" maxSuggestionWidth="60%" showSuggestion="true"
-															value="A020"></m:Input>
+													<f:fields>														
+														
 													</f:fields>
 												</f:FormElement>
-												<f:FormElement label="{i18n>CdR}">
+												<f:FormElement class="test" label="{i18n>CdR}">
 													<f:fields>
-														<m:Input id="idCdRNPF" required="true" editable="true" placeholder="Scegli {i18n>CdR}" maxSuggestionWidth="60%" showSuggestion="true" showValueHelp="true"
-															valueHelpOnly="true" change="onChange($event, 'idCdRNPF')" valueHelpRequest=".onValueHelpRequest($event, 'idCdRNPF')"
-															suggest=".onSuggest($event, 'idCdRNPF')" 
-															suggestionItemSelected=".onSuggestionItemSelected($event, 'idCdRNPF')"/>
+														
 														<!-- <m:Input id="idCdRNPF" editable="false" placeholder="Scegli {i18n>CdR}" value="0001"></m:Input> -->
 													</f:fields>
 												</f:FormElement>
 												<f:FormElement label="{i18n>Ragioneria}">
 													<f:fields>
-														<m:Input id="idRagioneriaNPF" required="true" editable="true" placeholder="Scegli {i18n>Ragioneria}" maxSuggestionWidth="60%" showSuggestion="true"
+														<!-- <m:Input id="idRagioneriaNPF" required="true" editable="true" placeholder="Scegli {i18n>Ragioneria}" maxSuggestionWidth="60%" showSuggestion="true"
 															showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idRagioneriaNPF')" 
 															valueHelpRequest=".onValueHelpRequest($event, 'idRagioneriaNPF')" suggest=".onSuggest($event, 'idRagioneriaNPF')"
-															suggestionItemSelected=".onSuggestionItemSelected($event, 'idRagioneriaNPF')"/>
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idRagioneriaNPF')"/> -->
 														<!-- <m:Input id="idRagioneriaNPF" editable="false" placeholder="Scegli {i18n>Ragioneria}" value="0840"></m:Input> -->
 													</f:fields>
 												</f:FormElement>
 												<f:FormElement label="{i18n>Missione}">
 													<f:fields>
-														<m:Input id="idMissioneNPF" required="true" editable="true" placeholder="Scegli {i18n>Missione}" maxSuggestionWidth="60%"
+														<!-- <m:Input id="idMissioneNPF" required="true" editable="true" placeholder="Scegli {i18n>Missione}" maxSuggestionWidth="60%"
 															showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idMissioneNPF')"
 															valueHelpRequest=".onValueHelpRequest($event, 'idMissioneNPF')" suggest=".onSuggest($event, 'idMissioneNPF')"
-															suggestionItemSelected=".onSuggestionItemSelected($event, 'idMissioneNPF')"/>
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idMissioneNPF')"/> -->
 													</f:fields>
 												</f:FormElement>
 												<f:FormElement label="{i18n>Programma}">
 													<f:fields>
-														<m:Input id="idProgrammaNPF" required="true" editable="true" placeholder="Scegli {i18n>Programma}" maxSuggestionWidth="60%"
+														<!-- <m:Input id="idProgrammaNPF" required="true" editable="true" placeholder="Scegli {i18n>Programma}" maxSuggestionWidth="60%"
 															showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idProgrammaNPF')"
 															valueHelpRequest=".onValueHelpRequest($event, 'idProgrammaNPF')" suggest=".onSuggest($event, 'idProgrammaNPF')"
-															suggestionItemSelected=".onSuggestionItemSelected($event, 'idProgrammaNPF')"/>
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idProgrammaNPF')"/> -->
 													</f:fields>
 												</f:FormElement>
 												<f:FormElement label="{i18n>Azione}">
 													<f:fields>
-														<m:Input id="idAzioneNPF" required="true" editable="true" placeholder="Scegli {i18n>Azione}" maxSuggestionWidth="60%" showSuggestion="true"
+														<!-- <m:Input id="idAzioneNPF" required="true" editable="true" placeholder="Scegli {i18n>Azione}" maxSuggestionWidth="60%" showSuggestion="true"
 															showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idAzioneNPF')"
 															valueHelpRequest=".onValueHelpRequest($event, 'idAzioneNPF')" suggest=".onSuggest($event, 'idAzioneNPF')"
-															suggestionItemSelected=".onSuggestionItemSelected($event, 'idAzioneNPF')"/>
+															suggestionItemSelected=".onSuggestionItemSelected($event, 'idAzioneNPF')"/> -->
 													</f:fields>
 												</f:FormElement>
 											</f:formElements>
 										</f:FormContainer>
-									</f:formContainers>
-								</f:Form>
-							</layout:VerticalLayout>
-							<layout:VerticalLayout width="100%">
-								<f:Form width="92%" class="sapUiSmallMarginBegin sapUiMediumPaddingBegin">
-									<f:layout>
-										<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="true" emptySpanXL="4"
-											emptySpanL="3" emptySpanM="3" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"></f:ResponsiveGridLayout>
-									</f:layout>
-									<f:formContainers>
+										
+											
+										
 										<f:FormContainer id="idFormContainer2">
 											<f:formElements>
-												<f:FormElement >
-													<m:Label required="true" text="{i18n>Capitolo}"/>
-													<layout:HorizontalLayout>
-														<m:Input id="idCapitoloNPF" required="true" editable="false" width="215px" placeholder="Scegli {i18n>Capitolo}" maxSuggestionWidth="60%"
+												<f:FormElement class="test" label="{i18n>asterisco}{i18n>Capitolo}">
+													
+													<!-- <m:Label required="true" text="{i18n>Capitolo}"/> -->
+													
+														<!-- <m:Input id="idCapitoloNPF"  editable="false" required="true"  placeholder="Scegli {i18n>Capitolo}" maxSuggestionWidth="60%"
 															showSuggestion="true" showValueHelp="false" valueHelpOnly="false" change="onChange($event, 'idCapitoloNPF')"
 															valueHelpRequest=".onValueHelpRequest($event, 'idCapitoloNPF')" suggest=".onSuggest($event, 'idCapitoloNPF')"
 															suggestionItemSelected=".onSuggestionItemSelected($event, 'idCapitoloNPF')"></m:Input>
 														<m:Button id="idBtnPrenotaCAP" text="{i18n>ScegliCap}" width="110px" class="sapUiTinyMarginBegin sapUiNoMarginEnd" type="Emphasized"
-															press="onPressOpenMenuCapitolo"></m:Button>
-													</layout:HorizontalLayout>
+															press="onPressOpenMenuCapitolo">
+															
+														</m:Button> -->
 												</f:FormElement>
-												<f:FormElement>
-													<m:Label required="true" text="{i18n>PG}"/>
-													<layout:HorizontalLayout>
+												<!-- <f:FormElement label="{i18n>PG}" >
 														<m:Input id="idPGNPF" width="215px" editable="false" required="true" class="sapUiTinyMarginEnd" placeholder="Scegli {i18n>PG}"
 															maxSuggestionWidth="60%" showSuggestion="false" showValueHelp="false" valueHelpOnly="false" change="onChange($event, 'idPGNPF')"
 															valueHelpRequest=".onValueHelpRequest($event, 'idPGNPF')" suggest=".onSuggest($event, 'idPGNPF')"
 															suggestionItemSelected=".onSuggestionItemSelected($event, 'idPGNPF')"></m:Input>
 														<m:Button id="idBtnPrenotaPG" text="{i18n>ScegliPG}" width="110px" type="Emphasized" press="onPressOpenMenuPG"/>
-													</layout:HorizontalLayout>
 												</f:FormElement>
 												<f:FormElement label="{i18n>Titolo}">
 													<f:fields>
@@ -211,54 +310,20 @@
 															showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idCE3NPF')" valueHelpRequest=".onValueHelpRequest($event, 'idCE3NPF')"
 															suggest=".onSuggest($event, 'idCE3NPF')" suggestionItemSelected=".onSuggestionItemSelected($event, 'idCE3NPF')"/>
 													</f:fields>
-												</f:FormElement>
+												</f:FormElement> -->
 											</f:formElements>
 										</f:FormContainer>
-									</f:formContainers>
-								</f:Form>
-							</layout:VerticalLayout>
-							<layout:VerticalLayout width="100%">
-								<f:Form width="92%" class="sapUiSmallMarginBeginEnd">
-									<f:layout>
-										<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="true" emptySpanXL="4"
-											emptySpanL="3" emptySpanM="3" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"></f:ResponsiveGridLayout>
-									</f:layout>
-									<f:formContainers>
 										<f:FormContainer id="idFormContainer3">
 											<f:formElements>
-												<!--<f:FormElement label="{i18n>TcrC}">
-													<f:fields>
-														<m:Input id="idTCRCNPF" editable="true" placeholder="Scegli {i18n>TcrC}" maxSuggestionWidth="60%" showSuggestion="true" showValueHelp="true"
-															change=".onChange($event, 'idTCRCNPF')" valueHelpRequest=".onValueHelpRequest($event, 'idTCRCNPF')"
-															suggest=".onSuggest($event, 'idTCRCNPF')" suggestionItemSelected=".onSuggestionItemSelected($event, 'idTCRCNPF')"/>
-													</f:fields>
-												</f:FormElement>-->
-												<!--<f:FormElement label="{i18n>TcrF}">
-													<f:fields>
-														<m:Input id="idTCRFNPF" editable="true" placeholder="Scegli {i18n>TcrF}" maxSuggestionWidth="60%" showSuggestion="true" showValueHelp="true"
-															change=".onChange($event, 'idTCRFNPF')" valueHelpRequest=".onValueHelpRequest($event, 'idTCRFNPF')"
-															suggest=".onSuggest($event, 'idTCRFNPF')" suggestionItemSelected=".onSuggestionItemSelected($event, 'idTCRFNPF')"/>
-													</f:fields>
-												</f:FormElement>-->
-												<f:FormElement label="{i18n>MacroAgg}">
+												<!-- <f:FormElement label="{i18n>MacroAgg}">
 													<f:fields>
 														<m:Input id="idMacroAggregatoNPF" required="true" editable="true" placeholder="Scegli {i18n>MacroAgg}" maxSuggestionWidth="60%"
 															showSuggestion="true" showValueHelp="true" valueHelpOnly="true" change="onChange($event, 'idMacroAggregatoNPF')"
 															valueHelpRequest=".onValueHelpRequest($event, 'idMacroAggregatoNPF')" suggest=".onSuggest($event, 'idMacroAggregatoNPF')"
 															suggestionItemSelected=".onSuggestionItemSelected($event, 'idMacroAggregatoNPF')" suggestionItems=""/>
-															<!--<m:suggestionItems>
-																<core:ListItem text="" additionalText=""/>
-															</m:suggestionItems>
-														</m:Input>-->
 													</f:fields>
 												</f:FormElement>
 												<f:FormElement label="{i18n>TipoSpesaCapitolo}">
-													<!-- <m:Select id="idTipoSpesaCapNPF" selectedKey="{modelNuovaPosFin>/Codicetipospcapspe}" enabled="true"  change="onChange"   showSecondaryValues="true"
-															items="{ path: '/ZCA_AF_TIPOSPCAPSet', sorter: { path: 'Codicetipospcapspe' }, templateShareable:false }">
-															<m:items>
-																<core:ListItem key="{Codicetipospcapspe}" text="{Desctipocap}"/>
-															</m:items>
-														</m:Select> -->
 													<f:fields>
 														<m:ComboBox id="idTipoSpesaCapNPF" enabled="true" selectedKey="{modelNuovaPosFin>/Codicetipospcapspe}" change="onChange" placeholder="Scegli {i18n>TipoSpesaCapitolo}" showSecondaryValues="true"
 															items="{ path: '/ZCA_AF_TIPOSPCAPSet', sorter: { path: 'Codicetipospcapspe' }, templateShareable:false }">
@@ -287,12 +352,6 @@
 																<core:ListItem key="{Codicetiposppspe}" text="{Codicetiposppspe}" additionalText="{Desctipopg}"/>
 															</m:items>
 														</m:ComboBox>
-														<!-- <m:Select id="idTipoSpesaPGNPF" enabled="true"  selectedKey="{modelNuovaPosFin>/Codicetiposppspe}"   showSecondaryValues="true"
-															items="{ path: '/ZCA_AF_TIPOSPPGSet', sorter: { path: 'Codicetiposppspe' }, templateShareable:false }">
-															<m:items>
-																<core:ListItem key="{Codicetiposppspe}" text="{Desctipopg}"/>
-															</m:items>
-														</m:Select> -->
 													</f:fields>
 												</f:FormElement>
 												<f:FormElement label="{i18n>DenominazionePG} {i18n>integrale}">
@@ -304,12 +363,29 @@
 													<f:fields>
 														<m:Input required="true" id="idDenominazionePGRidNPF" editable="true"/>
 													</f:fields>
-												</f:FormElement>
+												</f:FormElement> -->
 											</f:formElements>
 										</f:FormContainer>
 									</f:formContainers>
 								</f:Form>
-							</layout:VerticalLayout>
+								<!-- <f:Form width="92%" class="sapUiSmallMarginBegin sapUiMediumPaddingBegin">
+									<f:layout>
+										<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="true" emptySpanXL="4"
+											emptySpanL="3" emptySpanM="3" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"></f:ResponsiveGridLayout>
+									</f:layout>
+									<f:formContainers>
+										
+									</f:formContainers>
+								</f:Form>
+								<f:Form width="92%" class="sapUiSmallMarginBeginEnd">
+									<f:layout>
+										<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="true" emptySpanXL="4"
+											emptySpanL="3" emptySpanM="3" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"></f:ResponsiveGridLayout>
+									</f:layout>
+									<f:formContainers>
+										
+									</f:formContainers>
+								</f:Form> -->
 						</blocks>
 						<!-- lt ex blocco cofog <blocks>
 							<m:VBox class="sapUiMediumMarginBeginEnd sapUiMediumMarginBottom" width="95%">

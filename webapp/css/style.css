@@ -96,3 +96,16 @@ margin-right: 0 !important;
         font-weight: bold !important;
         font-size: 0.875rem;
 }
+
+/* .sapMLabelRequired:before {
+    content: "*";
+    color: #3bce8e;
+    font-family: "72","72full",Arial,Helvetica,sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    position: relative;
+    vertical-align: middle;
+    line-height: 0
+} */
+
+  
