@@ -195,6 +195,7 @@ sap.ui.define([
 
            if (aSelected.length > 0) {
                 // mi prendo la proprietà che mi interessa
+				var allData = [];
                 var PosFin = [];
                //ricerca per IDposfin
                 for (var i = 0; i < aSelected.length; i++) {
@@ -214,13 +215,19 @@ sap.ui.define([
                         Aut: sAut,
                         Datbis:this.sDatbis
                     };
+
+					allData.push(aSelected[i])
                     
                    PosFin.push(oBj);
                     //    PosFin.push(sIdPosFin4); --> modificata da G.Modugno per aggiungere la descrizione estesa della posfin
                     // fine modifica G.Modugno
-                    that.getView().getModel("modelPosFinSelected").setProperty("/IdPosfin", PosFin);
+                    that.getView().getModel("modelPosFinSelected").setProperty("/IdPosfin", PosFin);				
                     // that.getView().getModel("modelLinkPopUpPF").setData(oObjPopup);
                 }
+
+				if(allData.length > 0){
+					this.getOwnerComponent().setModel(new JSONModel(allData[0]), "contabileModel")
+				}
             }
         },
         
@@ -388,6 +395,7 @@ sap.ui.define([
 				MessageBox.warning(this.getView().getModel("i18n").getResourceBundle().getText("MBTastoDettaglioContabile"));
 			} else {
 				if (aRows.length === 1) {
+
 					this.oRouter.navTo("DettaglioContabile", {
 						ID: sID,
 						Fikrs: this.sFikrs,

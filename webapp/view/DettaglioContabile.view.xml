@@ -67,7 +67,7 @@
 			<m:OverflowToolbar>
 				<!--<m:Text id="AppVersion" class="sapUiTinyMarginBegin" />-->
 				<m:ToolbarSpacer/>
-				<m:Button type="Emphasized" text="{i18n>Indietro}" press="onNavBack"/>
+				<m:Button type="Emphasized" text="{i18n>Indietro}" press="onNavBackDettaglio"/>
 				<m:Button type="Emphasized" text="{i18n>Home}" press="onPressNavToHome"/>
 			</m:OverflowToolbar>
 		</footer>

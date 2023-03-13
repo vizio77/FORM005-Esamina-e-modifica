@@ -97,54 +97,6 @@ sap.ui.define([
 		_setTestata: function() {
 			this.getView().setModel(new JSONModel(sap.ui.getCore().getModel("modelPageAut").getData()[0]), "modelTestata");
 		},
-
-		_AutRead: async function() {
-			var that = this;
-
-			var aModelPosFin = this.getOwnerComponent().getModel("modelPosizioneFinanziaria").getData();
-
-			var isEmptyOData = Object.keys(aModelPosFin).length == 0;
-			var sPosfin;
-			if (isEmptyOData) {
-				sPosfin = this.getOwnerComponent().getModel("modelPageAut").getData()[0].IdPosfin;
-			} else {
-				sPosfin = aModelPosFin[0].Fipex;
-			}
-
-			var aFilters;
-			aFilters = [ // <-- Should be an array, not a Filter instance!
-				new Filter({ // required from "sap/ui/model/Filter"
-					path: "Fipex",
-					operator: FilterOperator.EQ, // required from "sap/ui/model/FilterOperator"
-					value1: sPosfin
-				})
-			];
-			try {
-				var aRes = await this.readFromDb("4", "/ZCOBI_PRSP_CODBLSet", aFilters, [], "");
-				if (aRes.length === 1) {
-					// this.getOwnerComponent().getModel("modelPageAut").getData().CodiFincode = aRes[0].Fincode;
-					this.getView().setModel(new JSONModel(aRes[0]), "modelPageAut");
-					this.getView().setModel(new JSONModel(aRes[0]), "modelPreAutInfoPopUp");
-
-				}
-				if (aRes.length > 1) {
-					this.getView().setModel(new JSONModel(aRes[0]), "modelPreAutInfoPopUp");
-					this.getView().setModel(new JSONModel(aRes[0]), "modelPageAut");
-
-				}
-			} catch (e) {
-				var sDettagli = that._setErrorMex(e);
-				var oErrorMessage = e.responseText;
-				MessageBox.error(oErrorMessage, {
-					details: sDettagli,
-					initialFocus: sap.m.MessageBox.Action.CLOSE,
-					styleClass: "sapUiSizeCompact"
-				});
-
-			}
-
-		},
-
 		/* _AutRead: function() {
 			var that = this;
 			this.oDataAut = this.getView().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");
@@ -196,6 +148,67 @@ sap.ui.define([
 				}
 			});
 		}, */
+
+		_AutRead: async function() {
+			var that = this;
+
+			var aModelPosFin = this.getOwnerComponent().getModel("modelPosizioneFinanziaria").getData();
+
+			var isEmptyOData = Object.keys(aModelPosFin).length == 0;
+			var sPosfin;
+			if (isEmptyOData) {
+				sPosfin = this.getOwnerComponent().getModel("modelPageAut").getData()[0].IdPosfin;
+			} else {
+				sPosfin = aModelPosFin[0].Fipex;
+			}
+
+			var aFilters;
+			aFilters = [ // <-- Should be an array, not a Filter instance!
+				new Filter({ // required from "sap/ui/model/Filter"
+					path: "Fipex",
+					operator: FilterOperator.EQ, // required from "sap/ui/model/FilterOperator"
+					value1: sPosfin
+				})
+			];
+			try {
+				var aRes = await this.readFromDb("4", "/ZCOBI_PRSP_CODBLSet", aFilters, [], "");
+				if (aRes.length === 1) {
+					// this.getOwnerComponent().getModel("modelPageAut").getData().CodiFincode = aRes[0].Fincode;
+					//this.getView().setModel(new JSONModel(aRes[0]), "modelPageAut");
+					this.getView().setModel(new JSONModel(aRes[0]), "modelPreAutInfoPopUp");
+
+				}
+				if (aRes.length > 1) {
+					this.getView().setModel(new JSONModel(aRes[0]), "modelPreAutInfoPopUp");
+					//this.getView().setModel(new JSONModel(aRes[0]), "modelPageAut");
+
+				}
+
+				/*  -------------LOGICA VECCHIA
+				if (response.results.length === 1) {
+						that._fillDisableInput("idAutorizz", false, response.results[0].Beschr);
+						that.getOwnerComponent().getModel("modelPageAut").getData().CodiFincode = response.results[0].Fincode;
+						that.getOwnerComponent().getModel("modelPreAut").setProperty("/ZCOBI_PRSP_CODBLSet", response.results);
+						that.getView().getModel("modelPreAutInfoPopUp").setData(response.results[0]);
+						that._fillInfoPopUp();
+					}
+					if (response.results.length > 1) {
+						that.getView().getModel("modelPreAut").setProperty("/ZCOBI_PRSP_CODBLSet", response.results);
+						that.getView().getModel("modelPreAutInfoPopUp").setData(response.results[0]);
+						that.getView().byId("idAutorizz").setValue("");
+					} */
+			} catch (e) {
+				var sDettagli = that._setErrorMex(e);
+				var oErrorMessage = e.responseText;
+				MessageBox.error(oErrorMessage, {
+					details: sDettagli,
+					initialFocus: sap.m.MessageBox.Action.CLOSE,
+					styleClass: "sapUiSizeCompact"
+				});
+
+			}
+
+		},
 
 		_fillInfoPopUp: function() {
 			//var oInputAut = this.getView().byId("idAutorizz");
@@ -291,11 +304,21 @@ sap.ui.define([
 					oFrameContent.setAttribute("src", that.urlSac);
 					this._refresh();
 				} catch (e) {
-					MessageBox.error(oResourceBundle.getText("MBCreateErrorPageAut"));
+					MessageBox.error(oResourceBundle.getText("MBCreateErrorPageAut"), {
+						id: "messER",
+						title: "Error",
+						actions: [MessageBox.Action.OK],
+					});
+					sap.ui.getCore().byId("messER").getButtons()[0].setType("Emphasized");
 				}
 
 			} else {
-				MessageBox.warning(oResourceBundle.getText("MBTastoCassaPagePosFinId"));
+				MessageBox.warning(oResourceBundle.getText("MBTastoCassaPagePosFinId"), {
+					id: "messWA",
+					title: "Warning",
+					actions: [MessageBox.Action.OK],
+				});
+				sap.ui.getCore().byId("messWA").getButtons()[0].setType("Emphasized");
 			}
 
 		},
@@ -496,6 +519,13 @@ sap.ui.define([
 			try {
 			var aRes = await this.readFromDb("4", sPathPF, [], [], ["PosFinToCofogNav", "PosFinToFoFpNav"]);
 			that.getView().getModel("modelAnagraficaPf").setData(aRes);
+
+			if (aRes.Codifofpspe !== "") {
+				this.Editable = false;
+			} else {
+				this.Editable = true;
+			}
+
 			that.getView().getModel("modelAnagraficaFOP").setData(aRes.PosFinToFoFpNav.results);
 			var oTableCofog = that.getView().getModel("modelAnagraficaCofog");
 					var aDataCofog = [];
@@ -893,54 +923,53 @@ sap.ui.define([
 		},
 
 		onPressChiudiAssAut: function() {
-			this.getView().byId("idAutorizzPop").setValue("");
+
 			var oPopover = this.getView().byId("AssociaAutPopover");
 			oPopover.close();
 		},
 
-		onPressOkAssAut: function(oEvt) {
-			var oDataModel = this.getView().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");
-		
-			var sFipex = this.sFipexAssAut;
-			// var sProposta = this.getView().byId("idPropostaTabID").getText();
-			// var sKeycodepr = this.sKeycodeprAssAut;
-			var sFincode = this.sFincodeAssAut;
-			var sFikrs = this.getView().getModel("modelPageAut").getData()[0].Fikrs;
-			var sAnno = this.getView().getModel("modelPageAut").getData()[0].AnnoFipex;
-			var sFase = this.getView().getModel("modelPageAut").getData()[0].Fase;
-			var sReale = this.getView().getModel("modelPageAut").getData()[0].Reale;
-			var sVersione = this.getView().getModel("modelPageAut").getData()[0].Versione;
-			// var sEos = this.getView().getModel("modelPageAut").getData()[0].Eos;
-			var sFictr = this.getView().byId("idPopStrAmmCenTabID").getText();
+		onPressOkAssAut: async function() {
 
-			var oEntry = {
-				"Fipex": sFipex,
-				// "Proposta": sProposta,
-				// "Keycodepr": sKeycodepr,
-				"Fikrs": sFikrs,
-				"Anno": sAnno,
-				"Fase": sFase,
-				"Reale": sReale,
-				"Versione": sVersione,
-				// "Eos": sEos,
-				"Fincode": sFincode,
-				"Fictr": sFictr
-				// Autorizzazione: sAut
-			};
+			var aDataAnag = this.getView().getModel("modelAnagraficaPf").getData();
+			var aCheckAnagrafica = this.Editable;
+			var sFincode = this.byId("AutorizzazioniMCD").getAutorizzazione().FINCODE
+			if (aCheckAnagrafica === true) {
+				var oEntry = {
+					"Fipex": aDataAnag.Fipex,
+					"Fikrs": aDataAnag.Fikrs,
+					"Anno": aDataAnag.Anno,
+					"Fase": aDataAnag.Fase,
+					"Reale": aDataAnag.Reale,
+					"Versione": aDataAnag.Versione,
+					"Fictr": this.getView().getModel("modelTestata").getData().Fictr,
+					"Fincode": sFincode
+				};
+				try {
+					await this.insertRecord("4", "/ZCOBI_PRSP_ASSAUTSet", oEntry);
 
-			var that = this;
-					oDataModel.create("/ZCOBI_PRSP_ASSAUTSet", oEntry, {
-						success: function(oResponse, oData) {
-							// var oDati = oData;
-							// console.log(oDati);
-							MessageBox.success(that.getView().getModel("i18n").getResourceBundle().getText("MBAssociaAutSuccessPagTabCompetenza"));
-							that.onPressChiudiAssAut();
-							that._AutRead();
-						},
-						error: function(oError) {
-							MessageBox.error(oError.responseText);
-						}
+					MessageBox.success(this.getResourceBundle().getText("AUTOOK"), {
+						id: "messSU",
+						title: "Success",
+						actions: [MessageBox.Action.OK],
 					});
+					sap.ui.getCore().byId("messSU").getButtons()[0].setType("Emphasized");
+					this.onPressChiudiAssAut();
+					this.getView().getModel("modelAnagraficaPf").refresh();
+					aCheckAnagrafica = true;
+					await this._getDatiAnagrafica();
+					await this._dataAuto();
+				} catch (e) {
+
+				}
+			} else {
+				MessageBox.warning(this.getResourceBundle().getText("ERRORFOFP"), {
+					id: "messWA",
+					title: "Warning",
+					actions: [MessageBox.Action.OK],
+				});
+				sap.ui.getCore().byId("messWA").getButtons()[0].setType("Emphasized");
+
+			}
 
 		},
 
@@ -2319,7 +2348,61 @@ sap.ui.define([
                     this.getView().getModel("modelCogofDelete").setData({});
                 }
             }
-        }
+        },
+
+		onPressAvvioComp: async function() {
+
+			var that = this;
+			this.urlSac = "";
+			var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+			var sPg = this.getView().getModel("modelAnagraficaPf").getData().Codicepg
+			var oLocalModel;
+			var sPosfin, sIdProp, sAut;
+			var oDati = {};
+
+			oLocalModel = this.getView().getModel("modelPageAut").getData();
+
+			sPosfin = oLocalModel.IdPosfin;
+			sIdProp = this.getView().getModel("modelTestata").getData().Key_Code;
+			var sValAutInput = this.getView().getModel("modelTestata").getData().Fincode;
+			oDati = {
+				"PosFin": oLocalModel.Fipex,
+				"IdProposta": sIdProp,
+				"Autorizzazione": sValAutInput,
+				"SemanticObject": "ESAMINA_MOD",
+				"Schermata": "COMPETENZA",
+				"Pg": sPg
+			};
+
+			if (oLocalModel) {
+				try {
+					var aRes = await this.insertRecord("4", "/SacUrlSet", oDati);
+					var oFrame = this.getView().byId("linkSacCompetenza");
+					this.urlSac = aRes.URL;
+					var oFrameContent = oFrame.$()[0];
+					oFrameContent.setAttribute("src", that.urlSac);
+					this._refresh();
+				} catch (e) {
+					MessageBox.error(oResourceBundle.getText("MBCreateErrorPageAut"), {
+						id: "messER",
+						title: "Error",
+						actions: [MessageBox.Action.OK],
+					});
+					sap.ui.getCore().byId("messER").getButtons()[0].setType("Emphasized");
+
+				}
+
+			} else {
+				MessageBox.warning(oResourceBundle.getText("MBTastoCassaPagePosFinId"), {
+					id: "messWA",
+					title: "Warning",
+					actions: [MessageBox.Action.OK],
+				});
+				sap.ui.getCore().byId("messWA").getButtons()[0].setType("Emphasized");
+
+			}
+
+		},
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

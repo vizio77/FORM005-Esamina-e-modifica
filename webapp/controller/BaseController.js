@@ -18,6 +18,31 @@ sap.ui.define([
 		getRouter: function() {
 			return sap.ui.core.UIComponent.getRouterFor(this);
 		},
+		insertRecord: function(sDbSource, sEntitySet, oRecord) {
+			var aReturn = this._getDbOperationReturn();
+			var oModel = this._getDbModel(sDbSource);
+			return new Promise(function(resolve, reject) {
+				oModel.create(sEntitySet, oRecord, {
+					success: function(oData) {
+						if (sEntitySet === "/SacUrlSet") {
+							return resolve(oData);
+						} else {
+							aReturn.returnStatus = true;
+							return resolve(aReturn.returnStatus);
+						}
+					},
+					error: function(e) {
+						/* if (oData.Belnr) {
+							return oData.Belnr;
+						} else { */
+						aReturn.returnStatus = false;
+						aReturn.message = JSON.parse(e.responseText).error.message.value;
+						return reject(aReturn);
+						/* } */
+					}
+				});
+			});
+		},
 		/* __getAnnoFaseProcessoMacroFase: function () {
             let modelTopologiche = this.getOwnerComponent().getModel("ZSS4_CO_GEST_TIPOLOGICHE_SRV")  
             var that = this;

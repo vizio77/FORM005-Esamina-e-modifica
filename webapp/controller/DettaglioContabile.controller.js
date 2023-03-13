@@ -2,8 +2,11 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 	"./BaseController",
+	"sap/m/MessageToast",
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator",
 	"../util/formatter"
-], function(Controller, MessageBox, BaseController, formatter) {
+], function(Controller, MessageBox, BaseController, MessageToast, Filter, FilterOperator,  formatter) {
 	"use strict";
 
 	return BaseController.extend("zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.DettaglioContabile", {
@@ -22,7 +25,7 @@ sap.ui.define([
 			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 		},
 
-		onNavBack: function() {
+		onNavBackDettaglio: function() {
 			this.getView().byId("idLinkPosFinSnap").setText('');
 			this.getView().byId("idLinkPosFin").setText('');
 			var oFrame = this.getView().byId("linkSac");
@@ -36,6 +39,7 @@ sap.ui.define([
 			if (this.sourcePage === 'IdProposta') {
 				this.oRouter.navTo("IdProposta");
 			}
+			this.onPressNavToHome();
 		},
 
 		onPressInformationsLocal: function(event) {
@@ -47,19 +51,21 @@ sap.ui.define([
 
 		},
 
-		_onRouteMatched: function() {
+		_onRouteMatched: async function() {
 
 			var oModelPosFin = this.getOwnerComponent().getModel("modelDettaglioContabile");
-			//var sIdProp = oModelPosFin.getData()[0].IdProposta;
-			var sKeycodepr = oModelPosFin.getData()[0].Key_Code;
 
-			this.Fikrs = oModelPosFin.getData()[0].Fikrs;
-			this.Anno = oModelPosFin.getData()[0].Anno;
-			this.Fase = oModelPosFin.getData()[0].Fase;
-			this.Reale =oModelPosFin.getData()[0].Reale;
-			this.Versione = oModelPosFin.getData()[0].Versione;
-			this.Fipex =oModelPosFin.getData()[0].Fipex;
-			this.Datbis = oModelPosFin.getData()[0].Datbis;
+			var contabileModel = this.getOwnerComponent().getModel("contabileModel")
+			var contabileData;
+			if(contabileModel) contabileData = contabileModel.getData();
+
+
+			this.Anno = contabileData.Anno;
+			this.Fase = contabileData.Fase;
+			this.Reale =contabileData.Reale;
+			this.Versione = contabileData.Versione;
+			this.Fipex =contabileData.Fipex;
+			this.Datbis = contabileData.Datbis;
 
 			if (this.Fipex) {
 				this.Fipex = this.Fipex.replaceAll(".", "");
@@ -68,6 +74,10 @@ sap.ui.define([
 			if (this.Datbis) {
 				this.Datbis = this.Datbis.replaceAll("-", "");
 			}
+
+			var posFin = await this._getDatiAnagrafica(contabileData)
+
+			this.getView().getModel("modelPosFinSelected").setData(posFin[0]);
 
 			this.getView().byId("idLinkPosFinSnap").setProperty("anno", this.Anno);
 			this.getView().byId("idLinkPosFinSnap").setProperty("fikrs", this.Fikrs);
@@ -92,6 +102,35 @@ sap.ui.define([
 				this.sourcePage = "IdProposta";
 				this._dettaglioContIDProposta();
 			//}
+		},
+
+		_getDatiAnagrafica: async function(contabileData) {
+			var sKeycodepr, sFikrs,sAnno, sFase, sReale,sVersione, sEos ;
+						
+			var sPathPF = "/PosFinSet(Fikrs='" + contabileData.Fikrs + "',Anno='" + contabileData.Anno + "',Fase='" + contabileData.Fase + "',Reale='" + contabileData.Reale + "',Versione='" +
+			contabileData.Versione + "',Fipex='" + contabileData.Fipex + "',Eos='" + contabileData.Eos + "')";
+			
+			var aFilters =[new Filter("Fipex", FilterOperator.EQ, contabileData.Fipex)];
+			
+			var oGlobalModel = this.getView().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");
+			var that = this;
+
+			try {
+				
+			var aRes = await this.readFromDb("4", "/ZES_AVVIOPF_IDSet", aFilters, [], []);
+			//var aRes = await this.readFromDb("4", sPathPF, [], [], ["PosFinToCofogNav", "PosFinToFoFpNav"]);
+
+			if(aRes && aRes.length > 0){
+				return aRes;
+			}
+			return []
+
+			} catch (e) {
+				MessageBox.error(e.responseText);
+			}
+
+
+
 		},
 
 		_dettaglioContPosFin: function() {
@@ -194,12 +233,12 @@ sap.ui.define([
 			var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
 			var oGlobalModel = this.getView().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");
 			
-			var oModelPosFin = this.getOwnerComponent().getModel("modelDettaglioContabile");
+			var oModelPosFin = this.getOwnerComponent().getModel("modelPosFinSelected");
 			//var sIdProp = oModelPosFin.getData()[0].IdProposta;
-			var sIdProp = oModelPosFin.getData()[0].Key_Code;
+			var sIdProp = oModelPosFin.getData().Key_Code;
 			//var oModelPageAut = this.getOwnerComponent().getModel("modelPageAut");
-			var sPosFin = oModelPosFin.getData()[0].Fipex;
-			var sAut = oModelPosFin.getData()[0].Autorizzazioni;
+			var sPosFin = oModelPosFin.getData().Fipex;
+			var sAut = oModelPosFin.getData().Autorizzazioni;
 
 			this.getView().byId('idTextIDProposta').setText(sIdProp);
 			this.getView().byId('idLinkPosFin').setText(sIdProp);

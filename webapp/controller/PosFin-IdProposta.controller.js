@@ -253,6 +253,22 @@ sap.ui.define([
 			var sPage = this.sRouterParameter;
 			var oModelPageTab = this.getView().getModel("modelPosFinSelected");
 			this._refreshModel(oModelPageTab);
+			
+			
+			if(this._getSelectedItems().length > 1){	
+				MessageBox.warning("Non è possibile gestire più di una posizione finanziaria. Selezionare una sola riga.");
+				return;
+			}
+
+			var conProposta = $.grep(this._getSelectedItems(), function (n, i) {
+				return n.IdProposta !== "";
+			});
+
+			if(conProposta.length === 0){
+				MessageBox.warning("Non è possibile gestire più di una posizione finanziaria. Selezionare una sola riga.");
+				return;
+			}
+
 			this._rowSel();
 
 			var aRows = oModelPageTab.getData().IdPosfin;
