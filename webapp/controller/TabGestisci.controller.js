@@ -750,26 +750,24 @@ sap.ui.define([
 		}, */
 
 		_getNota: async function() {
-			var aData = this.getView().getModel("modelTestata").getData();
-			try {
-				var aRes = await this.readFromDb("4", "/PropostaSet(Keycodepr='" + aData.Key_Code + "')", [], [], "");
-				this.getView().setModel(new JSONModel(aRes), "modelNote")
-				if (aRes.Idnota !== "0000000000") {
-					this.getView().byId("idInputScegliNoteIDProposta").setValue(aRes.Idnota);
-					this.getView().byId("idNota").setEditable(false);
-				} else {
-					this.getView().byId("idInputScegliNoteIDProposta").setEditable(false);
-					this.getView().byId("idInputScegliNoteIDProposta").setValue("");
-
-				}
-				var aRes = await this.readFromDb("4", "/ZES_NOTE_IDSet", [], [], "");
-				this.getView().setModel(new JSONModel(aRes), "modelListaIdNote");
-
-			} catch (e) {
-
-			}
-
-		},
+            var aData = this.getView().getModel("modelTestata").getData();
+            try {
+                var aRes = await this.readFromDb("4", "/PropostaSet(Keycodepr='" + aData.Key_Code + "')", [], [], "");
+                this.getView().setModel(new JSONModel(aRes), "modelNote")
+                if (aRes.Idnota !== "0000000000") {
+                    this.getView().byId("idInputScegliNoteIDProposta").setValue(aRes.Idnota);
+                    this.getView().byId("idNota").setEditable(false);
+                } else if (aRes.Idnota === "0000000000" && aRes.Testonota.length === 0) {
+                    this.getView().byId("idInputScegliNoteIDProposta").setEditable(true);
+                    this.getView().byId("idInputScegliNoteIDProposta").setValue("");
+                } else {
+                    this.getView().byId("idInputScegliNoteIDProposta").setEditable(false);
+                    this.getView().byId("idInputScegliNoteIDProposta").setValue("");
+                }
+                var aRes = await this.readFromDb("4", "/ZES_NOTE_IDSet", [], [], "");
+                this.getView().setModel(new JSONModel(aRes), "modelListaIdNote");
+            } catch (e) {}
+        },
 		
 		/*onBeforeRendering: function(){},*/
 

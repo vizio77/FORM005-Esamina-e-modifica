@@ -295,9 +295,129 @@ sap.ui.define([
 			this.oRouter.navTo("appHome");
 		},
 
+		// FILTRO AMMNINISTRAZIONE
+		handleValueHelp: async function(sId, Prctr) {
+			// this._openBusyDialog();
+			var oView = this.oView,
+				myTemplate,
+				myPath,
+				searchField = [],
+				that = this,
+				aFilter = [];
+			switch (sId) {
+				case 'Amm':
+					var arrDassSet = await this.readFromDb("2", "/ZCA_AF_AMMIN", [], [], "");
+					this.getView().setModel(new JSONModel(arrDassSet), "oMatchCodeModelTable");
+					var oObjectList = this._setObjectList("Prctr", "DescBreve");
+					var sTitleDialog = "{i18nL>cercaAmministrazione}";
+					break;
+				case 'Note':
+					var aFilter = [];
+					//var sAmmin = sap.ui.getCore().getModel("modelAnagraficaPf").getData().Prctr;
+					var sAmmin = this.getView().getModel("modelAnagraficaPf").getData().Prctr;
+					aFilter.push(new Filter("Prctr", sap.ui.model.FilterOperator.EQ, sAmmin));
+					aFilter.push(new Filter("Attributo", sap.ui.model.FilterOperator.EQ, "S"));
+					aFilter.push(new Filter("Attributo", sap.ui.model.FilterOperator.EQ, "G"));
+					var arrDassSet = await this.readFromDb("4", "/ZES_ELENCO_NOTE", aFilter, [], "");
+					this.getView().setModel(new JSONModel(arrDassSet), "oMatchCodeModelTable");
+					var oObjectList = this._setObjectList("IdNota", "TestoNota");
+					var sTitleDialog = "{i18nL>cercaNota}";
+			}
+
+			this.getView().setModel(new JSONModel(oObjectList), "oMatchcodeModel");
+
+			myPath = "oMatchcodeModel>/";
+			searchField.push("Valore", "Descrizione");
+			myTemplate = new sap.m.StandardListItem({
+				title: "{oMatchcodeModel>Valore}",
+				description: "{oMatchcodeModel>Descrizione}"
+			});
+
+			var oValueHelpDialog = new sap.m.SelectDialog({
+
+				title: sTitleDialog,
+
+				items: {
+					path: myPath,
+					template: myTemplate
+				},
+
+				contentHeight: "60%",
+				confirm: function(oConfirm) {
+					var titolo = oConfirm.getParameter("selectedItem").getTitle();
+
+					switch (sId) {
+						case 'Amm':
+							var oModelAdattaFiltri = that.oView.getModel("modelAdattaFiltri");
+							var aDataModelAdattaFiltri = oModelAdattaFiltri.getData();
+							aDataModelAdattaFiltri.CodiceAmmin = titolo;
+							oModelAdattaFiltri.refresh();
+							break;
+						case 'Note':
+							var sIdNota = oConfirm.getParameter("selectedItem").getTitle();
+							var sInputNota = that.getView().byId("idInputScegliNoteIDProposta");
+							sInputNota.setValue(sIdNota);
+							var sTestoNota = oConfirm.getParameter("selectedItem").getDescription();
+							var sTextArea = that.getView().byId("idNota");
+							sTextArea.setValue(sTestoNota);
+							that.getView().byId("idNota").setEditable(false);
+							break;
+					}
+
+				},
+				search: function(oEvent) {
+					switch (sId) {
+						case 'Amm':
+							var aVal = "Descrizione";
+							break;
+						case 'Note':
+							var aVal = "TestoNota";
+							break;
+					}
+
+					var sString = oEvent.getParameter("value");
+
+					var oFilter = new Filter(aVal, FilterOperator.Contains, sString);
+					oEvent.getSource().getBinding("items").filter(oFilter);
+
+				},
+				cancel: function(oCancel) {},
+
+			});
+
+			//gestione emphasized dei bottoni
+			var oButton = oValueHelpDialog.getAggregation("_dialog").getEndButton();
+			if (oButton) {
+				sap.ui.getCore().byId(oButton.sId).setType("Emphasized");
+			}
+			var oButton = oValueHelpDialog.getAggregation("_dialog").getBeginButton();
+			if (oButton) {
+				sap.ui.getCore().byId(oButton.sId).setType("Emphasized");
+			}
+			oView.addDependent(oValueHelpDialog);
+			// this._closeBusyDialog();
+			oValueHelpDialog.open();
+		},
+
+		_setObjectList: function(sTitolo, sDesc) {
+			var aData = this.getView().getModel("oMatchCodeModelTable").getData(),
+				aObject = [];
+			for (var i = 0; i < aData.length; i++) {
+				var oObject = {
+					"Valore": aData[i][sTitolo],
+					"Descrizione": aData[i][sDesc]
+				};
+				aObject.push(oObject);
+			}
+
+			return aObject;
+		},
+
 		_onClearInput: function(oEvent) {
 			//this._onClearInput();
 			var aSelectionsSets = oEvent.getParameters().selectionSet;
+			//lt setto il valore della posizione finanziaria a "" così da resettare il valore
+			this.byId("filterBarPosFin").setValue("")
 			//this.clearGlobalModel();
 			for (var i = 0; i < aSelectionsSets.length; i++) {
 				var oControl = this.getView().byId(aSelectionsSets[i].getId());

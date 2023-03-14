@@ -47,6 +47,9 @@ sap.ui.define([
 			this._aRowsChecked = [];
 		},
 
+		onReset: function(oEvent){
+			debugger
+		},
 		//***********************METODI CONO VISIBILITA'***********************
 
 		_AmminRead: function() {
@@ -163,13 +166,17 @@ sap.ui.define([
 		onSelectCheckBox: function(oEvent) {
 			// this._resetCheckbox("modelTreeTable", this);
             var oEl = oEvent.getSource().getBindingContext("modelTreeTable").sPath;
-            var oObjectUpdate = this.getView().getModel("modelTreeTable").oData[oEl.slice(1)];
-            if (oObjectUpdate.SELECTED && oObjectUpdate.SELECTED === true) {
-                oObjectUpdate.SELECTED = false;
-            } else {
-                oObjectUpdate.SELECTED = true;
-            }
-        },
+
+			if(oEl){
+
+				var oObjectUpdate = this.getView().getModel("modelTreeTable").oData[oEl.slice(1)];
+				if (oObjectUpdate.SELECTED && oObjectUpdate.SELECTED === true) {
+					oObjectUpdate.SELECTED = false;
+				} else {
+					oObjectUpdate.SELECTED = true;
+				}
+			}
+		},
         
         _getSelectedItems: function() {
         	// this._resetCheckbox("modelTreeTable", this);

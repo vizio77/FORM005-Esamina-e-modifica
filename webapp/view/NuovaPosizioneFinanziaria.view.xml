@@ -395,7 +395,7 @@
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
-			<ObjectPageSection titleUppercase="false" title="{i18n>Cofog}" >
+			<ObjectPageSection titleUppercase="false" required="true" title="{i18n>Cofog}" >
 				<subSections>
 					<ObjectPageSubSection >
 						<blocks>
