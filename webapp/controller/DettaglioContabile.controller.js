@@ -242,6 +242,19 @@ sap.ui.define([
 
 			this.getView().byId('idTextIDProposta').setText(sIdProp);
 			this.getView().byId('idLinkPosFin').setText(sIdProp);
+			
+			/*
+			var sPosfin = oDataPageAut[0].IdPosfin;
+			var sIdProp = oDataPageAut[0].Keycodepr;
+			var sValAutInput = oDataPageAut[0].CodiFincode;
+
+			 var oDati = {
+				"PosFin": sPosfin,
+				"IdProposta": sIdProp,
+				"Autorizzazione": sValAutInput,
+				"SemanticObject": "ESAMINA_MOD",
+				"Schermata": "COMPETENZA"
+			}; */
 
 			var oDati = {
 				"PosFin": sPosFin,

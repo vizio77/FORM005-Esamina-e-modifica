@@ -150,10 +150,10 @@ sap.ui.define([
 		},
 
 		_getAvvioPfId: function() {
-			var oTreeTable = this.getView().byId("treeTablePFID");
+			var oTreeTablePos = this.getView().byId("treeTablePFID");
 
 			//Deleto le precedenti row prima di inserire le nuove
-			oTreeTable.unbindRows();
+			oTreeTablePos.unbindRows();
 
 			//filtri per IDposfin
 			var oIdPosFinSel = this.getView().getModel("modelPosFinSelected").getData();
@@ -182,12 +182,12 @@ sap.ui.define([
 				}
 			}
 			
-			//oTreeTable.getBinding("rows").attachEvent("dataReceived", this.testFunction, this);
+			//oTreeTablePos.getBinding("rows").attachEvent("dataReceived", this.testFunction, this);
 			BusyIndicator.show(0);
 			//this.getView().byId("treeTablePFID").unbindRows();
-			
+			var that = this;
 		
-			oTreeTable.bindRows({
+			oTreeTablePos.bindRows({
 				path: "modelTreeTable>/ZES_AVVIOPF_IDSet",
 				parameters: {
 					countMode: 'Inline',
@@ -204,10 +204,30 @@ sap.ui.define([
 				},
 				filters: [aFilters],
 				events:{
-					dataReceived : this.onDataReceived.bind(this)
+					//dataReceived : this.onDataReceived.bind(this)
+					dataReceived : function(oEvent) {
+						var isSingleRow= that.getView().getModel("modelOneRow").getData().one;
+						var oModelTreeTable = that.getView().getModel("modelTreeTable");
+						var oTable = that.getView().byId("treeTablePFID")
+						if(isSingleRow){
+							if(oEvent.getParameter("data")){
+								if(!!oEvent.getParameter("data").results[0]){
+									var path = oEvent.getParameter("data").results[0].__metadata.uri.split("/").pop();
+									oModelTreeTable.oData[path].SELECTED = true;
+									oTable.mAggregations.rows[0].mAggregations.cells[0].setSelected(true);
+									oTable.mAggregations.rows[0].mAggregations.cells[0].setEnabled(false);
+								}
+								
+							}
+						}
+						BusyIndicator.hide();
+					}
 				}
 			});
 		
+		},
+		stopBusy: function(oEvent){
+			BusyIndicator.hide();
 		},
 		
 		onDataReceived:function(oEvent) {
@@ -265,7 +285,7 @@ sap.ui.define([
 			});
 
 			if(conProposta.length === 0){
-				MessageBox.warning("Non è possibile gestire più di una posizione finanziaria perchènon è stata ancora associata ad una proposta");
+				MessageBox.warning("Non è possibile gestire più di una posizione finanziaria perchè non è stata ancora associata ad una proposta");
 				return;
 			}
 

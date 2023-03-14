@@ -8,8 +8,9 @@ sap.ui.define([
 	"sap/m/MessageBox",
 	"../util/formatter",
 	"sap/ui/core/routing/History",
-	"sap/ui/model/json/JSONModel"
-], function(Controller, BaseController, Fragment, Filter, FilterOperator, syncStyleClass, MessageBox, formatter,History,JSONModel) {
+	"sap/ui/model/json/JSONModel",
+	"sap/ui/core/BusyIndicator"
+], function(Controller, BaseController, Fragment, Filter, FilterOperator, syncStyleClass, MessageBox, formatter,History,JSONModel, BusyIndicator) {
 	"use strict";
 
 	return BaseController.extend("zsap.com.r3.cobi.s4.esamodModSpesePosFin.controller.AssociaProposta", {
@@ -54,6 +55,8 @@ sap.ui.define([
 			// console.log(aFilters);
 			this._remove(aFilters, undefined);
 
+			BusyIndicator.show(0);
+
 			oTreeTable.bindRows({
 				path: sTreeTableBindingPath,
 				parameters: {
@@ -69,14 +72,42 @@ sap.ui.define([
 					},
 					useServersideApplicationFilters: true // necessario in combinazione con operationMode : 'Client' per inviare i filtri al BE ($filter)
 				},
-				filters: [aFilters]
-			});
+				filters: [aFilters],
+				events:{
+					//dataReceived : this.onDataReceivedAssociazione.bind(this)
+					dataReceived: function(oParameters) {
+						BusyIndicator.hide();
+					}.bind(this)
+				}
+			});			
 			
 			//Azzera la selezione delle righe
 			var oItems = oTreeTable.getRows();
 			for (var j = 0; j < oItems.length; j++) {
 			oItems[j].getAggregation("cells")[0].setSelected(false);
 			}
+		},
+
+		stopBusyAssocia: function(oEvent){
+			BusyIndicator.hide();
+		},
+
+		onDataReceivedAssociazione:function(oEvent) {
+			/* var isSingleRow= this.getView().getModel("modelOneRow").getData().one;
+			var oModelTreeTable = this.getView().getModel("modelTreeTable");
+			var oTable = this.getView().byId("treeTablePFID")
+			if(isSingleRow){
+				if(oEvent.getParameter("data")){
+					if(!!oEvent.getParameter("data").results[0]){
+						var path = oEvent.getParameter("data").results[0].__metadata.uri.split("/").pop();
+						oModelTreeTable.oData[path].SELECTED = true;
+						oTable.mAggregations.rows[0].mAggregations.cells[0].setSelected(true);
+						oTable.mAggregations.rows[0].mAggregations.cells[0].setEnabled(false);
+					}
+					
+				}
+			} */
+			BusyIndicator.hide();
 		},
 		
 		onSelectCheckBox: function(oEvent) {
@@ -85,11 +116,11 @@ sap.ui.define([
             var oObjectUpdate = this.getView().getModel("modelTreeTable").oData[oEl.slice(1)];
 			var oModel = new JSONModel(oObjectUpdate);
 			this.getView().setModel(oModel, "propostaSelectedModel");
-            /* if (oObjectUpdate.SELECTED && oObjectUpdate.SELECTED === true) {
+             if (oObjectUpdate.SELECTED && oObjectUpdate.SELECTED === true) {
                 oObjectUpdate.SELECTED = false;
             } else {
                 oObjectUpdate.SELECTED = true;
-            } */
+            } 
         },
         
         _getSelectedItems: function() {
@@ -274,6 +305,26 @@ sap.ui.define([
 			// oTreeTablePF.unbindRows();
 			this.getRouter().navTo("appHome");
 		},
+
+		_getSelPositions: function() {
+			var table = this.getView().byId("treeTableID");
+			var listIndSelected = table.getSelectedIndices();
+
+			var rows = table.getRows();
+			var listPos = [];
+
+			for (var i = 0; i < listIndSelected.length; i++) {
+				var index = listIndSelected[i];
+				var item = this.getView().getModel("modelTreeTable").oData[table.getContextByIndex(index).sPath.split("/")[1]];
+
+				//verifico se l'oggetto selezionato è di tipo Proposta
+				if (item.HierarchyLevel == '0') {
+					listPos.push(item);
+				}
+			}
+
+			return listPos;
+		},
 		
 		onPressAssocia:function(){
 		
@@ -281,17 +332,27 @@ sap.ui.define([
 			var oModelPageAut = this.getView().getModel("modelPageAut");
 			this._refreshModel(oModelPageAut);
 			//this._rowSelProps();
-			// var sPage = this.getView().getModel("i18n").getResourceBundle().getText("subtitlePosFinIdProposta");
-			var propostaSelectedModel = this.getView().getModel("propostaSelectedModel");
-			var propostaSelected = propostaSelectedModel.getData();
 
-			if(!propostaSelected){
+			var righeSelezionate = this._getSelPositions();
+
+			// var sPage = this.getView().getModel("i18n").getResourceBundle().getText("subtitlePosFinIdProposta");
+			/* var propostaSelectedModel = this.getView().getModel("propostaSelectedModel");
+			var propostaSelected = propostaSelectedModel.getData();
+ */
+			if(righeSelezionate.length === 0){
 				MessageBox.warning(this.getView().getModel("i18n").getResourceBundle().getText("MBTastoCompetenzaPageIDProposta"));
 				return;
 			}
+			if(righeSelezionate.length > 1){
+				MessageBox.warning(this.getView().getModel("i18n").getResourceBundle().getText("MBTastoCompetenzaPageIDPropostaMax"));
+				return;
+			}
 
-			this._resetCheckbox("modelTreeTable", this);
-				this._associaProps(propostaSelected);
+			//this._resetCheckbox("modelTreeTable", this);
+			
+			
+			
+			this._associaProps(righeSelezionate[0]);
 			//var aRows = oModelPageAut.getData();
 			//var aRows = [propostaSelected];
 			/* if (aRows.length === 0) {
@@ -303,80 +364,39 @@ sap.ui.define([
 		},
 		
 		_associaProps:function(prop){
-			
-			
-			//set use batch
-			//oModel.setUseBatch(false);
 			var positions = this.getView().getModel("modelPosFinSelected").getData().IdPosfin;
-			//var prop=props[0];
-			
 			this._recursiveUpdateModel(positions,prop);
-			
-			// var aPromCreate = [];
-			// var sIdProposta=prop.IdProposta;
-			// var sKeycodepr=prop.Keycodepr;
-			// for(var i=0; i< positions.length; i++){
-			// 	var sFipex=positions[i].Fipex;
-			// 	var oEntry = {
-			// 			Fipex: sFipex,
-			// 			Idproposta: sIdProposta
-			// 		};
-			// 	var sPath = "/PropostaSet(Keycodepr='" + sKeycodepr + "')";
+		},
 
-			// 	//update proposta
-			// 	var that = this;
-			// 	var promCreate = new Promise(function(resolve, reject) {
-			// 		oModel.update(sPath, oEntry, {
-			// 			success: function(oData) {
-			// 				var inEsito = "OK";
-			// 				resolve(inEsito);
-			// 			},
-			// 			error: function(e) {
-			// 				// errore creazione
-			// 				var inEsito = JSON.parse(e.responseText).error.message.value;
-			// 				reject(inEsito);
-			// 			}
-			// 		});
-			// 	});
-			// 	aPromCreate.push(promCreate);
-			// }
+		associaProposte: async function(arrayPosizioni,prop){
+			var errori = false;
+			var stringa = "";
+			for (let i = 0; i < arrayPosizioni.length; i++) {
+				var testoRisposta;
+				const posFin = arrayPosizioni[i];
+				var response = await this.updateModel(posFin,prop)
+				if(response === 'OK'){
+					testoRisposta = `Posizione ${posFin.Fipex} Associata con successo`;
+				}else{
+					if(JSON.parse(response.responseText).error.code === 'SY/530'){
+						testoRisposta = `Errore: ${JSON.parse(err.responseText).error.message.value}`;
+					}else{
+						testoRisposta = `Errore`;
+					}
+					errori = true;
+				}
+				stringa = stringa + testoRisposta + "\n"
+			}
+
+			if(!errori){
+				MessageBox.success(this.getView().getModel("i18n").getResourceBundle().getText("MBCreateSuccessAssociaProposta"));
+			}else{
+				MessageBox.warning(stringa);
+			}
+		},
 			
-			// Promise.allSettled(aPromCreate)
-			// .then(function(res) {
-			// 	MessageBox.success(that.getView().getModel("i18n").getResourceBundle().getText("MBCreateSuccessAssociaProposta"));
-			// }).
-			// catch(function(oError) {
-			// 	MessageBox.error(oError);
-			// });
-			
-			
-			
-			
-			//oModel.setUseBatch(true);
-			},
-			
-		
-		_recursiveUpdateModel: function(positions,prop){
-			var sRow = positions.shift();
-            var aPromises = [];
-            if(!!sRow) {
-                aPromises.push(this.updateModel(sRow,prop));
-            }
-    
-            Promise.all(aPromises)
-            .then(function () {
-                if(positions.length > 0) {
-                    return this._recursiveUpdateModel(positions, prop);
-                }
-                MessageBox.success(this.getView().getModel("i18n").getResourceBundle().getText("MBCreateSuccessAssociaProposta"));
-                this._setUseBatch(true);
-            }.bind(this))
-  
-            .catch(function(e){
-            	console.error(e);
-            	this._setUseBatch(true);
-            }.bind(this)
-            );	
+		_recursiveUpdateModel: async function(positions,prop){
+			this.associaProposte(positions,prop);
 		},
 		
 		_setUseBatch:function(bUseBatch){
@@ -384,7 +404,7 @@ sap.ui.define([
 			oModel.setUseBatch(bUseBatch);
 		},
 			
-		updateModel: function(position,prop){
+		updateModel: async function(position,prop){
 			var sIdProposta=prop.IdProposta;
 			var sKeycodepr=prop.Key_Code;
 			//var sKeycodepr=prop.Keycodepr;
@@ -394,9 +414,19 @@ sap.ui.define([
 					Fipex: sFipex,
 					Idproposta: sIdProposta
 				};
-			var sPath = "/PropostaSet(Keycodepr='" + sKeycodepr + "')";
-				
-			oModel.update(sPath, oEntry);
+			var sPath = "/PropostaSet(Keycodepr='" + sKeycodepr + "')";				
+			
+			return new Promise(function (resolve, reject) {
+				oModel.update(sPath, oEntry, {
+					success: function (oData) {
+						var response = oData
+						resolve('OK')
+					},
+					error: function (err) {
+						resolve(err)
+					},
+				})
+			})
 
 		},
 		

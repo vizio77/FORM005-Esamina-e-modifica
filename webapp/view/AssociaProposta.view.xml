@@ -53,7 +53,7 @@
 			<Panel headerText="{i18n>ListaProposte}" width="auto" class="sapUiResponsiveMargin">
 				
 			<t:TreeTable id="treeTableID" expandFirstLevel="false" visibleRowCountMode="Fixed" visibleRowCount="10"
-				selectionMode="None" enableSelectAll="False"
+				selectionMode="MultiToggle" enableSelectAll="false"
 				enableColumnReordering="false">
 				<t:extension>
 					<OverflowToolbar class="sapUiSmallMarginTop">
@@ -77,11 +77,11 @@
 					</OverflowToolbar>
 				</t:extension>
 				<t:columns>
-					<t:Column label="{i18n>Seleziona}" width="5rem">
+					<!-- <t:Column label="{i18n>Seleziona}" width="5rem">
 						<t:template>
 							<RadioButton visible="{= ${modelTreeTable>HierarchyLevel} === '0' ? true : false}" select="onSelectCheckBox" selected="{modelTreeTable>SELECTED}"></RadioButton>
 						</t:template>
-					</t:Column>
+					</t:Column> -->
 					<t:Column label="{i18n>Proposta}" width="7rem">
 						<t:template>
 							<Text text="{= ${modelTreeTable>HierarchyLevel} === '1' ? '' : ${modelTreeTable>IdProposta} === '0000000000' ? '' : ${modelTreeTable>IdProposta} }" wrapping="false"/>

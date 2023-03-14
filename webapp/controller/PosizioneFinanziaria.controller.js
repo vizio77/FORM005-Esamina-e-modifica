@@ -398,7 +398,7 @@ sap.ui.define([
 			this._refreshModel(oModelSelPosFin);
 			this._rowSel();
 			var aRows = oModelSelPosFin.getData().IdPosfin;
-			if (aRows === undefined) {
+			if (aRows === undefined || !aRows || aRows.length === 0) {
 				MessageBox.warning(this.getView().getModel("i18n").getResourceBundle().getText("MBTastoDettaglioContabile"));
 			} else {
 				if (aRows.length === 1) {
