@@ -261,11 +261,11 @@ sap.ui.define([
 			}
 
 			var conProposta = $.grep(this._getSelectedItems(), function (n, i) {
-				return n.IdProposta !== "";
+				return n.IdProposta !== "" && n.IdProposta !== "0";
 			});
 
 			if(conProposta.length === 0){
-				MessageBox.warning("Non è possibile gestire più di una posizione finanziaria. Selezionare una sola riga.");
+				MessageBox.warning("Non è possibile gestire più di una posizione finanziaria perchènon è stata ancora associata ad una proposta");
 				return;
 			}
 

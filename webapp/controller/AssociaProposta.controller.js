@@ -83,11 +83,13 @@ sap.ui.define([
 			this._resetCheckbox("modelTreeTable", this);
             var oEl = oEvent.getSource().getBindingContext("modelTreeTable").sPath;
             var oObjectUpdate = this.getView().getModel("modelTreeTable").oData[oEl.slice(1)];
-            if (oObjectUpdate.SELECTED && oObjectUpdate.SELECTED === true) {
+			var oModel = new JSONModel(oObjectUpdate);
+			this.getView().setModel(oModel, "propostaSelectedModel");
+            /* if (oObjectUpdate.SELECTED && oObjectUpdate.SELECTED === true) {
                 oObjectUpdate.SELECTED = false;
             } else {
                 oObjectUpdate.SELECTED = true;
-            }
+            } */
         },
         
         _getSelectedItems: function() {
@@ -278,25 +280,35 @@ sap.ui.define([
 			
 			var oModelPageAut = this.getView().getModel("modelPageAut");
 			this._refreshModel(oModelPageAut);
-			this._rowSelProps();
+			//this._rowSelProps();
 			// var sPage = this.getView().getModel("i18n").getResourceBundle().getText("subtitlePosFinIdProposta");
+			var propostaSelectedModel = this.getView().getModel("propostaSelectedModel");
+			var propostaSelected = propostaSelectedModel.getData();
 
-			var aRows = oModelPageAut.getData();
-			if (aRows.length === 0) {
+			if(!propostaSelected){
+				MessageBox.warning(this.getView().getModel("i18n").getResourceBundle().getText("MBTastoCompetenzaPageIDProposta"));
+				return;
+			}
+
+			this._resetCheckbox("modelTreeTable", this);
+				this._associaProps(propostaSelected);
+			//var aRows = oModelPageAut.getData();
+			//var aRows = [propostaSelected];
+			/* if (aRows.length === 0) {
 				MessageBox.warning(this.getView().getModel("i18n").getResourceBundle().getText("MBTastoCompetenzaPageIDProposta"));
 			} else {
 				this._resetCheckbox("modelTreeTable", this);
-				this._associaProps(aRows);
-			}
+				this._associaProps(propostaSelected);
+			} */
 		},
 		
-		_associaProps:function(props){
+		_associaProps:function(prop){
 			
 			
 			//set use batch
 			//oModel.setUseBatch(false);
 			var positions = this.getView().getModel("modelPosFinSelected").getData().IdPosfin;
-			var prop=props[0];
+			//var prop=props[0];
 			
 			this._recursiveUpdateModel(positions,prop);
 			
@@ -374,7 +386,8 @@ sap.ui.define([
 			
 		updateModel: function(position,prop){
 			var sIdProposta=prop.IdProposta;
-			var sKeycodepr=prop.Keycodepr;
+			var sKeycodepr=prop.Key_Code;
+			//var sKeycodepr=prop.Keycodepr;
 			var oModel = this.getView().getModel("ZSS4_COBI_PRSP_ESAMOD_SRV");
 			var sFipex=position.Fipex;
 			var oEntry = {

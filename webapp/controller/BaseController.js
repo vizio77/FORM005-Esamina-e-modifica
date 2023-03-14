@@ -830,7 +830,7 @@ sap.ui.define([
            this.getView().getModel(sModel).refresh();
         },
         
-        _gestTipologiche: function() {
+        _gestTipologiche: async function() {
 				var that = this; 
 				var oDataModel = this.getView().getModel("modelGestTipologicheSRV");
 				oDataModel.read("/ZES_FOTO_ANNO_SET(TYPE_KEY='SCH_AMM')", {

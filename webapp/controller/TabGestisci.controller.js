@@ -51,17 +51,17 @@ sap.ui.define([
 			this.getView().byId("TextAnno").setText(new Date().getFullYear() + 1);
 
 			//lt salvo un modello generico della testata
-			var oDataModPodFin  = this.getOwnerComponent().getModel("modelPosizioneFinanziaria").getData() ;
+			/*var oDataModPodFin  = this.getOwnerComponent().getModel("modelPosizioneFinanziaria").getData() ;
 			var isEmptyOData  = Object.keys(oDataModPodFin).length == 0;
-			var sPosfin;
+			 var sPosfin;
 			if(isEmptyOData){
 				sPosfin = this.getOwnerComponent().getModel("modelPageAut").getData()[0].IdPosfin;
 			}else{
 				sPosfin = oDataModPodFin[0].Fipex;
 			}
-			var oModelTestata = new JSONModel({Fipex: sPosfin});
+			var oModelTestata = new JSONModel({Fipex: sPosfin}); */
 			//this.getView().setModel(oModelTestata, "modelTestata");
-			this.getView().getModel("modelPageAut").setProperty('/Fipex', sPosfin);
+			//this.getView().getModel("modelPageAut").setProperty('/Fipex', sPosfin);
 
 			//LOGICA PER GESTIONE BTN INVIO/REVOCA VALIDAZIONE da rivedere
 			var sButtonInviaRevocaValidazione = this.getView().byId("btnInvioRevocaValidazione");
